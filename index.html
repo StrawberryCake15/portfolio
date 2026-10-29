@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0A0809">
+  <meta name="description" content="Davin the Project — Where ideas warp into reality. An evolving portfolio by a Computer Science student.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <title>Davin the Project — Build 01</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#home">Skip to page content</a>
+  <div class="ambient-grid" aria-hidden="true"></div>
+  <div class="ambient-light" aria-hidden="true"></div>
+  <div class="transition-wipe" aria-hidden="true"></div>
+
+  <header class="app-header">
+    <a class="brand" href="#home" aria-label="Davin the Project home">DAVIN<span>.</span></a>
+    <div class="header-right">
+      <span class="header-build">FIELD NOTES / BUILD 01</span>
+      <span class="page-indicator" aria-live="polite"><span id="page-current">01</span><span class="indicator-slash">/</span>05</span>
+    </div>
+  </header>
+
+  <main class="page-stage" id="main-content">
+    <!-- PAGE 01: HOME. Editable personal/course details are marked below. -->
+    <section class="page home-page active" id="home" aria-labelledby="home-title" data-page="0">
+      <div class="home-layout">
+        <div class="home-upper">
+          <!-- EDIT HERE: this line and the metadata below describe the student and current build. -->
+          <p class="eyebrow"><span class="eyebrow-line"></span> An evolving creative technology project</p>
+          <h1 class="hero-title" id="home-title">
+            <span class="hero-line hero-line-one">DAVIN</span>
+            <span class="hero-line hero-line-two">THE</span>
+            <span class="hero-line hero-line-three">PROJECT</span>
+          </h1>
+          <p class="tagline">Where <span class="warp-word" tabindex="0">ideas</span> <span class="warp-word accent-word" tabindex="0">warp</span> into reality.</p>
+          <p class="hero-subline">FIRST-YEAR COMPUTER SCIENCE <span class="meta-separator">/</span> GAME DEVELOPMENT + AI / ML</p>
+        </div>
+        <div class="home-lower">
+          <div class="ball-zone">
+            <button class="signature-ball" id="trainer-ball" type="button" aria-label="Open trainer card" aria-expanded="false" aria-controls="trainer-card">
+              <span class="ball-top" aria-hidden="true"></span>
+              <span class="ball-bottom" aria-hidden="true"></span>
+              <span class="ball-band" aria-hidden="true"></span>
+              <span class="ball-button" aria-hidden="true"></span>
+            </button>
+            <span class="ball-caption">TAP THE BALL <span aria-hidden="true">↗</span></span>
+          </div>
+          <div class="home-meta">
+          <!-- EDIT HERE: full name, course/section, term, build number, and date. -->
+            <p class="prepared-line">Prepared for Dr. Felipe A. Pati, Jr.<span class="meta-separator"> / </span><span class="edit-value">[COURSE CODE, SECTION]</span><span class="meta-separator"> / </span><span class="edit-value">[TERM]</span></p>
+            <p class="real-name">Daveen Raphael A. Peñaranda</p>
+            <p class="build-stamp">BUILD 01 <span class="meta-separator">/</span> 29 OCT 2026</p>
+          </div>
+        </div>
+      </div>
+      <aside class="trainer-card" id="trainer-card" role="dialog" aria-label="Trainer card" hidden>
+        <div class="trainer-card-head">
+          <span class="micro-label">PLAYER RECORD / 001</span>
+          <button class="card-close" id="close-trainer-card" type="button" aria-label="Close trainer card">×</button>
+        </div>
+        <p class="trainer-name">Daveen Raphael<br>A. Peñaranda</p>
+        <p class="trainer-course">COMPUTER SCIENCE <span>•</span> <span class="edit-value">[SECTION]</span></p>
+        <div class="trainer-rule"></div>
+        <dl class="trainer-facts">
+          <div><dt>DIRECTION</dt><dd>CS / AI &amp; ML / GAME DEV</dd></div>
+          <div><dt>FAVOURITE GAME</dt><dd>Creature-collecting RPGs</dd></div>
+        </dl>
+        <a class="text-link" href="#davin">Open full profile <span aria-hidden="true">↗</span></a>
+      </aside>
+    </section>
+
+    <!-- PAGE 02: BUILDS. Select a row to update the detail panel. -->
+    <section class="page builds-page" id="builds" aria-labelledby="builds-title" data-page="1">
+      <div class="page-heading">
+        <div><p class="section-kicker">01 / BUILD INDEX</p><h1 class="page-title" id="builds-title">BUILDS<span class="title-period">.</span></h1></div>
+        <p class="heading-note">Small steps. Honest status.<br>No imaginary milestones.</p>
+      </div>
+      <div class="builds-layout">
+        <div class="build-list" role="group" aria-label="Select a build">
+          <button class="build-item selected" type="button" data-build="0" aria-pressed="true">
+            <span class="build-number">01</span><span class="build-item-copy"><strong>First Contact</strong><small>C++ / EXPERIMENT</small></span><span class="status-tag tag-prototype">PROTOTYPE</span>
+          </button>
+          <button class="build-item" type="button" data-build="1" aria-pressed="false">
+            <span class="build-number">02</span><span class="build-item-copy"><strong>Unnamed Game</strong><small>GAME / CONCEPT</small></span><span class="status-tag tag-concept">CONCEPT</span>
+          </button>
+          <button class="build-item" type="button" data-build="2" aria-pressed="false">
+            <span class="build-number">03</span><span class="build-item-copy"><strong>Learning Machine</strong><small>AI / FUTURE BUILD</small></span><span class="status-tag tag-concept">CONCEPT</span>
+          </button>
+          <button class="build-item" type="button" data-build="3" aria-pressed="false">
+            <span class="build-number">04</span><span class="build-item-copy"><strong>Project 04</strong><small>CREATIVE TECHNOLOGY</small></span><span class="status-tag tag-concept">CONCEPT</span>
+          </button>
+        </div>
+        <article class="build-detail" aria-live="polite" aria-atomic="true">
+          <div class="detail-topline"><span id="detail-index">BUILD / 01</span><span class="detail-mark" aria-hidden="true">↘</span></div>
+          <p class="detail-category" id="detail-category">C++ / EXPERIMENT</p>
+          <h2 class="detail-title" id="detail-title">First Contact</h2>
+          <p class="detail-description" id="detail-description">An early programming experiment: a place to practise core concepts and make the first ideas executable.</p>
+          <div class="detail-fields">
+            <div><span class="field-label">STATUS</span><strong id="detail-status">PROTOTYPE</strong></div>
+            <div><span class="field-label">TOOLS</span><strong id="detail-tools">C++ / TO VERIFY</strong></div>
+            <div><span class="field-label">NEXT</span><strong id="detail-next">Refine the concept and document what was learned.</strong></div>
+          </div>
+          <p class="build-note">Full case studies arrive in Build 02.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- PAGE 03: LAB. Two compact sub-steps keep this page within one viewport. -->
+    <section class="page lab-page" id="lab" aria-labelledby="lab-title" data-page="2">
+      <div class="page-heading lab-heading">
+        <div><p class="section-kicker">02 / PROCESS ARCHIVE</p><h1 class="page-title" id="lab-title">STILL <span class="title-accent">LEARNING</span><span class="title-period">.</span></h1></div>
+        <div class="step-controls" aria-label="Lab sub-steps">
+          <span class="step-count" id="lab-step-count">STEP 1 / 2</span>
+          <button type="button" class="step-button" id="lab-prev" disabled aria-label="Previous lab step">←</button>
+          <button type="button" class="step-button" id="lab-next" aria-label="Next lab step">→</button>
+        </div>
+      </div>
+      <div class="lab-step active" id="lab-step-one" aria-labelledby="lab-title">
+        <div class="lab-intro">
+          <p>I document the process, not just the outcome: experiments, mistakes, questions, and discoveries that make the next attempt better.</p>
+          <div class="evolving-line"><span class="status-dot" aria-hidden="true"></span><span>STATUS</span><strong>EVOLVING</strong></div>
+          <p class="lab-small-note">A learning log, not a claim of mastery.</p>
+        </div>
+        <div class="learning-list" aria-label="Current learning areas">
+          <div class="learning-row"><div class="learning-copy"><strong>Programming Fundamentals</strong><span>LEARNING</span></div><div class="energy-bar" aria-label="Learning status"><i class="filled"></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="learning-row"><div class="learning-copy"><strong>JavaScript Experiments</strong><span>BUILDING</span></div><div class="energy-bar" aria-label="Learning status"><i class="filled"></i><i class="filled"></i><i class="filled"></i><i></i><i></i></div></div>
+          <div class="learning-row"><div class="learning-copy"><strong>Python / AI</strong><span>EXPLORING</span></div><div class="energy-bar" aria-label="Learning status"><i class="filled"></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="learning-row"><div class="learning-copy"><strong>Game Systems</strong><span>EXPLORING</span></div><div class="energy-bar" aria-label="Learning status"><i class="filled"></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="learning-row"><div class="learning-copy"><strong>Creative Interfaces</strong><span>BUILDING</span></div><div class="energy-bar" aria-label="Learning status"><i class="filled"></i><i class="filled"></i><i class="filled"></i><i></i><i></i></div></div>
+        </div>
+      </div>
+      <div class="lab-step" id="lab-step-two" aria-labelledby="build-notes-title" hidden>
+        <div class="notes-layout">
+          <div class="build-notes">
+            <p class="section-kicker">SYSTEMS / DESIGN RECORD</p>
+            <h2 class="notes-title" id="build-notes-title">BUILD NOTES<span class="title-period">.</span></h2>
+            <div class="process-grid">
+              <div><span>01</span><h3>Requirements</h3><p>Five pages. No scrolling. Keyboard and touch access.</p></div>
+              <div><span>02</span><h3>Design</h3><p>Console-inspired structure with a restrained maroon palette.</p></div>
+              <div><span>03</span><h3>Build</h3><p>Three files. Vanilla HTML, CSS, and JavaScript.</p></div>
+              <div><span>04</span><h3>Test</h3><p>Check routes, focus states, motion settings, and target viewports.</p></div>
+            </div>
+          </div>
+          <div class="build-log">
+            <p class="section-kicker">BUILD LOG / LATEST</p>
+            <div class="log-entry"><time datetime="2026-10-29">29 OCT 2026</time><strong>BUILD 00</strong><p>Started with the original scrolling prototype.</p></div>
+            <div class="log-entry"><time datetime="2026-10-29">29 OCT 2026</time><strong>BUILD 01</strong><p>Reframed the prototype as five viewport-bound pages.</p></div>
+            <div class="log-entry"><time datetime="2026-10-29">29 OCT 2026</time><strong>BUILD 01</strong><p>Added hash routes, navigation inputs, and the profile card.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 04: DAVIN. One true teamwork sentence is intentionally modest. -->
+    <section class="page davin-page" id="davin" aria-labelledby="davin-title" data-page="3">
+      <div class="page-heading">
+        <div><p class="section-kicker">03 / THE PERSON BEHIND THE BUILD</p><h1 class="page-title" id="davin-title">DAVIN<span class="title-period">.</span></h1></div>
+        <p class="heading-note">BUILD 01 <span class="meta-separator">/</span> 29 OCT 2026</p>
+      </div>
+      <div class="about-layout">
+        <div class="about-statement">A student learning to turn <span>curiosity</span> into things people can experience.</div>
+        <div class="about-details">
+          <article class="about-detail"><span class="field-label">01 / DIRECTION</span><p>Computer Science, AI / Machine Learning, and games that entertain, teach, and spark curiosity in the next generation.</p></article>
+          <article class="about-detail"><span class="field-label">02 / APPROACH</span><p>Learn by making. Break things. Understand why. Build again.</p></article>
+          <article class="about-detail"><span class="field-label">03 / TEAMWORK</span><p>I value teamwork, openness to different perspectives, and working toward a shared goal.</p></article>
+          <article class="about-detail"><span class="field-label">04 / CURRENT BUILD</span><p>Davin the Project: an evolving record of ideas becoming reality.</p></article>
+        </div>
+      </div>
+      <p class="influences">INFLUENCES <span>Handheld-era JRPG interfaces, Zenless Zone Zero, Soul Knight.</span></p>
+    </section>
+
+    <!-- PAGE 05: CONTACT. Add public contact links only when real values exist. -->
+    <section class="page contact-page" id="contact" aria-labelledby="contact-title" data-page="4">
+      <!-- EDIT HERE: add email/GitHub/LinkedIn anchors only after real public URLs are available. -->
+      <div class="contact-content">
+        <p class="section-kicker">04 / NEXT IDEA</p>
+        <h1 class="contact-title" id="contact-title">LET’S MAKE<br>IT <span>REAL.</span></h1>
+        <div class="contact-divider"></div>
+        <div class="contact-bottomline"><p>Ideas are only the beginning.<br><span>The work is what makes them real.</span></p><p class="contact-label">CONTACT LINKS<br><span>ADD VERIFIED DETAILS WHEN READY</span></p></div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="page-nav" aria-label="Portfolio pages">
+    <a class="nav-tile active" href="#home" data-nav="0" aria-current="page"><span class="nav-index">01</span><span class="nav-name">HOME</span></a>
+    <a class="nav-tile" href="#builds" data-nav="1"><span class="nav-index">02</span><span class="nav-name">BUILDS</span></a>
+    <a class="nav-tile" href="#lab" data-nav="2"><span class="nav-index">03</span><span class="nav-name">LAB</span></a>
+    <a class="nav-tile" href="#davin" data-nav="3"><span class="nav-index">04</span><span class="nav-name">DAVIN</span></a>
+    <a class="nav-tile" href="#contact" data-nav="4"><span class="nav-index">05</span><span class="nav-name">CONTACT</span></a>
+  </nav>
+  <p class="keyboard-hint" aria-hidden="true">← → NAVIGATE <span>•</span> 1—5 SELECT</p>
+</body>
+</html>
