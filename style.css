@@ -345,6 +345,7 @@ body::after{ background: radial-gradient(ellipse at center, transparent 48%, var
   .mobile-menu .nav-tile.active{ color: var(--paper); background: var(--surface-wash-18); }
   .mobile-menu .nav-index{ font-size: 11px; }
   .mobile-menu .nav-name{ font-size: clamp(20px, 5vw, 27px); letter-spacing: .12em; }
+}
 
 @media (max-width: 500px) {
   :root{ --header-height: 56px; --page-pad-x: 15px; }
@@ -352,12 +353,14 @@ body::after{ background: radial-gradient(ellipse at center, transparent 48%, var
   .header-right{ gap: 9px; }
   .page-indicator{ min-width: 42px; font-size: 11px; }
   .menu-toggle{ min-width: 43px; min-height: 36px; font-size: 11px; }
+}
 
 @media (max-height: 700px) and (min-width: 801px) {
   :root{ --header-height: 58px; }
 
 }
 @media (max-width: 500px) and (max-height: 700px) {
+}
 
 @media (prefers-reduced-motion: reduce) {
   .app-header{ animation: none !important; opacity: 1 !important; transform: none !important; }
