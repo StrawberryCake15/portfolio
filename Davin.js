@@ -58,6 +58,11 @@
   const portraitImage = document.getElementById("portrait-photo");
   const portraitCanvas = document.getElementById("portrait-canvas");
   const portraitBall = document.getElementById("portrait-ball");
+  const davinPage = document.getElementById("davin");
+  const aboutProfileCard = document.getElementById("agent-profile");
+  const aboutPhotoToggle = document.getElementById("about-photo-toggle");
+  const aboutProfilePhoto = document.getElementById("about-profile-photo");
+  const aboutPhotoMode = document.getElementById("about-photo-mode");
   const portraitModeLabel = document.getElementById("portrait-mode-label");
   const portraitDetails = document.getElementById("portrait-details");
   const detailsClose = document.getElementById("details-close");
@@ -81,6 +86,7 @@
   let pendingSpriteOffset = 0;
   let detailIntentTimer = 0;
   let detailHideTimer = 0;
+  let aboutEntryTimer = 0;
   let wobbleTimer = 0;
   let wobbleEndTimer = 0;
   let spriteBuildPromise = null;
@@ -399,6 +405,11 @@
 
     pageCurrent.textContent = String(activeIndex + 1).padStart(2, "0");
     updateCornerButtons();
+    if (activeIndex === 1) runAboutEntry();
+    else {
+      window.clearTimeout(aboutEntryTimer);
+      if (davinPage) davinPage.classList.remove("is-entering");
+    }
     closeStageDetails();
     setMobileMenu(false);
     document.body.classList.toggle("home-active", activeIndex === 0);
@@ -506,6 +517,37 @@
   portraitImage.addEventListener("error", showPortraitFallback, { once: true });
   portraitImage.addEventListener("load", () => portraitStage.classList.remove("image-failed"), { once: true });
   if (portraitImage.complete && portraitImage.naturalWidth === 0) showPortraitFallback();
+
+  // ABOUT PROFILE: the photo is visible on first paint; ID mode is an optional text-only view.
+  function updateAboutPhotoMode() {
+    if (!aboutProfileCard || !aboutPhotoToggle) return;
+    const idMode = aboutProfileCard.classList.contains("is-id-mode");
+    aboutPhotoToggle.setAttribute("aria-pressed", String(idMode));
+    aboutPhotoToggle.setAttribute("aria-label", idMode ? "Switch profile portrait to photo mode" : "Switch profile portrait to text-only ID mode");
+    if (aboutPhotoMode) aboutPhotoMode.textContent = idMode ? "ID MODE" : "PHOTO MODE";
+  }
+  if (aboutProfilePhoto && aboutProfileCard) {
+    aboutProfilePhoto.addEventListener("error", () => aboutProfileCard.classList.add("photo-failed"), { once: true });
+    aboutProfilePhoto.addEventListener("load", () => aboutProfileCard.classList.remove("photo-failed"), { once: true });
+    if (aboutProfilePhoto.complete && aboutProfilePhoto.naturalWidth === 0) aboutProfileCard.classList.add("photo-failed");
+  }
+  if (aboutPhotoToggle && aboutProfileCard) {
+    aboutPhotoToggle.addEventListener("click", () => {
+      aboutProfileCard.classList.toggle("is-id-mode");
+      updateAboutPhotoMode();
+    });
+    updateAboutPhotoMode();
+  }
+
+  // ABOUT PAGE: play a short, one-pass card/dossier arrival when the page becomes active.
+  function runAboutEntry() {
+    if (!davinPage) return;
+    window.clearTimeout(aboutEntryTimer);
+    davinPage.classList.remove("is-entering");
+    if (reducedMotion.matches) return;
+    requestAnimationFrame(() => davinPage.classList.add("is-entering"));
+    aboutEntryTimer = window.setTimeout(() => davinPage.classList.remove("is-entering"), 900);
+  }
 
   // ABOUT SLOT: create all word spans at once, with a bounded reveal under 0.9 seconds.
   function prepareBioWords() {

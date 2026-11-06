@@ -1,33 +1,26 @@
-DAVIN THE PROJECT — PORTRAIT-FIRST HOME BUILD
+DAVIN THE PROJECT — COMPLETE PORTFOLIO FOLDER
 
-OPEN THE PREVIEW
-1. Extract the complete project ZIP.
-2. Keep index.html, preview.html, style.css, Davin.js, assets/, and sprites/ together.
-3. Double-click preview.html (or index.html) to open the portfolio in Chrome or Edge.
+CONTENTS
+- index.html: main website entry point.
+- preview.html: preview entry point using the same local files.
+- OPEN_PREVIEW.html: small launcher with a link to preview.html.
+- Davin_About_Standalone.html: optional single-file preview with styles and scripts embedded.
+- style.css: site-wide styles and responsive layouts.
+- Davin.js: navigation, themes, sound, sprite ribbon, portrait mode, and interactions.
+- assets/: portrait images used on Home and About Me.
+- sprites/: 30 local sprite PNGs.
+- overlap-check.js: optional console overlap audit; not loaded by the website.
 
-PROJECT FILES
-- index.html      Main five-page website.
-- preview.html    Preview entry point; uses the same shared CSS, JS, and local assets.
-- style.css       Shared design system plus the single portrait-first Home layout block.
-- Davin.js        Routing, page controls, themes, sound, sprite ribbon, portrait sprite mode.
-- assets/         Optimized 4:5 portrait variants (WebP 800w/1200w and JPEG fallback).
-- sprites/        Thirty local 96x96 sprite PNGs used by the ribbon.
-- overlap-check.js Optional browser-console visual bounds checker.
-- Preview_Desktop.png / Preview_Mobile.png  Reference captures of the Home page in Photo Mode.
+HOW TO OPEN
+1. Extract this entire folder from the ZIP. Do not open files inside the ZIP viewer.
+2. Keep all files and both asset folders together; do not move index.html away from style.css, Davin.js, assets/, or sprites/.
+3. Double-click OPEN_PREVIEW.html and choose OPEN WEBSITE PREVIEW, or open preview.html directly.
+4. For a one-file preview, open Davin_About_Standalone.html.
+
+DEPLOYMENT
+Upload index.html, style.css, Davin.js, assets/, and sprites/ together to the same site directory. Keep exact file and folder names so relative paths continue to work.
 
 NOTES
-- The portrait is visible in the HTML's first paint; it does not depend on JavaScript adding a loaded class.
-- The fallback monogram appears only when the portrait image fails.
-- Sound starts OFF and never autoplays.
-- The initial theme is NIGHT; theme changes are saved locally when storage is available.
-- The portrait sprite is generated from the photo in canvas. If canvas pixel readback is blocked, it falls back to drawImage-only pixelation.
-- The 30 sprites are loaded from ./sprites/{id}.png. Keep the folder name and file names unchanged.
-- No old assets/davin.jpg reference is used.
-
-SOURCE SIZE COMPARISON
-Original uploaded style.css: 107,807 bytes
-Updated style.css:           63,278 bytes (see file size in your file manager)
-Original uploaded Davin.js:  56,163 bytes
-Updated Davin.js:            49,516 bytes
-
-The rest of the page copy is retained. Page order is HOME, DAVIN, BUILDS, LAB, CONTACT.
+- This folder is a local copy; downloading it does not publish changes to the live website.
+- The profile portrait and Home cutout are stored locally in assets/.
+- Sound remains off until the visitor explicitly enables it.
