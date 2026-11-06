@@ -260,7 +260,7 @@ body.js .page{ display: grid; }
   .log-entry{ display: block; min-width: 0; padding: 6px 0 0; }
   .log-entry time{ display: block; font-size: 11px; line-height: 1.25; white-space: normal; }
   .log-entry strong{ display: block; margin: 4px 0; font-size: 11px; }
-  .log-entry p{ font-size: 11px; line-height: 1.25; }
+  .log-entry p{ display: block; font-size: 11px; line-height: 1.25; }
   .davin-page{ padding-top: 15px; }
   .about-layout{ display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 15px; }
   .about-statement{ max-width: 330px; font-size: clamp(30px, 8vw, 39px); line-height: .96; }
@@ -292,7 +292,7 @@ body.js .page{ display: grid; }
   *, *::before, *::after{ animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
   .ambient-light{ animation: none; }
   .transition-wipe{ display: none; }
-  
+
 }
 
 /* BUILD 01 HOMEPAGE EDIT — premium top-nav layout and restrained atmosphere. */
@@ -369,6 +369,7 @@ body::after{ background: radial-gradient(ellipse at center, transparent 48%, var
   .mobile-menu .nav-tile.active{ color: var(--paper); background: var(--surface-wash-18); }
   .mobile-menu .nav-index{ font-size: 11px; }
   .mobile-menu .nav-name{ font-size: clamp(20px, 5vw, 27px); letter-spacing: .12em; }
+}
 
 @media (max-width: 500px) {
   :root{ --header-height: 56px; --page-pad-x: 15px; }
@@ -376,12 +377,14 @@ body::after{ background: radial-gradient(ellipse at center, transparent 48%, var
   .header-right{ gap: 9px; }
   .page-indicator{ min-width: 42px; font-size: 11px; }
   .menu-toggle{ min-width: 43px; min-height: 36px; font-size: 11px; }
+}
 
 @media (max-height: 700px) and (min-width: 801px) {
   :root{ --header-height: 58px; }
 
 }
 @media (max-width: 500px) and (max-height: 700px) {
+}
 
 @media (prefers-reduced-motion: reduce) {
   .app-header{ animation: none !important; opacity: 1 !important; transform: none !important; }
@@ -707,7 +710,7 @@ body{ transition: background .35s var(--ease), color .35s var(--ease); }
 }
 @media (prefers-reduced-motion: reduce) {
   body, .app-header, .mobile-menu, .corner-controls, .build-detail, .menu-toggle, .theme-toggle, .sound-toggle, .corner-button{ transition: none !important; }
-  
+
 }
 
 @media (min-width: 601px) { .credit-mobile{ display: none; } }
