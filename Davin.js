@@ -2,24 +2,23 @@
 (() => {
   "use strict";
 
-  // EDIT HERE: personalize the story and tune the lightweight homepage effects.
+  // EDIT HERE: personalize the homepage and tune its light effects.
   const CONFIG = {
-    bioText: "I'm Daveen, a Computer Science student who learns by making. Science, problem-solving, and creative technology pull me in, and I'm working toward game development and machine learning. I want to build games that entertain, teach, and spark curiosity in the next generation, and I'm using every project, mistake, and rebuild to get there.",
-    bioTypingEnabled: true,
+    displayName: ["DAVEEN", "PEÑARANDA"],
+    showProjectHeadline: false,
+    bioText: "I'm Daveen, a Computer Science student who learns by making. I'm working toward game development and machine learning, and I want to build games that entertain, teach, and spark curiosity in the next generation.",
+    trainerSpriteSrc: "", // Optional same-origin hand-drawn sprite; leave empty to build from the portrait.
     themeNames: ["night", "parchment", "slate"],
-    spriteRows: { desktop: 8, short: 6, phone: 4 },
+    spriteRows: { desktop: 4, short: 3, phone: 2 },
     spriteSpeeds: { far: 110, near: 55 },
     soundDefault: false,
     audioFile: "",
-    idleDelay: 5000,
-    ballWobbleInterval: 3000
+    ballWobbleInterval: 7000,
+    detailIntentDelay: 120,
+    detailHideDelay: 300
   };
 
-  // Reserved paste points for optional supplied data. Keep the placeholder line when sharing this source.
-  // EDIT HERE: the supplied image data is in portrait_inline.js, loaded immediately before this file.
-  /* PASTE PORTRAIT DATA HERE */
-  const PORTRAIT_SRC = window.DAVIN_PORTRAIT_SRC || "";
-
+  // Sprite data is supplied in the local sprites/ folder.
   const POKE_SPRITES = [
     /* PASTE SPRITE DATA HERE */
   ];
@@ -32,9 +31,14 @@
 
   document.body.classList.add("js");
 
-  // EDIT HERE: page slugs must match section IDs and navigation links.
-  const pages = ["home", "builds", "lab", "davin", "contact"];
-  const pageNames = ["Home", "Builds", "Lab", "Davin", "Contact"];
+  // Apply the editable display name from CONFIG to the two visible name lines.
+  document.querySelectorAll("#home-title .name-line").forEach((line, index) => {
+    if (CONFIG.displayName[index]) line.textContent = CONFIG.displayName[index];
+  });
+
+  // EDIT HERE: the order here controls hashes, keys, indicators, and corner navigation.
+  const pages = ["home", "davin", "builds", "lab", "contact"];
+  const pageNames = ["Home", "Davin", "Builds", "Lab", "Contact"];
   const pageElements = pages.map((id) => document.getElementById(id));
   const navLinks = Array.from(document.querySelectorAll("[data-nav]"));
   const pageCurrent = document.getElementById("page-current");
@@ -44,29 +48,20 @@
   const pageNextLabel = document.getElementById("page-next-label");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+  const coarsePointer = window.matchMedia("(pointer: coarse)");
   const smallScreen = window.matchMedia("(max-width: 600px)");
   const menuToggle = document.getElementById("menu-toggle");
   const mobileMenu = document.getElementById("mobile-menu");
   const homePage = document.getElementById("home");
-  const heroTitle = homePage.querySelector(".hero-title");
-  const headlineTrigger = document.getElementById("headline-trigger");
-  const bioPanel = document.getElementById("bio-panel");
-  const bioTypedText = document.getElementById("bio-typed-text");
-  const bioClose = document.getElementById("bio-close");
-  const trainerBall = document.getElementById("trainer-ball");
-  const trainerCard = document.getElementById("trainer-card");
-  const closeCardButton = document.getElementById("close-trainer-card");
-  const profilePeek = document.getElementById("profile-peek");
-  const ballHit = document.getElementById("ball-hit");
-  const ballWobble = document.getElementById("ball-wobble");
-  const ballScrim = document.getElementById("ball-scrim");
-  const closePeekButton = document.getElementById("close-profile-peek");
-  const identityZone = document.getElementById("identity-zone");
-  const identityMeta = document.getElementById("identity-meta");
-  const cornerControls = document.querySelector(".corner-controls");
-  const appHeader = document.querySelector(".app-header");
-  // Portals keep the peek and trainer card outside the clipped page stage.
-  document.body.append(ballScrim, profilePeek, trainerCard);
+  const portraitStage = document.getElementById("portrait-stage");
+  const portraitButton = document.getElementById("portrait-toggle");
+  const portraitImage = document.getElementById("portrait-photo");
+  const portraitCanvas = document.getElementById("portrait-canvas");
+  const portraitBall = document.getElementById("portrait-ball");
+  const portraitModeLabel = document.getElementById("portrait-mode-label");
+  const portraitDetails = document.getElementById("portrait-details");
+  const detailsClose = document.getElementById("details-close");
+  const aboutBio = document.getElementById("about-bio");
   const spriteBand = document.getElementById("sprite-band");
   const spriteRows = document.getElementById("sprite-rows");
   const spriteToggle = document.getElementById("sprite-toggle");
@@ -82,31 +77,10 @@
   let touchStartX = 0;
   let touchStartY = 0;
   let lastTouchTime = 0;
-  let pointerFrame = 0;
   let spriteParallaxFrame = 0;
   let pendingSpriteOffset = 0;
-  let pointerX = 0;
-  let pointerY = 0;
-  let bioTypingTimer = 0;
-  let bioHideTimer = 0;
-  let bioOpenedByCoarseFocus = false;
-  let bioWordsPrepared = false;
-  let bioWasRevealed = false;
-  let bioTouchHandled = false;
-  let vaultCloseTimer = 0;
-  let vaultIntentTimer = 0;
-  let vaultCloseFinishTimer = 0;
-  let vaultPeekTimer = 0;
-  let cardRevealTimer = 0;
-  let ballFocusInside = false;
-  let suppressPeekOnNextFocus = false;
-  let idleTimer = 0;
-  let idleWasShown = false;
-  try {
-    idleWasShown = sessionStorage.getItem("davin-idle-bio-shown") === "true";
-  } catch (_error) {
-    // The one-time idle panel still works for this page when session storage is blocked.
-  }
+  let detailIntentTimer = 0;
+  let detailHideTimer = 0;
   let wobbleTimer = 0;
   let wobbleEndTimer = 0;
   let spriteBuildPromise = null;
@@ -118,11 +92,24 @@
   let masterGain = null;
   let noiseBuffer = null;
   let musicTimer = 0;
-  let audioEnabled = false; // Always OFF on load; no saved state and no autoplay.
+  let audioEnabled = false; // Sound is OFF on every load; there is no autoplay.
   let audioTrack = null;
   let audioFadeTimer = 0;
   let beatIndex = 0;
   let nextBeatTime = 0;
+  let detailsOpen = false;
+  let suppressDetailsUntilLeave = false;
+  let spriteMode = false;
+  let spriteBuildPromiseForPortrait = null;
+  let cachedSpriteCanvas = null;
+  let bioPrepared = false;
+  let bioRevealedThisSession = false;
+  try { bioRevealedThisSession = sessionStorage.getItem("davin-home-bio-revealed") === "true"; } catch (_error) { /* Session storage is optional. */ }
+  let bioRevealTimer = 0;
+  let trainerSpriteImage = null;
+  let trainerSpritePromise = null;
+  let lastPointerType = "";
+
 
   // THEMES: start in NIGHT unless a previous theme choice was saved by this site.
   function readSavedTheme() {
@@ -412,15 +399,10 @@
 
     pageCurrent.textContent = String(activeIndex + 1).padStart(2, "0");
     updateCornerButtons();
-    closeTrainerCard();
-    hideProfilePeek();
-    ballHit.classList.remove("vault-open");
-    closeBioPanel();
+    closeStageDetails();
     setMobileMenu(false);
     document.body.classList.toggle("home-active", activeIndex === 0);
     updateSpritePlayback();
-    stopIdleTimer();
-    if (activeIndex === 0) resetIdleTimer();
     if (activeIndex === 0) startBallWobbleTimer();
     else stopBallWobbleTimer();
     if (focusHeading) {
@@ -449,7 +431,7 @@
     syncPage({ focusHeading });
   }
 
-  document.querySelectorAll("a.nav-tile, a.brand, a.text-link").forEach((link) => {
+  document.querySelectorAll("a.nav-tile, a.brand, a.text-link, a.home-cta").forEach((link) => {
     link.addEventListener("click", (event) => {
       const href = link.getAttribute("href") || "";
       const targetIndex = pages.indexOf(href.replace(/^#/, ""));
@@ -488,14 +470,7 @@
     const editing = target instanceof HTMLElement && (target.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName));
     if (editing) return;
     if (event.key === "Escape") {
-      if (!trainerCard.hidden || trainerBall.getAttribute("aria-expanded") === "true") {
-        closeTrainerCard({ returnFocus: true });
-      } else if (!profilePeek.hidden) {
-        finishVaultClose();
-        focusBallAfterPopoverClose();
-      } else if (bioPanel.dataset.open === "true") {
-        closeBioPanel();
-      }
+      if (detailsOpen) closeStageDetails({ returnFocus: true });
       if (menuToggle.getAttribute("aria-expanded") === "true") setMobileMenu(false, { restoreFocus: true });
       return;
     }
@@ -524,74 +499,19 @@
     requestPage(activeIndex + (dx < 0 ? 1 : -1));
   }, { passive: true });
 
-  // Pointer tilt is limited to Home and transform-only updates.
-  function scheduleTilt(event) {
-    pointerX = (event.clientX / window.innerWidth - 0.5) * 5;
-    pointerY = (event.clientY / window.innerHeight - 0.5) * 4;
-    if (pointerFrame) return;
-    pointerFrame = window.requestAnimationFrame(() => {
-      heroTitle.style.setProperty("--tilt-x", `${pointerX}px`);
-      heroTitle.style.setProperty("--tilt-y", `${pointerY}px`);
-      pointerFrame = 0;
-    });
+  // PORTRAIT: the image is visible from first paint. Only failures reveal the monogram.
+  function showPortraitFallback() {
+    portraitStage.classList.add("image-failed");
   }
-  function clearTilt() {
-    if (pointerFrame) window.cancelAnimationFrame(pointerFrame);
-    pointerFrame = 0;
-    heroTitle.style.setProperty("--tilt-x", "0px");
-    heroTitle.style.setProperty("--tilt-y", "0px");
-  }
-  if (finePointer.matches && !reducedMotion.matches) {
-    homePage.addEventListener("pointermove", scheduleTilt);
-  }
-  finePointer.addEventListener?.("change", (event) => {
-    if (!event.matches) clearTilt();
-  });
+  portraitImage.addEventListener("error", showPortraitFallback, { once: true });
+  portraitImage.addEventListener("load", () => portraitStage.classList.remove("image-failed"), { once: true });
+  if (portraitImage.complete && portraitImage.naturalWidth === 0) showPortraitFallback();
 
-  // portrait_inline.js exposes the supplied data URI as window.DAVIN_PORTRAIT_SRC.
-  // Keep the D monogram visible unless the image has decoded successfully.
-  function applyPortraitSource() {
-    const portraitData = typeof PORTRAIT_SRC === "string" ? PORTRAIT_SRC.trim() : "";
-    document.querySelectorAll(".portrait-frame img").forEach((image) => {
-      const frame = image.closest(".portrait-frame");
-      if (!frame) return;
-      image.alt = "Portrait of Daveen";
-      image.width = 96;
-      image.height = 96;
-      image.decoding = "async";
-      const revealImage = () => {
-        if (image.naturalWidth > 0 && image.naturalHeight > 0) frame.classList.add("is-loaded");
-      };
-      const keepMonogram = () => {
-        frame.classList.remove("is-loaded");
-        image.removeAttribute("src");
-      };
-      image.addEventListener("load", revealImage, { once: true });
-      image.addEventListener("error", keepMonogram, { once: true });
-      frame.classList.remove("is-loaded");
-      if (!portraitData.startsWith("data:image/")) return;
-      image.src = portraitData;
-      if (typeof image.decode === "function") {
-        image.decode().then(revealImage).catch(() => {
-          if (image.complete && image.naturalWidth === 0) keepMonogram();
-        });
-      } else if (image.complete) {
-        if (image.naturalWidth > 0) revealImage();
-        else keepMonogram();
-      }
-    });
-  }
-  applyPortraitSource();
-
-  // BIO PANEL: render every word immediately, then fade each in with a bounded stagger.
+  // ABOUT SLOT: create all word spans at once, with a bounded reveal under 0.9 seconds.
   function prepareBioWords() {
-    if (!CONFIG.bioTypingEnabled) {
-      bioTypedText.textContent = CONFIG.bioText;
-      bioWordsPrepared = false;
-      return;
-    }
+    if (bioPrepared) return;
     const words = CONFIG.bioText.trim().split(/\s+/);
-    const stagger = words.length > 1 ? Math.min(20, 800 / (words.length - 1)) : 0;
+    const stagger = words.length > 1 ? Math.min(14, 620 / (words.length - 1)) : 0;
     const fragment = document.createDocumentFragment();
     words.forEach((word, index) => {
       const span = document.createElement("span");
@@ -600,468 +520,329 @@
       span.style.setProperty("--word-delay", `${Math.round(index * stagger)}ms`);
       fragment.append(span);
     });
-    bioTypedText.replaceChildren(fragment);
-    bioWordsPrepared = true;
+    aboutBio.replaceChildren(fragment);
+    bioPrepared = true;
   }
 
-  function rememberBioReveal() {
-    bioWasRevealed = true;
-    try { sessionStorage.setItem("davin-bio-revealed", "true"); } catch (_error) { /* The current page still remembers the reveal. */ }
-  }
-
-  function completeBioText() {
-    window.clearTimeout(bioTypingTimer);
-    bioPanel.classList.add("bio-revealed", "bio-instant");
-    if (!CONFIG.bioTypingEnabled) {
-      bioTypedText.textContent = CONFIG.bioText;
-      rememberBioReveal();
+  function revealAboutBio(instant = false) {
+    prepareBioWords();
+    homePage.classList.add("details-open");
+    if (instant || reducedMotion.matches || bioRevealedThisSession) {
+      homePage.classList.add("bio-instant", "bio-revealed");
+      bioRevealedThisSession = true;
       return;
     }
-    bioWordsPrepared = false;
-    prepareBioWords();
-    rememberBioReveal();
+    homePage.classList.remove("bio-instant", "bio-revealed");
+    requestAnimationFrame(() => homePage.classList.add("bio-revealed"));
+    window.clearTimeout(bioRevealTimer);
+    bioRevealTimer = window.setTimeout(() => {
+      bioRevealedThisSession = true;
+      try { sessionStorage.setItem("davin-home-bio-revealed", "true"); } catch (_error) { /* Session storage is optional. */ }
+    }, 850);
   }
 
-  function revealBioWords() {
-    window.clearTimeout(bioTypingTimer);
-    bioWordsPrepared = false;
-    if (!CONFIG.bioTypingEnabled) {
-      bioTypedText.textContent = CONFIG.bioText;
-      bioPanel.classList.remove("bio-instant", "bio-revealed");
-      requestAnimationFrame(() => bioPanel.classList.add("bio-revealed"));
-      rememberBioReveal();
-      return;
+  function openStageDetails({ instant = false } = {}) {
+    window.clearTimeout(detailIntentTimer);
+    window.clearTimeout(detailHideTimer);
+    if (detailsOpen) return;
+    detailsOpen = true;
+    portraitDetails.hidden = false;
+    portraitDetails.classList.remove("is-visible");
+    revealAboutBio(instant);
+    requestAnimationFrame(() => portraitDetails.classList.add("is-visible"));
+  }
+
+  function closeStageDetails({ returnFocus = false } = {}) {
+    window.clearTimeout(detailIntentTimer);
+    window.clearTimeout(detailHideTimer);
+    if (!detailsOpen && portraitDetails.hidden) return;
+    detailsOpen = false;
+    portraitDetails.classList.remove("is-visible");
+    homePage.classList.remove("details-open");
+    window.setTimeout(() => {
+      if (!detailsOpen) portraitDetails.hidden = true;
+    }, reducedMotion.matches ? 0 : 260);
+    if (returnFocus) {
+      suppressDetailsUntilLeave = true;
+      portraitButton.focus({ preventScroll: true });
     }
-    prepareBioWords();
-    bioPanel.classList.remove("bio-instant", "bio-revealed");
-    requestAnimationFrame(() => bioPanel.classList.add("bio-revealed"));
-    const wordCount = bioTypedText.children.length;
-    const finalDelay = wordCount > 1 ? Math.min(800, (wordCount - 1) * Math.min(20, 800 / (wordCount - 1))) : 0;
-    bioTypingTimer = window.setTimeout(rememberBioReveal, Math.ceil(finalDelay + 190));
   }
 
-  function openBioPanel({ instant = false } = {}) {
-    window.clearTimeout(bioHideTimer);
-    if (!trainerCard.hidden) closeTrainerCard();
-    hideProfilePeek();
-    ballHit.classList.remove("vault-open");
-    bioPanel.dataset.open = "true";
-    if (instant || reducedMotion.matches) completeBioText();
-    else revealBioWords();
-  }
-
-  function closeBioPanel() {
-    if (!bioPanel) return;
-    window.clearTimeout(bioHideTimer);
-    window.clearTimeout(bioTypingTimer);
-    bioOpenedByCoarseFocus = false;
-    bioTouchHandled = false;
-    bioPanel.dataset.open = "false";
-  }
-
-  function scheduleBioHide() {
-    if (!finePointer.matches) return;
-    window.clearTimeout(bioHideTimer);
-    bioHideTimer = window.setTimeout(() => {
-      const pointerStillInside = headlineTrigger.matches(":hover") || bioPanel.matches(":hover");
-      const focusStillInside = headlineTrigger.contains(document.activeElement) || bioPanel.contains(document.activeElement);
-      if (!pointerStillInside && !focusStillInside) closeBioPanel();
-    }, 400);
-  }
-
-  function toggleBioPanel() {
-    if (bioPanel.dataset.open === "true") closeBioPanel();
-    else openBioPanel();
-  }
-
-  headlineTrigger.addEventListener("pointerenter", (event) => {
-    if (finePointer.matches && event.pointerType !== "touch") openBioPanel();
-  });
-  headlineTrigger.addEventListener("pointerleave", (event) => {
-    if (event.pointerType === "touch" || !finePointer.matches) return;
-    if (event.relatedTarget && bioPanel.contains(event.relatedTarget)) return;
-    scheduleBioHide();
-  });
-  headlineTrigger.addEventListener("focusin", () => {
-    if (!finePointer.matches && bioPanel.dataset.open !== "true") bioOpenedByCoarseFocus = true;
-    openBioPanel();
-  });
-  headlineTrigger.addEventListener("focusout", (event) => {
-    if (!finePointer.matches) return;
-    if (event.relatedTarget && (bioPanel.contains(event.relatedTarget) || headlineTrigger.contains(event.relatedTarget))) return;
-    scheduleBioHide();
-  });
-  headlineTrigger.addEventListener("pointerdown", (event) => {
-    if (event.pointerType !== "touch") return;
-    bioTouchHandled = true;
-    toggleBioPanel();
-  });
-  headlineTrigger.addEventListener("click", () => {
-    if (bioTouchHandled) { bioTouchHandled = false; return; }
-    if (!finePointer.matches) {
-      if (bioOpenedByCoarseFocus) { bioOpenedByCoarseFocus = false; return; }
-      toggleBioPanel();
-    }
-  });
-  bioPanel.addEventListener("pointerenter", () => window.clearTimeout(bioHideTimer));
-  bioPanel.addEventListener("pointerleave", (event) => {
-    if (event.pointerType === "touch" || !finePointer.matches) return;
-    scheduleBioHide();
-  });
-  bioPanel.addEventListener("focusin", () => window.clearTimeout(bioHideTimer));
-  bioPanel.addEventListener("focusout", (event) => {
-    if (!finePointer.matches) return;
-    if (event.relatedTarget && (headlineTrigger.contains(event.relatedTarget) || bioPanel.contains(event.relatedTarget))) return;
-    scheduleBioHide();
-  });
-  bioPanel.addEventListener("click", (event) => {
-    if (event.target.closest("#bio-close")) return;
-    completeBioText();
-  });
-  bioClose.addEventListener("click", (event) => {
-    event.stopPropagation();
-    closeBioPanel();
-  });
-  document.addEventListener("pointerdown", (event) => {
-    if (bioPanel.dataset.open === "true" && !headlineTrigger.contains(event.target) && !bioPanel.contains(event.target)) closeBioPanel();
-  });
-
-  // One-time idle assist. The message appears instantly after the configured quiet period.
-  function stopIdleTimer() { window.clearTimeout(idleTimer); }
-  function resetIdleTimer() {
-    stopIdleTimer();
-    if (activeIndex !== 0 || idleWasShown || document.hidden) return;
-    idleTimer = window.setTimeout(() => {
-      if (activeIndex === 0 && !idleWasShown && trainerCard.hidden && profilePeek.hidden) {
-        idleWasShown = true;
-        try { sessionStorage.setItem("davin-idle-bio-shown", "true"); } catch (_error) { /* Session storage is optional. */ }
-        openBioPanel({ instant: true });
+  function scheduleDetailsOpen() {
+    window.clearTimeout(detailHideTimer);
+    if (suppressDetailsUntilLeave || activeIndex !== 0) return;
+    window.clearTimeout(detailIntentTimer);
+    detailIntentTimer = window.setTimeout(() => {
+      if (activeIndex === 0 && (portraitStage.matches(":hover") || portraitStage.contains(document.activeElement))) {
+        openStageDetails();
       }
-    }, CONFIG.idleDelay);
+    }, CONFIG.detailIntentDelay);
   }
-  function noteActivity() { if (activeIndex === 0 && !idleWasShown) resetIdleTimer(); }
-  ["pointermove", "pointerdown", "keydown"].forEach((eventName) => {
-    document.addEventListener(eventName, noteActivity, { passive: eventName !== "keydown" });
+
+  function scheduleDetailsClose() {
+    window.clearTimeout(detailIntentTimer);
+    window.clearTimeout(detailHideTimer);
+    detailHideTimer = window.setTimeout(() => {
+      const pointerInside = portraitStage.matches(":hover");
+      const focusInside = portraitStage.contains(document.activeElement);
+      if (!pointerInside && !focusInside) closeStageDetails();
+    }, CONFIG.detailHideDelay);
+  }
+
+  portraitStage.addEventListener("pointerenter", (event) => {
+    if (finePointer.matches && event.pointerType !== "touch") scheduleDetailsOpen();
+  });
+  portraitStage.addEventListener("pointerleave", (event) => {
+    if (event.relatedTarget && portraitStage.contains(event.relatedTarget)) return;
+    suppressDetailsUntilLeave = false;
+    scheduleDetailsClose();
+  });
+  portraitStage.addEventListener("focusin", () => scheduleDetailsOpen());
+  portraitStage.addEventListener("focusout", (event) => {
+    if (event.relatedTarget && portraitStage.contains(event.relatedTarget)) return;
+    scheduleDetailsClose();
+  });
+  portraitDetails.addEventListener("pointerenter", () => window.clearTimeout(detailHideTimer));
+  portraitDetails.addEventListener("focusin", () => window.clearTimeout(detailHideTimer));
+  portraitDetails.addEventListener("pointerleave", scheduleDetailsClose);
+  detailsClose.addEventListener("click", () => closeStageDetails({ returnFocus: true }));
+  document.addEventListener("pointerdown", (event) => {
+    if (detailsOpen && !portraitStage.contains(event.target)) closeStageDetails();
   });
 
-  // BALL: a fixed-size hit target never moves; only the inner wobble and vault layers animate.
-  function panelForbiddenRects() {
-    const selectors = [
-      ".app-header", ".corner-controls", "#identity-meta", "#ball-hit", ".ball-caption", ".home-divider", ".eyebrow",
-      ".hero-line-one", ".hero-line-two", ".hero-line-three", ".tagline", ".hero-subline", ".bio-hint", ".sprite-toggle", ".bio-panel"
-    ];
-    return selectors.map((selector) => document.querySelector(selector)).filter(Boolean)
-      .filter((element) => {
-        const style = getComputedStyle(element);
-        return !element.hidden && style.display !== "none" && style.visibility !== "hidden" && Number(style.opacity) > 0.01;
-      })
-      .map((element) => element.getBoundingClientRect()).filter((rect) => rect.width && rect.height);
+  // Build the pixel portrait once. If canvas readback is blocked, drawing still works without quantization.
+  function medianCutPalette(imageData, maxColors = 14) {
+    const data = imageData.data;
+    const pixels = [];
+    for (let i = 0; i < data.length; i += 4) {
+      if (data[i + 3] < 16) continue;
+      pixels.push([data[i], data[i + 1], data[i + 2]]);
+    }
+    if (!pixels.length) return [];
+    const rangeFor = (box) => {
+      const mins = [255,255,255], maxs = [0,0,0];
+      box.forEach((p) => p.forEach((v,c) => { mins[c] = Math.min(mins[c],v); maxs[c] = Math.max(maxs[c],v); }));
+      return maxs.map((v,c) => v-mins[c]);
+    };
+    const boxes = [pixels];
+    while (boxes.length < maxColors) {
+      let pick = -1, bestRange = -1, channel = 0;
+      boxes.forEach((box, index) => {
+        if (box.length < 2) return;
+        const ranges = rangeFor(box);
+        const maxRange = Math.max(...ranges);
+        if (maxRange > bestRange) { bestRange = maxRange; pick = index; channel = ranges.indexOf(maxRange); }
+      });
+      if (pick < 0) break;
+      const box = boxes.splice(pick,1)[0].sort((a,b) => a[channel]-b[channel]);
+      const middle = Math.floor(box.length/2);
+      boxes.push(box.slice(0,middle), box.slice(middle));
+    }
+    return boxes.map((box) => {
+      const total = box.reduce((sum,p) => [sum[0]+p[0],sum[1]+p[1],sum[2]+p[2]],[0,0,0]);
+      return total.map((v) => Math.round(v/box.length));
+    });
   }
 
-  function rectsOverlap(a, b, gap = 6) {
-    return a.left < b.right + gap && a.right > b.left - gap && a.top < b.bottom + gap && a.bottom > b.top - gap;
+  function cssRgbToken(name) {
+    const value = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    const match = value.match(/#([0-9a-f]{6})/i);
+    if (match) return [parseInt(match[1].slice(0,2),16),parseInt(match[1].slice(2,4),16),parseInt(match[1].slice(4,6),16)];
+    const rgb = value.match(/rgba?\((\d+)[, ]+(\d+)[, ]+(\d+)/i);
+    return rgb ? [Number(rgb[1]),Number(rgb[2]),Number(rgb[3])] : null;
   }
 
-  function positionBallPanel(panel) {
-    if (!panel) return;
-    panel.hidden = false;
-    panel.classList.remove("is-mobile-sheet", "is-modal", "is-measuring");
-    panel.style.position = "fixed";
-    panel.style.left = "0px";
-    panel.style.top = "0px";
-    panel.style.right = "auto";
-    panel.style.bottom = "auto";
-    panel.style.transform = "none";
+  function quantizePortrait(canvas) {
+    try {
+      const context = canvas.getContext("2d", { willReadFrequently: true });
+      const image = context.getImageData(0,0,canvas.width,canvas.height);
+      const palette = medianCutPalette(image,14);
+      if (palette.length < 2) return;
+      const luminance = (p) => p[0]*.2126 + p[1]*.7152 + p[2]*.0722;
+      let dark = 0, light = 0;
+      palette.forEach((p,i) => { if (luminance(p)<luminance(palette[dark])) dark=i; if (luminance(p)>luminance(palette[light])) light=i; });
+      const bg = cssRgbToken("--bg"), ink = cssRgbToken("--ink");
+      if (bg) palette[dark] = bg;
+      if (ink) palette[light] = ink;
+      for (let i=0;i<image.data.length;i+=4) {
+        if (image.data[i+3] < 16) continue;
+        let nearest = palette[0], best = Infinity;
+        for (const p of palette) {
+          const dr=image.data[i]-p[0], dg=image.data[i+1]-p[1], db=image.data[i+2]-p[2];
+          const distance=dr*dr+dg*dg+db*db;
+          if (distance<best) { best=distance; nearest=p; }
+        }
+        image.data[i]=nearest[0]; image.data[i+1]=nearest[1]; image.data[i+2]=nearest[2];
+      }
+      context.putImageData(image,0,0);
+    } catch (_error) {
+      // Some file:// browsers block getImageData; the drawImage pixelation remains usable.
+    }
+  }
 
-    // Apply the desktop width and height limit before measuring so collision checks use the final box.
-    panel.style.width = "clamp(300px, 26vw, 400px)";
-    panel.style.maxWidth = "calc(100vw - 48px)";
-    panel.style.maxHeight = "min(58dvh, calc(100dvh - var(--header-height) - var(--corner-h) - 32px))";
-    panel.classList.add("is-measuring");
-    const measured = panel.getBoundingClientRect();
-    const panelWidth = Math.min(measured.width || Math.min(400, Math.max(300, window.innerWidth * 0.26)), window.innerWidth - 48);
-    const panelHeight = measured.height || 180;
-    panel.classList.remove("is-measuring");
+  function loadTrainerSprite() {
+    if (!CONFIG.trainerSpriteSrc) return Promise.resolve(portraitImage);
+    if (trainerSpriteImage && trainerSpriteImage.complete && trainerSpriteImage.naturalWidth) return Promise.resolve(trainerSpriteImage);
+    if (trainerSpritePromise) return trainerSpritePromise;
+    trainerSpritePromise = new Promise((resolve) => {
+      trainerSpriteImage = new Image();
+      trainerSpriteImage.onload = () => resolve(trainerSpriteImage);
+      trainerSpriteImage.onerror = () => { trainerSpriteImage = null; resolve(portraitImage); };
+      trainerSpriteImage.src = CONFIG.trainerSpriteSrc;
+    });
+    return trainerSpritePromise;
+  }
 
-    if (window.innerWidth <= 700) {
-      panel.classList.add("is-mobile-sheet");
-      panel.style.left = "12px";
-      panel.style.right = "12px";
-      panel.style.top = "auto";
-      panel.style.bottom = "calc(var(--corner-h) + 12px)";
-      panel.style.width = "auto";
-      panel.style.maxHeight = "45dvh";
-      panel.style.transform = "none";
-      ballScrim.hidden = false;
-      panel.setAttribute("aria-modal", "true");
+  function getSpriteSource() {
+    if (CONFIG.trainerSpriteSrc && trainerSpriteImage && trainerSpriteImage.complete && trainerSpriteImage.naturalWidth) return trainerSpriteImage;
+    return portraitImage;
+  }
+
+  // Scale the final 56x70 sprite by a whole-number factor so pixels stay crisp.
+  function sizeSpriteCanvas() {
+    const rect = portraitStage.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    const scale = Math.max(1, Math.floor(Math.min(rect.width / 56, rect.height / 70)));
+    portraitCanvas.style.width = `${56 * scale}px`;
+    portraitCanvas.style.height = `${70 * scale}px`;
+  }
+  sizeSpriteCanvas();
+  window.addEventListener("resize", sizeSpriteCanvas, { passive: true });
+
+  function drawSpriteLevel(level) {
+    const source = getSpriteSource();
+    if (!source || !source.complete || !source.naturalWidth) return false;
+    const width = level;
+    const height = Math.round(level * 1.25);
+    portraitCanvas.width = width;
+    portraitCanvas.height = height;
+    const context = portraitCanvas.getContext("2d");
+    context.imageSmoothingEnabled = false;
+    context.clearRect(0,0,width,height);
+    context.drawImage(source,0,0,width,height);
+    return true;
+  }
+
+  async function preparePixelPortrait() {
+    if (cachedSpriteCanvas) return cachedSpriteCanvas;
+    if (spriteBuildPromiseForPortrait) return spriteBuildPromiseForPortrait;
+    spriteBuildPromiseForPortrait = (async () => {
+      await loadTrainerSprite();
+      const source = getSpriteSource();
+      if (!source || !source.complete || !source.naturalWidth) return null;
+      for (const level of [300,160,96,64,56]) {
+        drawSpriteLevel(level);
+        await new Promise((resolve) => window.setTimeout(resolve, 1));
+      }
+      quantizePortrait(portraitCanvas);
+      const cache = document.createElement("canvas");
+      cache.width = 56; cache.height = 70;
+      cache.getContext("2d").drawImage(portraitCanvas,0,0,56,70);
+      cachedSpriteCanvas = cache;
+      return cache;
+    })();
+    const result = await spriteBuildPromiseForPortrait;
+    spriteBuildPromiseForPortrait = null;
+    return result;
+  }
+
+  function updatePortraitModeControls() {
+    portraitButton.setAttribute("aria-pressed", String(spriteMode));
+    portraitButton.setAttribute("aria-label", spriteMode ? "Return to photo mode" : "Turn portrait into a sprite");
+    portraitBall.setAttribute("aria-pressed", String(spriteMode));
+    portraitBall.setAttribute("aria-label", spriteMode ? "Return my portrait to photo mode" : "Turn my portrait into a sprite");
+    portraitModeLabel.textContent = spriteMode ? "SPRITE MODE" : "PHOTO MODE";
+  }
+
+  async function enterSpriteMode() {
+    if (spriteMode) return;
+    spriteMode = true;
+    updatePortraitModeControls();
+    playSoundEffect("page");
+    portraitStage.classList.add("sprite-transition");
+    if (reducedMotion.matches) {
+      const cache = await preparePixelPortrait();
+      if (cache) {
+        portraitCanvas.width=cache.width; portraitCanvas.height=cache.height;
+        portraitCanvas.getContext("2d").drawImage(cache,0,0);
+      }
+      portraitStage.classList.add("sprite-mode");
+      portraitStage.classList.remove("sprite-transition");
       return;
     }
-
-    const identity = identityMeta.getBoundingClientRect();
-    const zone = identityZone.getBoundingClientRect();
-    const header = appHeader.getBoundingClientRect();
-    const footer = cornerControls.getBoundingClientRect();
-    const forbidden = panelForbiddenRects();
-    const preferredLeft = identity.right + 32;
-    const candidates = [
-      { left: preferredLeft, top: zone.top, name: "right" },
-      { left: preferredLeft, top: zone.top - panelHeight - 16, name: "above-right" }
-    ];
-    const valid = candidates.find((candidate) => {
-      const rect = { left: candidate.left, right: candidate.left + panelWidth, top: candidate.top, bottom: candidate.top + panelHeight };
-      if (rect.left < 24 || rect.right > window.innerWidth - 24) return false;
-      if (rect.top < header.bottom + 12 || rect.bottom > footer.top - 12) return false;
-      return !forbidden.some((blocked) => rectsOverlap(rect, blocked, 8));
-    });
-
-    if (valid) {
-      panel.classList.remove("is-modal");
-      panel.style.left = `${valid.left}px`;
-      panel.style.top = `${valid.top}px`;
-      panel.style.right = "auto";
-      panel.style.bottom = "auto";
-      panel.style.transform = "none";
-      panel.dataset.placement = valid.name;
-      ballScrim.hidden = true;
-      panel.setAttribute("aria-modal", "false");
-    } else {
-      panel.classList.add("is-modal");
-      panel.style.left = "50%";
-      panel.style.top = "50%";
-      panel.style.right = "auto";
-      panel.style.bottom = "auto";
-      panel.style.width = "min(400px, calc(100vw - 48px))";
-      panel.style.maxHeight = "min(58dvh, calc(100dvh - var(--header-height) - var(--corner-h) - 32px))";
-      panel.style.transform = "translate(-50%, -50%)";
-      panel.dataset.placement = "modal";
-      ballScrim.hidden = false;
-      panel.setAttribute("aria-modal", "true");
+    await loadTrainerSprite();
+    const source = getSpriteSource();
+    if (!source || !source.complete || !source.naturalWidth) {
+      spriteMode = false; updatePortraitModeControls(); portraitStage.classList.remove("sprite-transition"); return;
     }
+    drawSpriteLevel(300);
+    portraitStage.classList.add("sprite-mode");
+    const levels = [160,96,64,56];
+    levels.forEach((level,index) => window.setTimeout(() => drawSpriteLevel(level), 145 + index*105));
+    window.setTimeout(async () => {
+      const cache = await preparePixelPortrait();
+      if (cache) {
+        portraitCanvas.width=cache.width; portraitCanvas.height=cache.height;
+        portraitCanvas.getContext("2d").drawImage(cache,0,0);
+      }
+    }, 575);
+    window.setTimeout(() => portraitStage.classList.remove("sprite-transition"), 680);
   }
 
-  function setBallPopoverClosed() {
-    ballScrim.hidden = true;
-    profilePeek.hidden = true;
-    trainerCard.hidden = true;
-    profilePeek.classList.remove("is-mobile-sheet", "is-modal");
-    trainerCard.classList.remove("is-mobile-sheet", "is-modal", "card-revealed");
-    profilePeek.style.cssText = "";
-    trainerCard.style.cssText = "";
-    trainerCard.setAttribute("aria-modal", "false");
+  function leaveSpriteMode() {
+    if (!spriteMode) return;
+    spriteMode = false;
+    updatePortraitModeControls();
+    playSoundEffect("page");
+    portraitStage.classList.remove("sprite-mode","sprite-transition");
+    if (reducedMotion.matches) portraitCanvas.getContext("2d").clearRect(0,0,portraitCanvas.width,portraitCanvas.height);
+    else window.setTimeout(() => portraitCanvas.getContext("2d").clearRect(0,0,portraitCanvas.width,portraitCanvas.height), 470);
   }
 
-  function hideProfilePeek() {
-    window.clearTimeout(vaultPeekTimer);
-    profilePeek.hidden = true;
-    profilePeek.classList.remove("is-mobile-sheet", "is-modal");
-    ballScrim.hidden = true;
+  function toggleSpriteMode() {
+    if (spriteMode) leaveSpriteMode();
+    else enterSpriteMode();
   }
 
+  portraitButton.addEventListener("pointerdown", (event) => { lastPointerType = event.pointerType || ""; });
+  portraitButton.addEventListener("click", (event) => {
+    // On touch, the portrait reveals the details; the dedicated ball toggles sprite mode.
+    if (event.detail > 0 && (lastPointerType === "touch" || coarsePointer.matches)) {
+      if (detailsOpen) closeStageDetails(); else openStageDetails({ instant: true });
+      return;
+    }
+    toggleSpriteMode();
+  });
+  portraitBall.addEventListener("click", toggleSpriteMode);
+
+  // The small ball has its own transform and timer, separate from all portrait transitions.
   function stopBallWobbleTimer() {
     window.clearTimeout(wobbleTimer);
     window.clearTimeout(wobbleEndTimer);
-    wobbleTimer = 0;
-    wobbleEndTimer = 0;
-    ballWobble.classList.remove("is-wobbling");
+    wobbleTimer = 0; wobbleEndTimer = 0;
+    portraitBall.classList.remove("is-wobbling");
   }
-
+  function ballIsBusy() {
+    return portraitBall.matches(":hover") || portraitBall === document.activeElement || spriteMode || detailsOpen || document.hidden || activeIndex !== 0 || reducedMotion.matches;
+  }
   function startBallWobbleTimer() {
     stopBallWobbleTimer();
-    const pointerInside = ballHit.matches(":hover") || ballHit.contains(document.activeElement);
-    const ballBusy = pointerInside || !trainerCard.hidden || ballHit.classList.contains("vault-open") || ballHit.classList.contains("vault-closing");
-    if (reducedMotion.matches || document.hidden || activeIndex !== 0 || ballBusy) return;
+    if (ballIsBusy()) return;
     wobbleTimer = window.setTimeout(performBallWobble, CONFIG.ballWobbleInterval);
   }
-
   function performBallWobble() {
-    const pointerInside = ballHit.matches(":hover") || ballHit.contains(document.activeElement);
-    const ballBusy = pointerInside || !trainerCard.hidden || ballHit.classList.contains("vault-open") || ballHit.classList.contains("vault-closing");
-    if (!ballBusy && !reducedMotion.matches && !document.hidden && activeIndex === 0) {
-      ballWobble.classList.add("is-wobbling");
-      wobbleEndTimer = window.setTimeout(() => {
-        ballWobble.classList.remove("is-wobbling");
-        wobbleEndTimer = 0;
-      }, 1650);
-    }
-    if (!reducedMotion.matches && !document.hidden && activeIndex === 0) {
-      wobbleTimer = window.setTimeout(performBallWobble, CONFIG.ballWobbleInterval);
-    } else {
-      wobbleTimer = 0;
-    }
+    if (ballIsBusy()) return;
+    portraitBall.classList.add("is-wobbling");
+    wobbleEndTimer = window.setTimeout(() => {
+      portraitBall.classList.remove("is-wobbling");
+      wobbleEndTimer = 0;
+    }, 980);
+    wobbleTimer = window.setTimeout(performBallWobble, CONFIG.ballWobbleInterval);
   }
-
-  function cancelVaultClose() {
-    window.clearTimeout(vaultCloseTimer);
-    window.clearTimeout(vaultCloseFinishTimer);
-    vaultCloseTimer = 0;
-    vaultCloseFinishTimer = 0;
-    ballHit.classList.remove("vault-closing");
-  }
-
-  function finishVaultClose() {
-    hideProfilePeek();
-    const wasOpen = ballHit.classList.contains("vault-open");
-    if (!wasOpen) {
-      ballHit.classList.remove("vault-closing");
-      startBallWobbleTimer();
-      return;
-    }
-    ballHit.classList.add("vault-closing");
-    ballHit.classList.remove("vault-open");
-    window.clearTimeout(vaultCloseFinishTimer);
-    // The closing CSS transition is 300ms; restart idle motion only after it completes.
-    vaultCloseFinishTimer = window.setTimeout(() => {
-      ballHit.classList.remove("vault-closing");
-      vaultCloseFinishTimer = 0;
-      startBallWobbleTimer();
-    }, reducedMotion.matches ? 0 : 320);
-  }
-
-  function showVaultPeek() {
-    if (!trainerCard.hidden) return;
-    if (!(ballHit.matches(":hover") || ballFocusInside)) return;
-    cancelVaultClose();
-    ballHit.classList.add("vault-open");
-    window.clearTimeout(vaultPeekTimer);
-    vaultPeekTimer = window.setTimeout(() => {
-      if (trainerCard.hidden && (ballHit.matches(":hover") || ballFocusInside)) {
-        profilePeek.hidden = false;
-        positionBallPanel(profilePeek);
-      } else {
-        closeVaultAfterLeave();
-      }
-    }, 250);
-  }
-
-  function closeVaultAfterLeave() {
-    window.clearTimeout(vaultIntentTimer);
-    window.clearTimeout(vaultCloseTimer);
-    vaultCloseTimer = window.setTimeout(() => {
-      const pointerInside = ballHit.matches(":hover") || identityZone.matches(":hover") || profilePeek.matches(":hover");
-      const focusInside = ballHit.contains(document.activeElement) || profilePeek.contains(document.activeElement);
-      if (pointerInside || focusInside || !trainerCard.hidden) return;
-      finishVaultClose();
-    }, 180);
-  }
-
-  function scheduleVaultPeek() {
-    cancelVaultClose();
-    window.clearTimeout(vaultIntentTimer);
-    window.clearTimeout(vaultPeekTimer);
-    stopBallWobbleTimer();
-    if (!trainerCard.hidden) return;
-    // Do not open the ball after the pointer has already left the static hit area.
-    vaultIntentTimer = window.setTimeout(() => {
-      if (ballHit.matches(":hover") || ballFocusInside) showVaultPeek();
-    }, 150);
-  }
-
-  ballHit.addEventListener("pointerenter", (event) => {
-    if (finePointer.matches && event.pointerType !== "touch") scheduleVaultPeek();
-  });
-  ballHit.addEventListener("pointerleave", (event) => {
-    if (event.relatedTarget && (identityZone.contains(event.relatedTarget) || profilePeek.contains(event.relatedTarget))) return;
-    closeVaultAfterLeave();
-  });
-  identityZone.addEventListener("pointerleave", (event) => {
-    if (event.relatedTarget && profilePeek.contains(event.relatedTarget)) return;
-    closeVaultAfterLeave();
-  });
-  ballHit.addEventListener("focusin", () => {
-    ballFocusInside = true;
-    if (suppressPeekOnNextFocus) return;
-    scheduleVaultPeek();
-  });
-  ballHit.addEventListener("focusout", (event) => {
-    ballFocusInside = Boolean(event.relatedTarget && ballHit.contains(event.relatedTarget));
-    if (!ballFocusInside && (!event.relatedTarget || !profilePeek.contains(event.relatedTarget))) closeVaultAfterLeave();
-  });
-  profilePeek.addEventListener("pointerenter", () => window.clearTimeout(vaultCloseTimer));
-  profilePeek.addEventListener("pointerleave", closeVaultAfterLeave);
-  if (closePeekButton) {
-    closePeekButton.addEventListener("click", () => {
-      finishVaultClose();
-      focusBallAfterPopoverClose();
-    });
-  }
-
-  function focusBallAfterPopoverClose() {
-    // Return keyboard focus without immediately reopening the hover/focus peek.
-    suppressPeekOnNextFocus = true;
-    trainerBall.focus({ preventScroll: true });
-    window.requestAnimationFrame(() => { suppressPeekOnNextFocus = false; });
-  }
-
-  function openTrainerCard() {
-    window.clearTimeout(cardRevealTimer);
-    window.clearTimeout(vaultIntentTimer);
-    window.clearTimeout(vaultPeekTimer);
-    cancelVaultClose();
-    closeBioPanel();
-    hideProfilePeek();
-    stopBallWobbleTimer();
-    ballHit.classList.add("vault-open");
-    trainerBall.classList.add("is-open");
-    trainerBall.setAttribute("aria-expanded", "true");
-    trainerBall.setAttribute("aria-label", "Close trainer card for Daveen Raphael A. Peñaranda");
-    playSoundEffect("latch");
-    cardRevealTimer = window.setTimeout(() => {
-      trainerCard.hidden = false;
-      positionBallPanel(trainerCard);
-      trainerCard.classList.remove("card-revealed");
-      requestAnimationFrame(() => trainerCard.classList.add("card-revealed"));
-      closeCardButton.focus({ preventScroll: true });
-    }, reducedMotion.matches ? 0 : 420);
-  }
-
-  function closeTrainerCard({ returnFocus = false } = {}) {
-    if (!trainerCard || !trainerBall) return;
-    window.clearTimeout(cardRevealTimer);
-    window.clearTimeout(vaultIntentTimer);
-    const wasOpen = trainerBall.getAttribute("aria-expanded") === "true" || !trainerCard.hidden;
-    trainerCard.hidden = true;
-    trainerCard.classList.remove("card-revealed", "is-mobile-sheet", "is-modal");
-    trainerCard.style.cssText = "";
-    trainerBall.classList.remove("is-open");
-    trainerBall.setAttribute("aria-expanded", "false");
-    trainerBall.setAttribute("aria-label", "Open trainer card for Daveen Raphael A. Peñaranda");
-    if (returnFocus) focusBallAfterPopoverClose();
-    const shouldStayOpen = ballHit.matches(":hover") || (!returnFocus && ballHit.contains(document.activeElement));
-    if (shouldStayOpen) {
-      cancelVaultClose();
-      ballHit.classList.add("vault-open");
-    } else if (wasOpen) {
-      finishVaultClose();
-    } else {
-      ballScrim.hidden = true;
-    }
-  }
-
-  trainerBall.addEventListener("click", () => {
-    if (trainerBall.getAttribute("aria-expanded") === "true") closeTrainerCard({ returnFocus: true });
-    else openTrainerCard();
-  });
-  closeCardButton.addEventListener("click", () => closeTrainerCard({ returnFocus: true }));
-  document.addEventListener("pointerdown", (event) => {
-    if (ballScrim.contains(event.target)) return;
-    if ((trainerBall.getAttribute("aria-expanded") === "true" || !trainerCard.hidden)
-      && !trainerCard.contains(event.target) && !ballHit.contains(event.target)) {
-      closeTrainerCard();
-      return;
-    }
-    if (!profilePeek.hidden && !profilePeek.contains(event.target) && !ballHit.contains(event.target)) {
-      finishVaultClose();
-    }
-  });
-  ballScrim.addEventListener("click", () => {
-    if (!trainerCard.hidden || trainerBall.getAttribute("aria-expanded") === "true") closeTrainerCard({ returnFocus: true });
-    else finishVaultClose();
-  });
-  // Reposition an open popover whenever the viewport changes.
-  window.addEventListener("resize", () => {
-    if (!profilePeek.hidden) positionBallPanel(profilePeek);
-    if (!trainerCard.hidden) positionBallPanel(trainerCard);
-  }, { passive: true });
+  portraitBall.addEventListener("pointerenter", stopBallWobbleTimer);
+  portraitBall.addEventListener("pointerleave", startBallWobbleTimer);
+  portraitBall.addEventListener("focus", stopBallWobbleTimer);
+  portraitBall.addEventListener("blur", startBallWobbleTimer);
 
   // Project selector: honest status and detail copy stay in this data block.
   const builds = [
@@ -1294,21 +1075,44 @@
     spriteRows.querySelectorAll(".sprite-row").forEach((row) => row.style.setProperty("--pointer-y", "0px"));
   });
 
+  // Desktop-only parallax: move the portrait and offset frame by at most six pixels.
+  let photoParallaxFrame = 0;
+  let pendingPhotoX = 0;
+  let pendingPhotoY = 0;
+  portraitStage.addEventListener("pointermove", (event) => {
+    if (!finePointer.matches || reducedMotion.matches || activeIndex !== 0) return;
+    pendingPhotoX = ((event.clientX / window.innerWidth) - .5) * 12;
+    pendingPhotoY = ((event.clientY / window.innerHeight) - .5) * 12;
+    if (photoParallaxFrame) return;
+    photoParallaxFrame = window.requestAnimationFrame(() => {
+      portraitStage.style.setProperty("--photo-x", `${pendingPhotoX * .5}px`);
+      portraitStage.style.setProperty("--photo-y", `${pendingPhotoY * .5}px`);
+      portraitStage.style.setProperty("--frame-x", `${pendingPhotoX * -.5}px`);
+      portraitStage.style.setProperty("--frame-y", `${pendingPhotoY * -.5}px`);
+      photoParallaxFrame = 0;
+    });
+  });
+  portraitStage.addEventListener("pointerleave", () => {
+    if (photoParallaxFrame) window.cancelAnimationFrame(photoParallaxFrame);
+    photoParallaxFrame = 0;
+    portraitStage.style.setProperty("--photo-x", "0px");
+    portraitStage.style.setProperty("--photo-y", "0px");
+    portraitStage.style.setProperty("--frame-x", "0px");
+    portraitStage.style.setProperty("--frame-y", "0px");
+  });
+
   document.addEventListener("visibilitychange", () => {
     document.body.classList.toggle("tab-hidden", document.hidden);
     updateSpritePlayback();
     if (document.hidden) {
       stopBallWobbleTimer();
-      window.clearTimeout(vaultIntentTimer);
-      window.clearTimeout(vaultPeekTimer);
-      window.clearTimeout(vaultCloseTimer);
-      stopIdleTimer();
+      if (photoParallaxFrame) window.cancelAnimationFrame(photoParallaxFrame);
+      photoParallaxFrame = 0;
+      window.clearTimeout(detailIntentTimer);
+      window.clearTimeout(detailHideTimer);
       pauseAudioForHiddenTab();
     } else {
-      if (activeIndex === 0) {
-        startBallWobbleTimer();
-        resetIdleTimer();
-      }
+      if (activeIndex === 0) startBallWobbleTimer();
       resumeAudioForVisibleTab();
     }
   });
@@ -1316,20 +1120,21 @@
   reducedMotion.addEventListener?.("change", (event) => {
     if (event.matches) {
       document.body.classList.remove("transitioning");
-      clearTilt();
       if (spriteParallaxFrame) window.cancelAnimationFrame(spriteParallaxFrame);
       spriteParallaxFrame = 0;
       spriteRows.querySelectorAll(".sprite-row").forEach((row) => row.style.setProperty("--pointer-y", "0px"));
       stopBallWobbleTimer();
+      if (photoParallaxFrame) window.cancelAnimationFrame(photoParallaxFrame);
+      photoParallaxFrame = 0;
+      portraitStage.style.setProperty("--photo-x", "0px"); portraitStage.style.setProperty("--photo-y", "0px");
+      portraitStage.style.setProperty("--frame-x", "0px"); portraitStage.style.setProperty("--frame-y", "0px");
       stopSpriteSparkles();
-      window.clearTimeout(vaultIntentTimer);
-      window.clearTimeout(vaultPeekTimer);
-      window.clearTimeout(vaultCloseTimer);
-      window.clearTimeout(vaultCloseFinishTimer);
-      ballHit.classList.remove("vault-closing");
-      ballWobble.classList.remove("is-wobbling");
-      window.clearTimeout(bioTypingTimer);
-      if (bioPanel.dataset.open === "true") completeBioText();
+      window.clearTimeout(detailIntentTimer);
+      window.clearTimeout(detailHideTimer);
+      if (detailsOpen) {
+        prepareBioWords();
+        homePage.classList.add("bio-instant","bio-revealed");
+      }
     } else {
       if (activeIndex === 0) startBallWobbleTimer();
       updateSpritePlayback();

@@ -1,32 +1,33 @@
-DAVIN THE PROJECT — HOMEPAGE OVERLAP FIX
+DAVIN THE PROJECT — PORTRAIT-FIRST HOME BUILD
 
-FILES
-- index.html: complete updated homepage and five-page structure.
-- preview.html: browser-openable preview entry point (same page as index.html).
-- style.css: existing styles plus the final Home spacing/alignment overrides.
-- Davin.js: existing interaction code plus popover Escape/focus-return fix.
-- portrait_inline.js: supplied portrait as a data URI, loaded before Davin.js.
-- sprites/: the 30 supplied local sprite PNGs.
-- overlap-check.js: separate console audit snippet; it is NOT loaded by the website.
+OPEN THE PREVIEW
+1. Extract the complete project ZIP.
+2. Keep index.html, preview.html, style.css, Davin.js, assets/, and sprites/ together.
+3. Double-click preview.html (or index.html) to open the portfolio in Chrome or Edge.
 
-HOW TO VIEW
-1. Extract the ZIP.
-2. Keep index.html, preview.html, style.css, Davin.js, and portrait_inline.js together.
-3. Keep the sprites folder beside those files.
-4. Double-click preview.html (or index.html) to open it in Chrome/Edge.
+PROJECT FILES
+- index.html      Main five-page website.
+- preview.html    Preview entry point; uses the same shared CSS, JS, and local assets.
+- style.css       Shared design system plus the single portrait-first Home layout block.
+- Davin.js        Routing, page controls, themes, sound, sprite ribbon, portrait sprite mode.
+- assets/         Optimized 4:5 portrait variants (WebP 800w/1200w and JPEG fallback).
+- sprites/        Thirty local 96x96 sprite PNGs used by the ribbon.
+- overlap-check.js Optional browser-console visual bounds checker.
+- Preview_Desktop.png / Preview_Mobile.png  Reference captures of the Home page in Photo Mode.
 
-IMPORTANT
-- The Content-Security-Policy in the HTML was not changed.
-- The portrait data is supplied by portrait_inline.js so the site can display it
-  under the existing self-only script policy and data: image policy.
-- In Davin.js, POKE_SPRITES, SPRITES, CURSORS, and PORTRAIT_SRC paste points are
-  represented by the requested placeholder comments. The preview uses the
-  supplied data from portrait_inline.js and the supplied local sprite PNGs.
-- Do not open preview.html by itself after moving it away from its companion
-  files. The relative stylesheet, script, and sprite paths must remain intact.
+NOTES
+- The portrait is visible in the HTML's first paint; it does not depend on JavaScript adding a loaded class.
+- The fallback monogram appears only when the portrait image fails.
+- Sound starts OFF and never autoplays.
+- The initial theme is NIGHT; theme changes are saved locally when storage is available.
+- The portrait sprite is generated from the photo in canvas. If canvas pixel readback is blocked, it falls back to drawImage-only pixelation.
+- The 30 sprites are loaded from ./sprites/{id}.png. Keep the folder name and file names unchanged.
+- No old assets/davin.jpg reference is used.
 
-OVERLAP AUDIT
-Open the browser console on Home and paste the contents of overlap-check.js.
-Repeat at each viewport size, theme, and relevant state (idle, ball peek,
-trainer card, and bio panel). The audit reports intersecting visible bounding
-boxes, including CSS-transformed bounds.
+SOURCE SIZE COMPARISON
+Original uploaded style.css: 107,807 bytes
+Updated style.css:           63,278 bytes (see file size in your file manager)
+Original uploaded Davin.js:  56,163 bytes
+Updated Davin.js:            49,516 bytes
+
+The rest of the page copy is retained. Page order is HOME, DAVIN, BUILDS, LAB, CONTACT.

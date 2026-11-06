@@ -1,76 +1,58 @@
-/*
- * Davin the Project — visual overlap audit.
- * Paste this whole snippet into DevTools Console while Home is active.
- * getBoundingClientRect() includes CSS transforms, so tilted/animated text
- * bounds are included. Re-run after changing viewport, theme, or UI state.
- */
+/* Davin the Project — Home layout audit. Paste into DevTools Console on Home. */
 (() => {
-  const checks = [
-    ["Identity text block", "#identity-meta"],
-    ["Ball", "#trainer-ball"],
-    ["Ball caption", ".ball-caption"],
-    ["Eyebrow", ".eyebrow"],
-    ["Divider", ".home-divider"],
-    ["Headline line 1", ".hero-line-one"],
-    ["Headline line 2", ".hero-line-two"],
-    ["Headline line 3", ".hero-line-three"],
-    ["Tagline", ".tagline"],
-    ["Subline", ".hero-subline"],
-    ["Hint label", ".bio-hint"],
-    ["Profile peek", "#profile-peek"],
-    ["Trainer card", "#trainer-card"],
-    ["Bio panel", "#bio-panel"],
-    ["Previous corner button", "#page-prev"],
-    ["Next corner button", "#page-next"]
+  const selectors = [
+    ["Home copy", ".home-copy"],
+    ["Eyebrow", ".home-eyebrow"],
+    ["Name line 1", ".name-line-one"],
+    ["Name line 2", ".name-line-two"],
+    ["Role chips", ".role-chips"],
+    ["About slot", ".about-slot"],
+    ["CTA", ".home-cta"],
+    ["Prepared for", ".prepared-for"],
+    ["Portrait stage", ".portrait-stage"],
+    ["Portrait details", ".portrait-details"],
+    ["Portrait ball", ".portrait-ball-control"],
+    ["Mode label", ".portrait-mode-label"],
+    ["Site credit", ".site-credit"],
+    ["Corner controls", ".corner-controls"]
   ];
-
-  const isVisible = (element) => {
-    if (!element || element.hidden || element.closest("[hidden]")) return false;
-    const style = getComputedStyle(element);
-    if (style.display === "none" || style.visibility === "hidden" || Number(style.opacity) <= 0.01) return false;
-    const rect = element.getBoundingClientRect();
-    return rect.width > 0 && rect.height > 0;
+  const visible = (el) => {
+    if (!el || el.hidden || el.closest("[hidden]")) return false;
+    const s = getComputedStyle(el);
+    if (s.display === "none" || s.visibility === "hidden" || Number(s.opacity) <= 0.01) return false;
+    const r = el.getBoundingClientRect();
+    return r.width > 0 && r.height > 0;
   };
-
-  const measured = checks.map(([label, selector]) => {
-    const element = document.querySelector(selector);
-    if (!isVisible(element)) return null;
-    const rect = element.getBoundingClientRect();
-    return { label, selector, rect };
+  const measured = selectors.map(([name, selector]) => {
+    const el = document.querySelector(selector);
+    if (!visible(el)) return null;
+    return { name, rect: el.getBoundingClientRect() };
   }).filter(Boolean);
-
   const overlaps = [];
   for (let i = 0; i < measured.length; i += 1) {
     for (let j = i + 1; j < measured.length; j += 1) {
-      const a = measured[i];
-      const b = measured[j];
-      const left = Math.max(a.rect.left, b.rect.left);
-      const right = Math.min(a.rect.right, b.rect.right);
-      const top = Math.max(a.rect.top, b.rect.top);
-      const bottom = Math.min(a.rect.bottom, b.rect.bottom);
-      const width = right - left;
-      const height = bottom - top;
-      if (width > 0.5 && height > 0.5) {
-        overlaps.push({
-          elementA: a.label,
-          elementB: b.label,
-          overlapWidth: Math.round(width * 10) / 10,
-          overlapHeight: Math.round(height * 10) / 10,
-          intersectionArea: Math.round(width * height)
-        });
-      }
+      const a = measured[i].rect, b = measured[j].rect;
+      const width = Math.min(a.right, b.right) - Math.max(a.left, b.left);
+      const height = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+      if (width > 1 && height > 1) overlaps.push({
+        elementA: measured[i].name,
+        elementB: measured[j].name,
+        overlapWidth: Math.round(width * 10) / 10,
+        overlapHeight: Math.round(height * 10) / 10
+      });
     }
   }
-
-  const theme = document.documentElement.dataset.theme || "unknown";
-  console.group(`Davin overlap audit — ${innerWidth} × ${innerHeight} — ${theme.toUpperCase()}`);
-  console.info(`Visible elements checked: ${measured.length}`);
-  if (overlaps.length) {
-    console.warn(`Found ${overlaps.length} overlapping pair(s):`);
-    console.table(overlaps);
-  } else {
-    console.info("No visible overlaps detected among the listed elements.");
-  }
+  const result = {
+    viewport: `${innerWidth} × ${innerHeight}`,
+    theme: document.documentElement.dataset.theme || "unknown",
+    scrollWidth: document.documentElement.scrollWidth,
+    scrollHeight: document.documentElement.scrollHeight,
+    overlaps
+  };
+  console.group(`Davin Home audit — ${result.viewport} — ${result.theme}`);
+  console.table(overlaps);
+  console.info(`Document size: ${result.scrollWidth} × ${result.scrollHeight}`);
+  console.info(overlaps.length ? "Review the intersecting pairs above." : "No listed element pairs intersect.");
   console.groupEnd();
-  return { viewport: { width: innerWidth, height: innerHeight }, theme, checked: measured.length, overlaps };
+  return result;
 })();
