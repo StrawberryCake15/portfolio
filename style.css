@@ -762,13 +762,13 @@ body{ transition: background .35s var(--ease), color .35s var(--ease); }
 /* Portrait stage: the photograph is visible in the HTML's first paint. */
 .portrait-stage {
   position: relative; z-index: 3; align-self: stretch; min-width: 0; min-height: 0; overflow: visible;
-  margin-left: -2px; background: var(--surface); isolation: isolate;
+  margin-left: -2px; background: transparent; isolation: isolate;
   clip-path: polygon(7% 0,100% 0,100% 100%,0 100%);
 }
 .portrait-outline { position: absolute; z-index: 0; inset: 0 0 0 14px; border: 1px solid var(--accent-light); clip-path: polygon(7% 0,100% 0,100% 100%,0 100%); transform: translate3d(calc(-14px + var(--frame-x,0px)),var(--frame-y,0px),0); pointer-events: none; }
 .portrait-stage-button {
   position: absolute; z-index: 3; inset: 0; display: block; width: 100%; height: 100%; padding: 0; margin: 0;
-  overflow: hidden; border: 0; border-radius: 0; background: var(--surface); color: var(--ink); cursor: pointer;
+  overflow: hidden; border: 0; border-radius: 0; background: transparent; color: var(--ink); cursor: pointer;
   clip-path: polygon(20% 0,100% 0,100% 100%,0 100%); isolation: isolate;
 }
 .portrait-stage-button:focus-visible { outline: 3px solid var(--accent-light); outline-offset: -8px; }
@@ -797,24 +797,27 @@ body{ transition: background .35s var(--ease), color .35s var(--ease); }
 .corner-bottom-right { right: 12px; bottom: 12px; border-right: 1px solid; border-bottom: 1px solid; }
 .portrait-mode-label { position: absolute; z-index: 12; top: 16px; right: 18px; padding: 7px 9px; border: 1px solid var(--line-strong); background: color-mix(in srgb,var(--surface) 88%,transparent); color: var(--ink); font: 700 11px/1 var(--display); letter-spacing: .09em; }
 
-/* The retained sprite-row engine is now a narrow ribbon at the portrait's slanted edge. */
+/* Keep the sprite set as a soft atmospheric gradient behind the portrait instead of a diagonal ribbon. */
 .sprite-band {
-  position: absolute; z-index: 2; top: 0; left: 0; right: auto; bottom: 0; width: 160px; height: 100%; overflow: hidden;
-  pointer-events: auto; transform: skewX(-14deg); transform-origin: top left; opacity: .45;
-  mask-image: linear-gradient(to bottom,transparent 0%,#000 13%,#000 87%,transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom,transparent 0%,#000 13%,#000 87%,transparent 100%);
+  position: absolute; z-index: 2; inset: 0; width: 100%; height: 100%; overflow: hidden;
+  pointer-events: none; opacity: 1; transform: none; transform-origin: center;
+  background:
+    radial-gradient(circle at 20% 22%, rgba(255,255,255,.12), transparent 24%),
+    radial-gradient(circle at 78% 18%, rgba(255,180,180,.14), transparent 26%),
+    linear-gradient(120deg, rgba(82, 16, 22, .72) 0%, rgba(54, 5, 14, .82) 35%, rgba(30, 9, 14, .94) 100%);
+  mask-image: none; -webkit-mask-image: none;
 }
-.sprite-band::after { opacity: .5; }
+.sprite-band::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.08) 100%); opacity: 1; }
 .sprite-rows { position: absolute; inset: 0; }
-.sprite-row { position: absolute; left: -8%; width: 116%; height: calc(var(--row-size) + 10px); overflow: visible; will-change: transform; transform: translate3d(0,var(--pointer-y,0px),0); }
+.sprite-row { position: absolute; left: -5%; width: 110%; height: calc(var(--row-size) + 10px); overflow: visible; will-change: transform; transform: translate3d(0,var(--pointer-y,0px),0); opacity: 1; filter: saturate(1.1) brightness(1.18); }
 .sprite-track { display: flex; width: max-content; }
 .sprite-track.moves-left { animation: sprite-marquee var(--row-speed) linear var(--row-delay) infinite; }
 .sprite-track.moves-right { animation: sprite-marquee-reverse var(--row-speed) linear var(--row-delay) infinite; }
 .sprite-set { display: flex; flex: 0 0 auto; align-items: center; gap: 5px; padding-right: 5px; }
 .sprite-item { position: relative; flex: 0 0 var(--row-size); width: var(--row-size); height: calc(var(--row-size) + 12px); display: grid; place-items: center; }
-.sprite-item img { display: block; width: var(--row-size); height: var(--row-size); object-fit: contain; image-rendering: pixelated; transition: transform .18s steps(2,end); }
+.sprite-item img { display: block; width: var(--row-size); height: var(--row-size); object-fit: contain; image-rendering: pixelated; filter: drop-shadow(0 0 8px rgba(255,255,255,.06)); transition: transform .18s steps(2,end), opacity .18s ease; opacity: .85; }
 .sprite-name { position: absolute; top: 100%; left: 50%; opacity: 0; transform: translateX(-50%); white-space: nowrap; pointer-events: none; color: var(--ink); font: 400 11px/1 var(--display); text-shadow: 1px 1px 0 var(--bg),-1px -1px 0 var(--bg); }
-.sprite-item:hover img { transform: translateY(-6px); }
+.sprite-item:hover img { transform: translateY(-4px); opacity: 1; }
 .sprite-item:hover .sprite-name { opacity: 1; }
 .sprite-item.sparkling::after { content: "✦"; position: absolute; right: 8%; top: 6%; color: var(--accent-light); font: 700 18px/1 var(--display); opacity: 0; transform: scale(.35) rotate(0); animation: sprite-sparkle .24s steps(2,end) both; }
 .sprite-toggle {
