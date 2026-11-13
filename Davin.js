@@ -6,7 +6,6 @@
   const CONFIG = {
     displayName: ["DAVEEN", "PEÑARANDA"],
     showProjectHeadline: false,
-    bioText: "I'm Daveen, a Computer Science student who learns by making. I'm working toward game development and machine learning, and I want to build games that entertain, teach, and spark curiosity in the next generation.",
     trainerSpriteSrc: "",
     themeNames: ["parchment", "night", "slate"],
     spriteRows: { desktop: 4, short: 3, phone: 2 },
@@ -101,7 +100,6 @@
   const portraitModeLabel = document.getElementById("portrait-mode-label");
   const portraitDetails = document.getElementById("portrait-details");
   const detailsClose = document.getElementById("details-close");
-  const aboutBio = document.getElementById("about-bio");
   const spriteBand = document.getElementById("sprite-band");
   const spriteRows = document.getElementById("sprite-rows");
   const spriteToggle = document.getElementById("sprite-toggle");
@@ -141,10 +139,6 @@
   let spriteMode = false;
   let spriteBuildPromiseForPortrait = null;
   let cachedSpriteCanvas = null;
-  let bioPrepared = false;
-  let bioRevealedThisSession = false;
-  try { bioRevealedThisSession = sessionStorage.getItem("davin-home-bio-revealed") === "true"; } catch (_error) { /* Session storage is optional. */ }
-  let bioRevealTimer = 0;
   let trainerSpriteImage = null;
   let trainerSpritePromise = null;
   let lastPointerType = "";
@@ -598,54 +592,13 @@
     aboutEntryTimer = window.setTimeout(() => personalPage.classList.remove("is-entering"), 900);
   }
 
-  // ABOUT SLOT: create all word spans at once, with a bounded reveal under 0.9 seconds.
-  function prepareBioWords() {
-    if (bioPrepared) return;
-    const words = CONFIG.bioText.trim().split(/\s+/);
-    const stagger = words.length > 1 ? Math.min(14, 620 / (words.length - 1)) : 0;
-    const fragment = document.createDocumentFragment();
-    words.forEach((word, index) => {
-      const span = document.createElement("span");
-      span.className = "bio-word";
-      span.textContent = `${word}${index === words.length - 1 ? "" : " "}`;
-      span.style.setProperty("--word-delay", `${Math.round(index * stagger)}ms`);
-      fragment.append(span);
-    });
-    aboutBio.replaceChildren(fragment);
-    bioPrepared = true;
-  }
-
-  function revealAboutBio(instant = false) {
-    prepareBioWords();
-    homePage.classList.add("details-open");
-    if (instant || reducedMotion.matches || bioRevealedThisSession) {
-      homePage.classList.add("bio-instant", "bio-revealed");
-      bioRevealedThisSession = true;
-      return;
-    }
-    homePage.classList.remove("bio-instant", "bio-revealed");
-    requestAnimationFrame(() => homePage.classList.add("bio-revealed"));
-    window.clearTimeout(bioRevealTimer);
-    bioRevealTimer = window.setTimeout(() => {
-      bioRevealedThisSession = true;
-      try { sessionStorage.setItem("davin-home-bio-revealed", "true"); } catch (_error) { /* Session storage is optional. */ }
-    }, 850);
-  }
-
-  // Show the complete introduction immediately. Portrait details remain optional
-  // hover/focus discoveries, never a gate for the profile copy.
-  prepareBioWords();
-  homePage.classList.add("bio-instant", "bio-revealed");
-  bioRevealedThisSession = true;
-
-  function openStageDetails({ instant = false } = {}) {
+  function openStageDetails() {
     window.clearTimeout(detailIntentTimer);
     window.clearTimeout(detailHideTimer);
     if (detailsOpen) return;
     detailsOpen = true;
     portraitDetails.hidden = false;
     portraitDetails.classList.remove("is-visible");
-    revealAboutBio(instant);
     requestAnimationFrame(() => portraitDetails.classList.add("is-visible"));
   }
 
@@ -655,7 +608,6 @@
     if (!detailsOpen && portraitDetails.hidden) return;
     detailsOpen = false;
     portraitDetails.classList.remove("is-visible");
-    homePage.classList.remove("details-open");
     window.setTimeout(() => {
       if (!detailsOpen) portraitDetails.hidden = true;
     }, reducedMotion.matches ? 0 : 260);
@@ -905,7 +857,7 @@
   portraitButton.addEventListener("click", (event) => {
     // On touch, the portrait reveals the details; the dedicated ball toggles sprite mode.
     if (event.detail > 0 && (lastPointerType === "touch" || coarsePointer.matches)) {
-      if (detailsOpen) closeStageDetails(); else openStageDetails({ instant: true });
+      if (detailsOpen) closeStageDetails(); else openStageDetails();
       return;
     }
     toggleSpriteMode();
@@ -1550,10 +1502,6 @@
       portraitStage.style.setProperty("--frame-x", "0px"); portraitStage.style.setProperty("--frame-y", "0px");
       window.clearTimeout(detailIntentTimer);
       window.clearTimeout(detailHideTimer);
-      if (detailsOpen) {
-        prepareBioWords();
-        homePage.classList.add("bio-instant","bio-revealed");
-      }
     } else {
       if (activeIndex === 0) startBallWobbleTimer();
       updateSpritePlayback();
