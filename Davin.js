@@ -7,27 +7,44 @@
     displayName: ["DAVEEN", "PEÑARANDA"],
     showProjectHeadline: false,
     bioText: "I'm Daveen, a Computer Science student who learns by making. I'm working toward game development and machine learning, and I want to build games that entertain, teach, and spark curiosity in the next generation.",
-    trainerSpriteSrc: "", // Optional same-origin hand-drawn sprite; leave empty to build from the portrait.
-    themeNames: ["night", "parchment", "slate"],
+    trainerSpriteSrc: "",
+    themeNames: ["parchment", "night", "slate"],
     spriteRows: { desktop: 4, short: 3, phone: 2 },
     spriteSpeeds: { far: 110, near: 55 },
     soundDefault: false,
     audioFile: "",
     ballWobbleInterval: 7000,
     detailIntentDelay: 120,
-    detailHideDelay: 300
+    detailHideDelay: 300,
+    education: [
+      { level: "Grade School", years: "SY 2021–2022", school: "Don Mariano Marcos Memorial State University", campus: "South La Union Campus", status: "COMPLETED", schoolKey: "dmmmsu", proofImage: "assets/proofs/grade-school-dmmmsu.jpg", proofAlt: "Grade-school graduation portrait and frame labeled DMMMSU-SLUC Elementary Laboratory School, SY 2021–2022" },
+      { level: "Junior High School", years: "2023–2024", school: "Don Mariano Marcos Memorial State University", campus: "South La Union Campus", status: "COMPLETED", schoolKey: "dmmmsu", proofImage: "assets/proofs/junior-high-dmmmsu.jpg", proofAlt: "Junior-high graduation photo labeled Grade 10, Batch 2023–2024" },
+      { level: "Senior High School", years: "BATCH 2026", school: "Don Mariano Marcos Memorial State University", campus: "South La Union Campus", status: "COMPLETED", schoolKey: "dmmmsu", proofImage: "assets/proofs/senior-high-dmmmsu.jpg", proofAlt: "Senior-high graduation portrait labeled Grade 12 STEM, Batch 2026" },
+      { level: "College", years: "AUG 2026–PRESENT", school: "University of the Cordilleras", program: "Computer Science", status: "IN SESSION", schoolKey: "uc" }
+    ],
+    proofTapeMoments: [
+      { title: "DMMMSU Campus · Profile", image: "assets/proofs/dmmmsu-campus-profile.jpg", alt: "Daveen in school uniform at the DMMMSU-SLUC campus entrance, looking toward the campus sign" },
+      { title: "DMMMSU Campus · Portrait", image: "assets/proofs/dmmmsu-campus-portrait.jpg", alt: "Daveen wearing his school uniform and medal at the DMMMSU-SLUC campus entrance" }
+    ],
+    achievements: [
+      { id: "academic", title: "Academic Excellence Award", category: "ACADEMICS", stage: "GRADE SCHOOL / HIGH SCHOOL", years: [], note: "Recognized throughout grade school and high school.", icon: "star", proofImages: [
+        { title: "Medal Presentation", src: "assets/proofs/academic-excellence-medal-presentation.jpg", alt: "Daveen receives a medal from an educator during a graduation recognition ceremony" },
+        { title: "Graduation Day", src: "assets/proofs/academic-excellence-graduation.jpg", alt: "Daveen stands with classmates and educators at a graduation ceremony" }
+      ] },
+      { id: "journalist", title: "Campus Journalist", category: "MEDIA", stage: "THE FORUMN / FEATURE STORY", years: [], note: "Feature story: The Climb — Journey Beyond the Goal.", icon: "quill", proofImage: "assets/proofs/the-climb-journalism.jpg", proofAlt: "The Climb: Journey Beyond the Goal, a feature story about graduates" },
+      { id: "broadcaster", title: "Lead Broadcaster/Anchor", category: "MEDIA", stage: "SPORTS NEWS", years: [], note: "Lead broadcaster and anchor covering sports news.", icon: "mic" },
+      { id: "divisions", title: "Divisions Meet · Volleyball (Men's)", category: "ATHLETICS", stage: "JUNIOR HIGH / SENIOR HIGH", years: ["2023", "2025"], note: "Volleyball team achievement.", icon: "medal", proofImage: "assets/proofs/athletics-volleyball-team.jpg", proofAlt: "The volleyball team huddles together after a match" },
+      { id: "workshops", title: "Workshops / Seminars", category: "LEARNING", stage: "BUSINESS PROBLEM LAB", years: ["2026"], note: "Participated in Business Problem Lab: It Wasn't Luck (October 25, 2026).", icon: "star", proofImage: "assets/proofs/workshop-business-problem-lab.jpg", proofAlt: "Certificate of participation in Business Problem Lab: It Wasn't Luck, dated October 25, 2026" }
+    ],
+    certificates: [
+      { id: "ai-data-scientist", title: "AI and Data Scientist Certificate", issuer: "", date: "", fileUrl: "assets/certs/ai-and-data-scientist-certificate.pdf", previewImage: "assets/certs/previews/ai-and-data-scientist-certificate-preview.jpg", previewAlt: "First page of Daveen's OneRoadmap AI and Data Scientist certificate" },
+      { id: "python", title: "Python Certificate", issuer: "", date: "", fileUrl: "assets/certs/python-certificate.pdf", previewImage: "assets/certs/previews/python-certificate-preview.jpg", previewAlt: "First page of Daveen's OneRoadmap Python certificate" }
+    ],
+    family: [],
+    friends: [],
+    partyNote: "",
+    contact: { email: "dap1801@students.uc-bcf.edu.ph" }
   };
-
-  // Sprite data is supplied in the local sprites/ folder.
-  const POKE_SPRITES = [
-    /* PASTE SPRITE DATA HERE */
-  ];
-  const SPRITES = [
-    /* PASTE SPRITE DATA HERE */
-  ];
-  const CURSORS = [
-    /* PASTE SPRITE DATA HERE */
-  ];
 
   document.body.classList.add("js");
 
@@ -37,8 +54,8 @@
   });
 
   // EDIT HERE: the order here controls hashes, keys, indicators, and corner navigation.
-  const pages = ["home", "davin", "builds", "lab", "contact"];
-  const pageNames = ["Home", "Davin", "Builds", "Lab", "Contact"];
+  const pages = ["home", "personal", "education", "family"];
+  const pageNames = ["Home", "Personal Information", "Education", "Family & Friends"];
   const pageElements = pages.map((id) => document.getElementById(id));
   const navLinks = Array.from(document.querySelectorAll("[data-nav]"));
   const pageCurrent = document.getElementById("page-current");
@@ -58,9 +75,27 @@
   const portraitImage = document.getElementById("portrait-photo");
   const portraitCanvas = document.getElementById("portrait-canvas");
   const portraitBall = document.getElementById("portrait-ball");
-  const davinPage = document.getElementById("davin");
+  const personalPage = document.getElementById("personal");
   const aboutProfileCard = document.getElementById("agent-profile");
   const aboutPhotoToggle = document.getElementById("about-photo-toggle");
+  const siteIntro = document.getElementById("site-intro");
+  let introStartTimer = 0;
+  let introFinishTimer = 0;
+  function finishSiteIntro() {
+    window.clearTimeout(introStartTimer);
+    window.clearTimeout(introFinishTimer);
+    if (siteIntro) siteIntro.hidden = true;
+    document.body.classList.remove("intro-playing");
+  }
+  function startSiteIntro() {
+    if (!siteIntro || reducedMotion.matches) return;
+    siteIntro.hidden = false;
+    document.body.classList.add("intro-playing");
+    introStartTimer = window.setTimeout(() => {
+      siteIntro.classList.add("is-exiting");
+      introFinishTimer = window.setTimeout(finishSiteIntro, 380);
+    }, 1540);
+  }
   const aboutProfilePhoto = document.getElementById("about-profile-photo");
   const aboutPhotoMode = document.getElementById("about-photo-mode");
   const portraitModeLabel = document.getElementById("portrait-mode-label");
@@ -89,10 +124,8 @@
   let aboutEntryTimer = 0;
   let wobbleTimer = 0;
   let wobbleEndTimer = 0;
-  let spriteBuildPromise = null;
-  let spriteRowsCount = 0;
   let userPausedSprites = false;
-  let sparkleTimer = 0;
+  let spriteMotionOverride = false;
   let resizeTimer = 0;
   let audioContext = null;
   let masterGain = null;
@@ -117,13 +150,13 @@
   let lastPointerType = "";
 
 
-  // THEMES: start in NIGHT unless a previous theme choice was saved by this site.
+  // THEMES: start in PARCHMENT unless a previous theme choice was saved by this site.
   function readSavedTheme() {
     try {
       const saved = localStorage.getItem("davin-theme");
-      return CONFIG.themeNames.includes(saved) ? saved : "night";
+      return CONFIG.themeNames.includes(saved) ? saved : "parchment";
     } catch (_error) {
-      return "night";
+      return "parchment";
     }
   }
 
@@ -376,17 +409,26 @@
 
   function updateCornerButtons() {
     if (!pagePrev || !pageNext) return;
-    const previousName = pageNames[Math.max(0, activeIndex - 1)];
-    const nextName = pageNames[(activeIndex + 1) % pages.length];
+    const short = smallScreen.matches;
+    const prevLabels = ["", "< HOME", "< PERSONAL INFORMATION", "< EDUCATION"];
+    const nextLabels = ["TO PERSONAL INFORMATION >", "TO EDUCATION >", "TO FAMILY & FRIENDS >", "BACK TO HOME"];
+    const compact = (label) => {
+      if (!short) return label;
+      if (label === "TO PERSONAL INFORMATION >") return "PERSONAL INFO >";
+      if (label === "TO FAMILY & FRIENDS >") return "FAMILY & FRIENDS >";
+      return label.replace("PERSONAL INFORMATION", "PERSONAL INFO");
+    };
     pagePrev.hidden = activeIndex === 0;
-    pagePrevLabel.textContent = `< ${previousName.toUpperCase()}`;
-    pagePrev.setAttribute("aria-label", `Previous page: ${previousName}`);
-    pageNextLabel.textContent = activeIndex === pages.length - 1 ? "HOME >" : `NEXT: ${nextName.toUpperCase()} >`;
-    pageNext.setAttribute("aria-label", activeIndex === pages.length - 1 ? "Next page: Home" : `Next page: ${nextName}`);
+    pagePrevLabel.textContent = compact(prevLabels[activeIndex]);
+    pagePrev.setAttribute("aria-label", activeIndex === 0 ? "Previous page unavailable" : "Previous page: " + pageNames[activeIndex - 1]);
+    pageNextLabel.textContent = compact(nextLabels[activeIndex]);
+    pageNext.setAttribute("aria-label", activeIndex === 3 ? "Back to Home" : "Next page: " + pageNames[activeIndex + 1]);
   }
 
   function syncPage({ focusHeading = false } = {}) {
     activeIndex = indexFromHash();
+    const pageStage = document.querySelector(".page-stage");
+    if (pageStage) pageStage.scrollTop = 0;
     pageElements.forEach((page, index) => {
       const isActive = index === activeIndex;
       page.classList.toggle("active", isActive);
@@ -408,12 +450,15 @@
     if (activeIndex === 1) runAboutEntry();
     else {
       window.clearTimeout(aboutEntryTimer);
-      if (davinPage) davinPage.classList.remove("is-entering");
+      if (personalPage) personalPage.classList.remove("is-entering");
     }
     closeStageDetails();
     setMobileMenu(false);
     document.body.classList.toggle("home-active", activeIndex === 0);
+    document.body.classList.toggle("personal-scroll-active", activeIndex === 1);
+    setSpritePage(activeIndex);
     updateSpritePlayback();
+    updatePokedexAutoplay();
     if (activeIndex === 0) startBallWobbleTimer();
     else stopBallWobbleTimer();
     if (focusHeading) {
@@ -461,11 +506,15 @@
   window.addEventListener("hashchange", () => syncPage({ focusHeading: true }));
   window.addEventListener("popstate", () => syncPage({ focusHeading: true }));
   if (!window.location.hash) history.replaceState(null, "", "#home");
-  syncPage();
+  // Initial sync runs after the page data is ready.
 
   // One wheel gesture changes one page; wait for trackpad inertia to settle.
   window.addEventListener("wheel", (event) => {
-    if (Math.abs(event.deltaY) < 18 || Math.abs(event.deltaY) < Math.abs(event.deltaX)) return;
+    const stage = document.querySelector(".page-stage");
+    const maxScroll = stage ? Math.max(0, stage.scrollHeight - stage.clientHeight) : 0;
+    const profileCanScroll = activeIndex === 1 && maxScroll > 2 &&
+      ((event.deltaY > 0 && stage.scrollTop < maxScroll - 2) || (event.deltaY < 0 && stage.scrollTop > 2));
+    if (profileCanScroll || Math.abs(event.deltaY) < 18 || Math.abs(event.deltaY) < Math.abs(event.deltaX)) return;
     event.preventDefault();
     window.clearTimeout(wheelTimer);
     if (!wheelLocked) {
@@ -491,7 +540,7 @@
     } else if (event.key === "ArrowLeft" || event.key === "PageUp") {
       event.preventDefault();
       requestPage(activeIndex - 1);
-    } else if (/^[1-5]$/.test(event.key)) {
+    } else if (/^[1-4]$/.test(event.key)) {
       requestPage(Number(event.key) - 1);
     }
   });
@@ -541,12 +590,12 @@
 
   // ABOUT PAGE: play a short, one-pass card/dossier arrival when the page becomes active.
   function runAboutEntry() {
-    if (!davinPage) return;
+    if (!personalPage) return;
     window.clearTimeout(aboutEntryTimer);
-    davinPage.classList.remove("is-entering");
+    personalPage.classList.remove("is-entering");
     if (reducedMotion.matches) return;
-    requestAnimationFrame(() => davinPage.classList.add("is-entering"));
-    aboutEntryTimer = window.setTimeout(() => davinPage.classList.remove("is-entering"), 900);
+    requestAnimationFrame(() => personalPage.classList.add("is-entering"));
+    aboutEntryTimer = window.setTimeout(() => personalPage.classList.remove("is-entering"), 900);
   }
 
   // ABOUT SLOT: create all word spans at once, with a bounded reveal under 0.9 seconds.
@@ -582,6 +631,12 @@
       try { sessionStorage.setItem("davin-home-bio-revealed", "true"); } catch (_error) { /* Session storage is optional. */ }
     }, 850);
   }
+
+  // Show the complete introduction immediately. Portrait details remain optional
+  // hover/focus discoveries, never a gate for the profile copy.
+  prepareBioWords();
+  homePage.classList.add("bio-instant", "bio-revealed");
+  bioRevealedThisSession = true;
 
   function openStageDetails({ instant = false } = {}) {
     window.clearTimeout(detailIntentTimer);
@@ -886,236 +941,557 @@
   portraitBall.addEventListener("focus", stopBallWobbleTimer);
   portraitBall.addEventListener("blur", startBallWobbleTimer);
 
-  // Project selector: honest status and detail copy stay in this data block.
-  const builds = [
-    { category: "C++ / EXPERIMENT", title: "First Contact", description: "A space for an early C++ experiment. Use it to record the core idea, the programming concept, and what the next attempt should test.", status: "CONCEPT", tools: "C++ / TO VERIFY", next: "Record the real experiment and what it taught you." },
-    { category: "GAME / CONCEPT", title: "Unnamed Game", description: "A game idea at the concept stage. The focus is finding a clear player goal and a reason to keep exploring.", status: "CONCEPT", tools: "Design notes / EDIT HERE", next: "Define the core loop before choosing an implementation." },
-    { category: "AI / FUTURE BUILD", title: "Learning Machine", description: "A future exploration of how machine learning could support interactive and adaptive experiences.", status: "CONCEPT", tools: "Not selected yet", next: "Build the foundations before committing to a model or feature." },
-    { category: "CREATIVE TECHNOLOGY", title: "Project 04", description: "A reserved slot for the next idea that earns its way into the project log.", status: "CONCEPT", tools: "To be determined", next: "Replace this entry when a real project begins." }
-  ];
-  const detailIndex = document.getElementById("detail-index");
-  const detailCategory = document.getElementById("detail-category");
-  const detailTitle = document.getElementById("detail-title");
-  const detailDescription = document.getElementById("detail-description");
-  const detailStatus = document.getElementById("detail-status");
-  const detailTools = document.getElementById("detail-tools");
-  const detailNext = document.getElementById("detail-next");
-  const buildButtons = Array.from(document.querySelectorAll("[data-build]"));
-  function selectBuild(index) {
-    const build = builds[index];
-    if (!build) return;
-    buildButtons.forEach((button, buttonIndex) => {
-      const selected = buttonIndex === index;
-      button.classList.toggle("selected", selected);
-      button.setAttribute("aria-pressed", String(selected));
+
+  // EDUCATION + FAMILY: all editable class data is kept in CONFIG above.
+  const routeList = document.getElementById("education-route");
+  const achievementIndex = document.getElementById("achievement-index");
+  const achievementTotal = document.getElementById("achievement-total");
+  const educationPage = document.getElementById("education");
+  const pokedexPanel = document.querySelector(".pokedex-panel");
+  const pokedexCarousel = document.getElementById("pokedex-carousel");
+  const pokedexCount = document.getElementById("pokedex-count");
+  const pokedexProgress = document.getElementById("pokedex-progress");
+  const proofRibbonTrack = document.getElementById("proof-ribbon-track");
+  const proofRibbonCount = document.getElementById("proof-ribbon-count");
+  let proofSlides = [];
+  let activeProofIndex = 0;
+  let proofAutoplayTimer = 0;
+  let proofExitTimer = 0;
+  let familyFilter = "all";
+  let familyPage = 0;
+  const badgeIcons = {
+    star: '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="m24 4 5.8 12 13.2 1.9-9.5 9.3 2.2 13.1L24 34.1l-11.7 6.2 2.2-13.1L5 17.9 18.2 16 24 4Z"/></svg>',
+    quill: '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M39 5C23 6 12 11 9 23c-2 8 5 12 11 8-1 6-5 9-9 11m5-12 12-11M12 36l-4 4m20-24 7 6"/></svg>',
+    mic: '<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="17" y="5" width="14" height="24" rx="7"/><path d="M11 22v2a13 13 0 0 0 26 0v-2M24 37v7m-9 0h18"/></svg>',
+    ball: '<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><path d="M6 24h36M24 6a18 18 0 0 1 0 36"/><circle cx="24" cy="24" r="5"/></svg>',
+    medal: '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="m14 5 10 9 10-9 5 2-4 17H13L9 7l5-2Z"/><circle cx="24" cy="33" r="10"/><path d="m24 27 2 4 4 .6-3 3 .7 4.4-3.7-2-3.7 2 .7-4.4-3-3 4-.6 2-4Z"/></svg>'
+  };
+  const schoolLogos = {
+    dmmmsu: { src: "assets/logo-dmmmsu.jpg", alt: "Don Mariano Marcos Memorial State University logo" },
+    uc: { src: "assets/logo-uc.jpg", alt: "University of the Cordilleras logo" }
+  };
+  function addText(parent, tag, className, value) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    node.textContent = value;
+    parent.append(node);
+    return node;
+  }
+  function renderRoute() {
+    routeList.replaceChildren();
+    const groups = new Map();
+    CONFIG.education.forEach((entry) => {
+      const key = entry.schoolKey || entry.school;
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(entry);
     });
-    detailIndex.textContent = `BUILD / ${String(index + 1).padStart(2, "0")}`;
-    detailCategory.textContent = build.category;
-    detailTitle.textContent = build.title;
-    detailDescription.textContent = build.description;
-    detailStatus.textContent = build.status;
-    detailTools.textContent = build.tools;
-    detailNext.textContent = build.next;
-  }
-  buildButtons.forEach((button) => button.addEventListener("click", () => selectBuild(Number(button.dataset.build))));
 
-  // Lab steps share one viewport, so only one content panel is displayed at a time.
-  const labSteps = [document.getElementById("lab-step-one"), document.getElementById("lab-step-two")];
-  const labStepCount = document.getElementById("lab-step-count");
-  const labPrev = document.getElementById("lab-prev");
-  const labNext = document.getElementById("lab-next");
-  let labStepIndex = 0;
-  function setLabStep(index) {
-    labStepIndex = Math.max(0, Math.min(1, index));
-    labSteps.forEach((step, stepIndex) => {
-      const active = stepIndex === labStepIndex;
-      step.hidden = !active;
-      step.classList.toggle("active", active);
+    groups.forEach((entries, key) => {
+      const first = entries[0];
+      const row = document.createElement("li");
+      row.className = "school-record";
+      row.dataset.school = key;
+
+      const logoFrame = document.createElement("span");
+      logoFrame.className = "school-record-logo";
+      logoFrame.dataset.school = key;
+      const logo = schoolLogos[key];
+      if (logo) {
+        const image = document.createElement("img");
+        image.src = logo.src;
+        image.alt = logo.alt;
+        image.width = 192;
+        image.height = 192;
+        image.loading = "lazy";
+        image.decoding = "async";
+        image.addEventListener("error", () => { image.hidden = true; }, { once: true });
+        logoFrame.append(image);
+      } else {
+        logoFrame.setAttribute("aria-hidden", "true");
+        addText(logoFrame, "span", "school-record-initial", first.school.slice(0, 1));
+      }
+
+      const heading = document.createElement("div");
+      heading.className = "school-record-heading";
+      const headingLine = document.createElement("div");
+      headingLine.className = "school-record-title-line";
+      addText(headingLine, "h3", "school-record-name", first.school);
+      const inSession = entries.some((entry) => entry.status === "IN SESSION");
+      addText(headingLine, "span", "school-status" + (inSession ? " is-current" : ""), inSession ? "IN SESSION" : "COMPLETED");
+      heading.append(headingLine);
+      const context = [...new Set(entries.flatMap((entry) => [entry.campus, entry.program]).filter(Boolean))];
+      if (context.length) addText(heading, "p", "school-record-context", context.join(" · "));
+
+      const stages = document.createElement("ol");
+      stages.className = "school-stage-list";
+      entries.forEach((entry) => {
+        const stage = document.createElement("li");
+        stage.className = "school-stage";
+        addText(stage, "span", "school-stage-level", entry.level);
+        addText(stage, "span", "school-stage-years", entry.years);
+        stages.append(stage);
+      });
+
+      const details = document.createElement("div");
+      details.className = "school-record-details";
+      details.append(heading, stages);
+      row.append(logoFrame, details);
+      routeList.append(row);
     });
-    labStepCount.textContent = `STEP ${labStepIndex + 1} / 2`;
-    labPrev.disabled = labStepIndex === 0;
-    labNext.disabled = labStepIndex === 1;
   }
-  labPrev.addEventListener("click", () => setLabStep(labStepIndex - 1));
-  labNext.addEventListener("click", () => setLabStep(labStepIndex + 1));
-
-  // EDIT HERE: standard Pokédex IDs and English names for the decorative sprite strip.
-  const pokemon = [
-    [1, "Bulbasaur"], [4, "Charmander"], [6, "Charizard"], [7, "Squirtle"], [25, "Pikachu"],
-    [39, "Jigglypuff"], [54, "Psyduck"], [94, "Gengar"], [130, "Gyarados"], [133, "Eevee"],
-    [143, "Snorlax"], [149, "Dragonite"], [150, "Mewtwo"], [151, "Mew"], [152, "Chikorita"],
-    [155, "Cyndaquil"], [158, "Totodile"], [175, "Togepi"], [196, "Espeon"], [197, "Umbreon"],
-    [258, "Mudkip"], [384, "Rayquaza"], [448, "Lucario"], [650, "Chespin"], [653, "Fennekin"],
-    [656, "Froakie"], [658, "Greninja"], [722, "Rowlet"], [725, "Litten"], [728, "Popplio"]
-  ];
-
-  function shuffled(items) {
-    const result = items.slice();
-    for (let i = result.length - 1; i > 0; i -= 1) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [result[i], result[j]] = [result[j], result[i]];
-    }
-    return result;
+  function renderAchievementIndex() {
+    achievementIndex.replaceChildren();
+    CONFIG.achievements.forEach((entry, index) => {
+      const item = document.createElement("li");
+      item.className = "achievement-index-item";
+      addText(item, "span", "achievement-index-number", String(index + 1).padStart(2, "0"));
+      const details = document.createElement("span");
+      details.className = "achievement-index-details";
+      addText(details, "span", "achievement-index-title", entry.title);
+      addText(details, "span", "achievement-index-category", entry.category + ((entry.years || []).length ? " · " + entry.years.join(", ") : ""));
+      item.append(details);
+      achievementIndex.append(item);
+    });
+    achievementTotal.textContent = CONFIG.achievements.length + (CONFIG.achievements.length === 1 ? " RECORD" : " RECORDS");
   }
+  function appendProofImage(art, src, alt, options = {}) {
+    const images = Array.isArray(src) ? src : [{ src, alt }];
+    if (images.length > 1) art.classList.add("is-photo-pair");
+    images.forEach((proof) => {
+      const photo = document.createElement("span");
+      photo.className = "pokedex-proof-photo" + (options.fit === "contain" ? " is-document" : "");
 
-  function rowCountForViewport() {
-    if (smallScreen.matches) return CONFIG.spriteRows.phone;
-    return window.innerHeight >= 768 ? CONFIG.spriteRows.desktop : CONFIG.spriteRows.short;
-  }
+      const backdrop = document.createElement("img");
+      backdrop.className = "pokedex-proof-backdrop";
+      backdrop.src = proof.src;
+      backdrop.alt = "";
+      backdrop.setAttribute("aria-hidden", "true");
+      backdrop.decoding = "async";
+      backdrop.loading = "eager";
+      backdrop.draggable = false;
 
-  function spriteSourceFor(id) {
-    return (window.DAVIN_SPRITE_URLS && window.DAVIN_SPRITE_URLS[id]) || `./sprites/${id}.png`;
-  }
-
-  function createSpriteSet(entries, spriteSize) {
-    const set = document.createElement("div");
-    set.className = "sprite-set";
-    set.setAttribute("aria-hidden", "true");
-    entries.forEach(([id, name]) => {
-      const item = document.createElement("span");
-      item.className = "sprite-item";
-      item.dataset.spriteId = String(id);
       const image = document.createElement("img");
-      image.src = spriteSourceFor(id);
-      image.width = 96;
-      image.height = 96;
-      image.alt = "";
+      image.className = "pokedex-proof-image";
+      image.src = proof.src;
+      image.alt = proof.alt || alt || "Portfolio proof photo";
       image.decoding = "async";
+      image.loading = "eager";
+      image.draggable = false;
+      image.addEventListener("error", () => { photo.hidden = true; }, { once: true });
+
+      photo.append(backdrop, image);
+      art.append(photo);
+    });
+  }
+  function makeProofSlide(record, index, total) {
+    const slide = document.createElement("article");
+    slide.className = "pokedex-slide";
+    slide.setAttribute("role", "group");
+    slide.setAttribute("aria-roledescription", "slide");
+    slide.setAttribute("aria-label", (index + 1) + " of " + total + ": " + record.title);
+    slide.setAttribute("aria-hidden", String(index !== 0));
+    slide.inert = index !== 0;
+
+    const art = document.createElement("div");
+    const hasImageProof = (record.type === "school" && record.entry.proofImage) || (record.type === "achievement" && (record.entry.proofImage || record.entry.proofImages)) || (record.type === "certificate" && record.entry.previewImage);
+    art.className = "pokedex-art" + (record.type === "achievement" ? " is-achievement" : "") + (hasImageProof ? " is-photo-proof" : record.type === "certificate" ? " is-certificate-proof" : "");
+    art.dataset.school = record.schoolKey || "";
+    addText(art, "span", "pokedex-art-label", record.type === "school" ? "SCHOOL PROOF" : record.type === "certificate" ? "CERTIFICATE PROOF" : "ACHIEVEMENT PROOF");
+
+    if (record.type === "school") {
+      if (record.entry.proofImage) {
+        appendProofImage(art, record.entry.proofImage, record.entry.proofAlt || record.entry.level + " graduation proof");
+      } else {
+        const frame = document.createElement("span");
+        frame.className = "pokedex-emblem";
+        frame.dataset.school = record.schoolKey;
+        const logo = schoolLogos[record.schoolKey];
+        if (logo) {
+          const image = document.createElement("img");
+          image.src = logo.src;
+          image.alt = logo.alt;
+          image.width = 192;
+          image.height = 192;
+          image.loading = "eager";
+          image.decoding = "async";
+          image.addEventListener("error", () => { image.hidden = true; }, { once: true });
+          frame.append(image);
+        }
+        art.append(frame);
+      }
+    } else if (record.type === "achievement") {
+      if (record.entry.proofImages || record.entry.proofImage) {
+        const proof = record.entry.proofImages || record.entry.proofImage;
+        appendProofImage(art, proof, record.entry.proofAlt || record.entry.title + " proof");
+      } else {
+        const emblem = document.createElement("span");
+        emblem.className = "pokedex-achievement-emblem";
+        emblem.innerHTML = badgeIcons[record.entry.icon] || badgeIcons.star;
+        art.append(emblem);
+      }
+    } else if (record.entry.previewImage) {
+      appendProofImage(art, record.entry.previewImage, record.entry.previewAlt || record.entry.title + " preview", { fit: "contain" });
+    } else {
+      const documentFrame = document.createElement("iframe");
+      documentFrame.className = "pokedex-document-frame";
+      documentFrame.title = record.entry.title;
+      documentFrame.src = record.entry.fileUrl + "#toolbar=0&navpanes=0&scrollbar=0&view=Fit";
+      documentFrame.loading = "eager";
+      documentFrame.tabIndex = -1;
+      documentFrame.setAttribute("scrolling", "no");
+      art.append(documentFrame);
+    }
+
+    const copy = document.createElement("div");
+    copy.className = "pokedex-copy";
+    addText(copy, "span", "pokedex-copy-kicker", record.kicker);
+    addText(copy, "h3", "pokedex-copy-title", record.title);
+    if (record.type === "school") {
+      if (record.context) addText(copy, "p", "pokedex-copy-context", record.context);
+      addText(copy, "span", "pokedex-copy-years", record.years);
+    } else if (record.type === "achievement") {
+      addText(copy, "p", "pokedex-copy-context", record.entry.stage);
+      addText(copy, "p", "pokedex-copy-note", record.entry.note);
+      if ((record.entry.years || []).length) addText(copy, "span", "pokedex-copy-years", record.entry.years.join(" · "));
+    } else {
+      if (record.entry.issuer) addText(copy, "p", "pokedex-copy-context", record.entry.issuer);
+      if (record.entry.date) addText(copy, "span", "pokedex-copy-years", record.entry.date);
+    }
+    slide.append(art, copy);
+    return slide;
+  }
+  function updatePokedexDisplay() {
+    if (!proofSlides.length) return;
+    pokedexCount.textContent = String(activeProofIndex + 1).padStart(2, "0") + " / " + String(proofSlides.length).padStart(2, "0");
+    pokedexProgress.style.width = ((activeProofIndex + 1) / proofSlides.length * 100) + "%";
+  }
+  function showProofSlide(nextIndex) {
+    if (proofSlides.length < 2) return;
+    const normalized = (nextIndex + proofSlides.length) % proofSlides.length;
+    if (normalized === activeProofIndex) return;
+    const previous = proofSlides[activeProofIndex];
+    const next = proofSlides[normalized];
+    previous.classList.remove("is-active", "is-exiting");
+    previous.setAttribute("aria-hidden", "true");
+    previous.inert = true;
+    if (!reducedMotion.matches) previous.classList.add("is-exiting");
+    next.classList.remove("is-exiting");
+    next.classList.add("is-active");
+    next.setAttribute("aria-hidden", "false");
+    next.inert = false;
+    activeProofIndex = normalized;
+    updatePokedexDisplay();
+    window.clearTimeout(proofExitTimer);
+    proofExitTimer = window.setTimeout(() => previous.classList.remove("is-exiting"), 520);
+  }
+  function updatePokedexAutoplay() {
+    window.clearTimeout(proofAutoplayTimer);
+    const paused = document.hidden || !educationPage.classList.contains("active") || proofSlides.length < 2;
+    pokedexPanel.classList.toggle("is-paused", paused);
+    if (paused) return;
+    proofAutoplayTimer = window.setTimeout(() => {
+      showProofSlide(activeProofIndex + 1);
+      updatePokedexAutoplay();
+    }, 5400);
+  }
+  function renderPokedex() {
+    pokedexCarousel.replaceChildren();
+    const records = [];
+    CONFIG.education.forEach((entry) => {
+      const context = [entry.campus, entry.program].filter(Boolean).join(" · ");
+      records.push({ type: "school", kicker: entry.level.toUpperCase(), title: entry.school, schoolKey: entry.schoolKey, context, years: entry.years, entry });
+    });
+    CONFIG.achievements.forEach((entry) => records.push({ type: "achievement", kicker: entry.category, title: entry.title, entry }));
+    CONFIG.certificates.forEach((entry) => records.push({ type: "certificate", kicker: "ONLINE CERTIFICATE", title: entry.title, entry }));
+    proofSlides = records.map((record, index) => makeProofSlide(record, index, records.length));
+    proofSlides.forEach((slide, index) => {
+      if (index === 0) slide.classList.add("is-active");
+      pokedexCarousel.append(slide);
+    });
+    activeProofIndex = 0;
+    updatePokedexDisplay();
+    updatePokedexAutoplay();
+  }
+  function renderProofRibbon() {
+    const educationRecords = CONFIG.education.map((entry) => {
+      const logo = schoolLogos[entry.schoolKey];
+      const image = entry.proofImage || (logo && logo.src);
+      if (!image) return null;
+      return {
+        kind: "EDUCATION",
+        title: entry.level,
+        image,
+        alt: entry.proofAlt || (logo ? logo.alt : entry.level + " proof")
+      };
+    }).filter(Boolean);
+    const achievementRecords = CONFIG.achievements.flatMap((entry) => {
+      const proofs = entry.proofImages || (entry.proofImage ? [{ src: entry.proofImage, alt: entry.proofAlt, title: "" }] : []);
+      return proofs.map((proof) => ({
+        kind: "ACHIEVEMENT",
+        title: [entry.title, proof.title].filter(Boolean).join(" · "),
+        image: proof.src,
+        alt: proof.alt || entry.proofAlt || entry.title + " proof"
+      }));
+    });
+    const campusRecords = (CONFIG.proofTapeMoments || []).map((entry) => ({
+      kind: "EDUCATION",
+      title: entry.title,
+      image: entry.image,
+      alt: entry.alt
+    }));
+    const certificateRecords = CONFIG.certificates.map((entry) => ({
+      kind: "CERTIFICATE",
+      title: entry.title,
+      image: entry.previewImage,
+      alt: entry.previewAlt || entry.title + " preview",
+      mark: entry.id === "python" ? "PY" : "AI + DATA"
+    }));
+    const records = educationRecords.concat(campusRecords, achievementRecords, certificateRecords);
+    proofRibbonCount.textContent = String(records.length).padStart(2, "0");
+
+    function buildCycle(isDuplicate) {
+      const cycle = document.createElement("div");
+      cycle.className = "proof-ribbon-cycle" + (isDuplicate ? " is-duplicate" : "");
+      cycle.setAttribute("role", "list");
+      if (isDuplicate) {
+        cycle.setAttribute("aria-hidden", "true");
+        cycle.inert = true;
+      } else {
+        cycle.setAttribute("aria-label", "Education photos first, followed by achievement photos and certificate previews");
+      }
+      records.forEach((record, index) => {
+        const item = document.createElement("article");
+        item.className = "proof-ribbon-item";
+        item.dataset.kind = record.kind.toLowerCase();
+        item.setAttribute("role", "listitem");
+
+        let media;
+        if (record.image) {
+          media = document.createElement("img");
+          media.className = "proof-ribbon-image" + (record.kind === "CERTIFICATE" ? " is-document" : "");
+          media.src = record.image;
+          media.alt = isDuplicate ? "" : record.alt;
+          media.loading = "eager";
+          media.decoding = "async";
+          media.draggable = false;
+        } else {
+          media = document.createElement("span");
+          media.className = "proof-ribbon-document-preview";
+          media.setAttribute("aria-hidden", "true");
+          addText(media, "b", "proof-ribbon-document-type", "PDF");
+          addText(media, "span", "proof-ribbon-document-mark", record.mark);
+        }
+
+        const copy = document.createElement("span");
+        copy.className = "proof-ribbon-copy";
+        addText(copy, "span", "proof-ribbon-kind", record.kind);
+        addText(copy, "span", "proof-ribbon-name", record.title);
+        addText(item, "span", "proof-ribbon-number", String(index + 1).padStart(2, "0"));
+        item.append(media, copy);
+        cycle.append(item);
+      });
+      return cycle;
+    }
+
+    proofRibbonTrack.replaceChildren(buildCycle(false), buildCycle(true));
+  }
+  const familyGrid = document.getElementById("family-grid");
+  const familyEmpty = document.getElementById("family-empty");
+  const familyFilterBar = document.getElementById("family-filters");
+  function allPartyMembers() {
+    return CONFIG.family.map((member) => Object.assign({}, member, { group: "family" }))
+      .concat(CONFIG.friends.map((member) => Object.assign({}, member, { group: member.group === "teammate" ? "teammate" : "friend" })));
+  }
+  function drawFamilyCard(member) {
+    const card = document.createElement("article");
+    card.className = "member-card panel";
+    card.tabIndex = 0;
+    card.dataset.auditBox = "";
+    const photoBox = document.createElement("div");
+    photoBox.className = "member-photo";
+    const initial = (member.name || "?").trim().charAt(0).toUpperCase();
+    addText(photoBox, "span", "member-monogram", initial);
+    if (member.photo) {
+      const image = document.createElement("img");
+      image.src = member.photo;
+      image.alt = "Portrait of " + member.name;
+      image.width = 240;
+      image.height = 300;
+      image.loading = "lazy";
+      image.onerror = () => { image.remove(); photoBox.classList.add("photo-missing"); };
+      photoBox.append(image);
+    }
+    card.append(photoBox);
+    addText(card, "h2", "member-name", member.name);
+    addText(card, "span", "stamp member-relation", member.relation);
+    if (member.note) {
+      const note = member.note.trim().split(/\s+/).slice(0, 15).join(" ");
+      addText(card, "p", "member-note", note);
+    }
+    return card;
+  }
+  function renderFamily() {
+    const members = allPartyMembers();
+      familyFilterBar.querySelectorAll("[data-filter]").forEach((button) => {
+      const group = button.dataset.filter;
+      button.hidden = group !== "all" && !members.some((member) => member.group === group);
+    });
+    const filtered = familyFilter === "all" ? members : members.filter((member) => member.group === familyFilter);
+    const maxPages = Math.max(1, Math.ceil(filtered.length / 8));
+    familyPage = Math.min(familyPage, maxPages - 1);
+    const pageMembers = filtered.slice(familyPage * 8, familyPage * 8 + 8);
+    familyGrid.replaceChildren(...pageMembers.map(drawFamilyCard));
+    familyEmpty.hidden = members.length !== 0;
+    familyGrid.hidden = members.length === 0 || pageMembers.length === 0;
+    const pagination = document.getElementById("family-pagination");
+    pagination.hidden = maxPages <= 1 || members.length === 0;
+    document.getElementById("family-page-label").textContent = (familyPage + 1) + " / " + maxPages;
+    document.getElementById("family-page-count").textContent = members.length ? filtered.length + " MEMBERS" : "";
+    document.getElementById("family-prev").disabled = familyPage === 0;
+    document.getElementById("family-next").disabled = familyPage >= maxPages - 1;
+    const note = document.getElementById("party-note");
+    if (CONFIG.partyNote) { note.textContent = CONFIG.partyNote; note.hidden = false; }
+    else note.hidden = true;
+  }
+  familyFilterBar.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-filter]");
+    if (!button || button.hidden) return;
+    familyFilter = button.dataset.filter;
+    familyPage = 0;
+    familyFilterBar.querySelectorAll("[data-filter]").forEach((item) => {
+      const selected = item === button;
+      item.classList.toggle("selected", selected);
+      item.setAttribute("aria-pressed", String(selected));
+    });
+    renderFamily();
+  });
+  document.getElementById("family-prev").addEventListener("click", () => { familyPage -= 1; renderFamily(); });
+  document.getElementById("family-next").addEventListener("click", () => { familyPage += 1; renderFamily(); });
+  if (CONFIG.contact && CONFIG.contact.email) {
+    const email = document.getElementById("personal-email");
+    email.href = "mailto:" + CONFIG.contact.email;
+    email.textContent = CONFIG.contact.email;
+    document.getElementById("personal-contact").hidden = false;
+  }
+  document.querySelectorAll(".logo-frame img").forEach((image) => { image.addEventListener("error", () => { image.hidden = true; }, { once: true }); });
+  renderRoute(); renderAchievementIndex(); renderPokedex(); renderProofRibbon(); renderFamily();
+
+
+  // One shared sprite ribbon is moved to the active page and repopulated from local files.
+  const homePokemon = [
+    [1,"Bulbasaur"],[4,"Charmander"],[6,"Charizard"],[7,"Squirtle"],[25,"Pikachu"],
+    [39,"Jigglypuff"],[54,"Psyduck"],[94,"Gengar"],[130,"Gyarados"],[133,"Eevee"],
+    [143,"Snorlax"],[149,"Dragonite"],[150,"Mewtwo"],[151,"Mew"],[152,"Chikorita"],
+    [155,"Cyndaquil"],[158,"Totodile"],[175,"Togepi"],[196,"Espeon"],[197,"Umbreon"],
+    [258,"Mudkip"],[384,"Rayquaza"],[448,"Lucario"],[650,"Chespin"],[653,"Fennekin"],
+    [656,"Froakie"],[658,"Greninja"],[722,"Rowlet"],[725,"Litten"],[728,"Popplio"]
+  ];
+  const pageSpriteIds = {
+    personal: [3,9,26,37,52,63,66,74,95,104,123,129,131,132,137,144,147],
+    education: [172,179,183,194,212,248,249,252,254,255,257,282,359,373,385,387,390],
+    family: [393,443,445,475,495,498,501,570,571,678,681,700,724,727,730,745]
+  };
+  let spritePageKey = "";
+  function spriteSourceFor(id) { return "./sprites/" + id + ".png"; }
+  function rowCountForViewport(pageId) {
+    if (pageId === "home") {
+      if (smallScreen.matches) return CONFIG.spriteRows.phone;
+      return window.innerHeight >= 768 ? CONFIG.spriteRows.desktop : CONFIG.spriteRows.short;
+    }
+    return window.innerHeight >= 900 ? 3 : 2;
+  }
+  function makeSpriteItem(entry, background) {
+    const item = document.createElement("span");
+    item.className = "sprite-item";
+    item.setAttribute("aria-hidden", "true");
+    const image = document.createElement("img");
+    image.src = spriteSourceFor(entry[0]);
+    image.width = 96; image.height = 96; image.alt = ""; image.decoding = "async";
+    image.onerror = () => item.remove();
+    item.append(image);
+    if (!background) {
       const label = document.createElement("span");
       label.className = "sprite-name";
-      label.textContent = name;
-      item.append(image, label);
-      set.append(item);
-    });
-    set.style.setProperty("--sprite-size", `${spriteSize}px`);
-    return set;
+      label.textContent = entry[1];
+      item.append(label);
+    }
+    return item;
   }
-
-  function preloadOneSprite([id, name]) {
-    return new Promise((resolve) => {
-      const image = new Image();
-      image.onload = () => resolve([id, name, true]);
-      image.onerror = () => resolve([id, name, false]);
-      image.src = spriteSourceFor(id);
-    });
-  }
-
-  function updateSpritePlayback() {
-    if (!spriteBand || !spriteToggle) return;
-    const autoPaused = document.hidden || activeIndex !== 0 || reducedMotion.matches;
-    const paused = userPausedSprites || autoPaused;
-    spriteBand.classList.toggle("is-paused", paused);
-    spriteBand.classList.toggle("is-static", reducedMotion.matches);
-    spriteToggle.setAttribute("aria-pressed", String(userPausedSprites));
-    spriteToggle.setAttribute("aria-label", userPausedSprites ? "Play sprite animation" : "Pause sprite animation");
-    spriteToggle.title = userPausedSprites ? "Play sprite animation" : "Pause sprite animation";
-    spriteToggle.textContent = userPausedSprites ? "▶" : "Ⅱ";
-    if (paused) stopSpriteSparkles();
-    else startSpriteSparkles();
-  }
-
-  function createSpriteRows(available, count) {
+  function buildSpriteRows(entries, count, background, span) {
     spriteRows.replaceChildren();
-    const perSet = Math.max(1, Math.floor(80 / count));
-    for (let rowIndex = 0; rowIndex < count; rowIndex += 1) {
+    const rows = Array.from({length:count}, () => []);
+    entries.forEach((entry, index) => rows[index % count].push(entry));
+    rows.forEach((list, index) => {
       const row = document.createElement("div");
       row.className = "sprite-row";
-      const progress = count === 1 ? 1 : rowIndex / (count - 1);
-      const spriteSize = smallScreen.matches
-        ? Math.round(32 + (14 * progress))
-        : Math.round(48 + (48 * progress));
-      const opacity = 0.34 + (0.56 * progress);
-      const duration = Math.round(CONFIG.spriteSpeeds.far - ((CONFIG.spriteSpeeds.far - CONFIG.spriteSpeeds.near) * progress));
-      const shuffledEntries = shuffled(available).slice(0, Math.min(perSet, available.length));
       const track = document.createElement("div");
-      track.className = `sprite-track ${rowIndex % 2 ? "moves-right" : "moves-left"}`;
-      row.style.top = `${((rowIndex + 0.5) / count) * 100}%`;
-      row.style.opacity = String(opacity);
-      row.style.setProperty("--row-speed", `${duration}s`);
-      row.style.setProperty("--row-size", `${spriteSize}px`);
-      row.style.setProperty("--row-delay", `${-((rowIndex * 7) % duration)}s`);
-      track.append(createSpriteSet(shuffledEntries, spriteSize), createSpriteSet(shuffledEntries, spriteSize));
-      row.append(track);
+      track.className = "sprite-track " + (index % 2 ? "moves-right" : "moves-left");
+      const set = document.createElement("div");
+      set.className = "sprite-set";
+      set.style.minWidth = span + "px";
+      set.style.justifyContent = "space-around";
+      list.forEach((entry) => set.append(makeSpriteItem(entry, background)));
+      track.append(set, set.cloneNode(true)); row.append(track);
+      row.style.top = ((index + 0.5) / count * 100) + "%";
+      row.style.setProperty("--row-speed", (background ? (index % 2 ? "62s" : "48s") : (index % 2 ? "68s" : "52s")));
+      row.style.setProperty("--row-size", (background ? "48px" : (smallScreen.matches ? "48px" : "72px")));
       spriteRows.append(row);
+    });
+  }
+  function setSpritePage(index) {
+    if (!spriteBand || !spriteRows || !spriteToggle) return;
+    const pageId = pages[index] || "home";
+    const parent = pageId === "home" ? portraitStage : pageElements[index];
+    if (!parent) return;
+    const controlsParent = pageId === "personal" ? (parent.querySelector(".page-heading") || parent) : parent;
+    const rowCount = rowCountForViewport(pageId);
+    const key = pageId + ":" + rowCount;
+    if (spritePageKey !== key) {
+      spriteBand.classList.remove("is-visible");
+      spriteBand.dataset.context = pageId;
+      spriteBand.dataset.background = String(pageId !== "home");
+      const entries = pageId === "home" ? homePokemon : (pageSpriteIds[pageId] || []).map((id) => [id, ""]);
+      const span = Math.max(1, Math.ceil(parent.getBoundingClientRect().width || window.innerWidth));
+      buildSpriteRows(entries, rowCount, pageId !== "home", span);
+      spritePageKey = key;
     }
-    spriteRowsCount = count;
+    if (spriteBand.parentElement !== parent) {
+      parent.insertBefore(spriteBand, parent.firstElementChild);
+      controlsParent.append(spriteToggle);
+    }
+    spriteBand.hidden = false;
     spriteToggle.hidden = false;
+    requestAnimationFrame(() => spriteBand.classList.add("is-visible"));
     updateSpritePlayback();
   }
-
-  async function buildSpriteBand(force = false) {
-    if (!spriteBand || !spriteRows || (!force && spriteRowsCount === rowCountForViewport())) return;
-    if (spriteBuildPromise) return spriteBuildPromise;
-    spriteBuildPromise = (async () => {
-      const results = await Promise.all(pokemon.map(preloadOneSprite));
-      const available = results.filter((item) => item[2]).map(([id, name]) => [id, name]);
-      if (!available.length) {
-        spriteBand.remove();
-        spriteToggle.hidden = true;
-        return;
-      }
-      createSpriteRows(available, rowCountForViewport());
-      spriteBand.hidden = false;
-    })();
-    await spriteBuildPromise;
-    spriteBuildPromise = null;
+  function updateSpritePlayback() {
+    if (!spriteBand || !spriteToggle) return;
+    const reduceMotionPause = reducedMotion.matches && !spriteMotionOverride;
+    const paused = userPausedSprites || document.hidden || reduceMotionPause || pages[activeIndex] !== spriteBand.dataset.context;
+    spriteBand.classList.toggle("is-paused", paused);
+    spriteBand.classList.toggle("is-static", reduceMotionPause);
+    spriteToggle.setAttribute("aria-pressed", String(paused));
+    spriteToggle.setAttribute("aria-label", paused ? "Play sprite ribbon" : "Pause sprite ribbon");
+    spriteToggle.title = paused ? "Play sprite ribbon" : "Pause sprite ribbon";
+    spriteToggle.textContent = paused ? "▶" : "Ⅱ";
   }
-
-  function stopSpriteSparkles() {
-    window.clearTimeout(sparkleTimer);
-    spriteBand.querySelectorAll(".sparkling").forEach((item) => item.classList.remove("sparkling"));
-  }
-
-  function scheduleSpriteSparkle() {
-    window.clearTimeout(sparkleTimer);
-    if (document.hidden || activeIndex !== 0 || reducedMotion.matches || userPausedSprites) return;
-    sparkleTimer = window.setTimeout(() => {
-      const items = Array.from(spriteBand.querySelectorAll(".sprite-item"));
-      if (items.length) {
-        const item = items[Math.floor(Math.random() * items.length)];
-        item.classList.add("sparkling");
-        window.setTimeout(() => item.classList.remove("sparkling"), 260);
-      }
-      scheduleSpriteSparkle();
-    }, 4000);
-  }
-
-  function startSpriteSparkles() {
-    if (!sparkleTimer && !document.hidden && activeIndex === 0 && !reducedMotion.matches && !userPausedSprites) scheduleSpriteSparkle();
-  }
-
-  if (spriteToggle) {
-    spriteToggle.addEventListener("click", () => {
+  if (spriteToggle) spriteToggle.addEventListener("click", () => {
+    const reduceMotionPause = reducedMotion.matches && !spriteMotionOverride;
+    if (reduceMotionPause && !userPausedSprites) {
+      spriteMotionOverride = true;
+      userPausedSprites = false;
+    } else {
       userPausedSprites = !userPausedSprites;
-      updateSpritePlayback();
-    });
-  }
-  buildSpriteBand();
+    }
+    updateSpritePlayback();
+  });
   window.addEventListener("resize", () => {
     window.clearTimeout(resizeTimer);
-    resizeTimer = window.setTimeout(() => buildSpriteBand(true), 200);
-  }, { passive: true });
-
-  // Pointer parallax is a small transform-only response; reduced motion leaves rows still.
-  homePage.addEventListener("pointermove", (event) => {
-    if (!finePointer.matches || reducedMotion.matches || activeIndex !== 0) return;
-    pendingSpriteOffset = ((event.clientX / window.innerWidth) - 0.5) * 12;
-    if (spriteParallaxFrame) return;
-    spriteParallaxFrame = window.requestAnimationFrame(() => {
-      const rows = Array.from(spriteRows.querySelectorAll(".sprite-row"));
-      rows.forEach((row, index) => {
-        const depth = 0.45 + (index / Math.max(1, rows.length - 1)) * 0.55;
-        const direction = index % 2 ? -1 : 1;
-        row.style.setProperty("--pointer-y", `${pendingSpriteOffset * depth * direction}px`);
-      });
-      spriteParallaxFrame = 0;
-    });
-  });
-  homePage.addEventListener("pointerleave", () => {
-    if (spriteParallaxFrame) window.cancelAnimationFrame(spriteParallaxFrame);
-    spriteParallaxFrame = 0;
-    spriteRows.querySelectorAll(".sprite-row").forEach((row) => row.style.setProperty("--pointer-y", "0px"));
-  });
+    resizeTimer = window.setTimeout(() => {
+      spritePageKey = "";
+      setSpritePage(activeIndex);
+    }, 200);
+  }, {passive:true});
 
   // Desktop-only parallax: move the portrait and offset frame by at most six pixels.
   let photoParallaxFrame = 0;
@@ -1146,6 +1522,7 @@
   document.addEventListener("visibilitychange", () => {
     document.body.classList.toggle("tab-hidden", document.hidden);
     updateSpritePlayback();
+    updatePokedexAutoplay();
     if (document.hidden) {
       stopBallWobbleTimer();
       if (photoParallaxFrame) window.cancelAnimationFrame(photoParallaxFrame);
@@ -1161,6 +1538,7 @@
 
   reducedMotion.addEventListener?.("change", (event) => {
     if (event.matches) {
+      finishSiteIntro();
       document.body.classList.remove("transitioning");
       if (spriteParallaxFrame) window.cancelAnimationFrame(spriteParallaxFrame);
       spriteParallaxFrame = 0;
@@ -1170,7 +1548,6 @@
       photoParallaxFrame = 0;
       portraitStage.style.setProperty("--photo-x", "0px"); portraitStage.style.setProperty("--photo-y", "0px");
       portraitStage.style.setProperty("--frame-x", "0px"); portraitStage.style.setProperty("--frame-y", "0px");
-      stopSpriteSparkles();
       window.clearTimeout(detailIntentTimer);
       window.clearTimeout(detailHideTimer);
       if (detailsOpen) {
@@ -1181,5 +1558,9 @@
       if (activeIndex === 0) startBallWobbleTimer();
       updateSpritePlayback();
     }
+    updatePokedexAutoplay();
   });
+  syncPage();
+  document.documentElement.classList.add("js-ready");
+  window.requestAnimationFrame(startSiteIntro);
 })();
