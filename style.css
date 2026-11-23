@@ -880,6 +880,7 @@ body{ transition: background .35s var(--ease), color .35s var(--ease); }
 .page:not(.home-page) .sprite-toggle{position:absolute;z-index:4;top:8px;right:10px;bottom:auto;left:auto;min-width:58px;min-height:44px;padding:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:700 var(--fs-label)/var(--line-display) var(--display)}
 .sprite-band{transition:opacity .3s var(--ease)}
 .page:not(.home-page) .sprite-toggle{display:grid;place-items:center;width:44px;min-height:44px;}
+.page:not(.home-page) .sprite-toggle[hidden]{display:none}
 .sprite-band.is-paused .sprite-track,.sprite-band.is-static .sprite-track{animation-play-state:paused}
 .sprite-row{will-change:transform}
 .sprite-track{animation-duration:var(--row-speed);animation-timing-function:linear;animation-iteration-count:infinite}
@@ -1922,7 +1923,7 @@ body.personal-scroll-active .personal-page .page-heading .sprite-toggle{
 
 /* The education view stays inside the viewport; the Pokédex reuses a side panel for proof. */
 .education-page{grid-template-rows:auto minmax(0,1fr);overflow:hidden;padding-bottom:8px;gap:clamp(8px,1.2vh,14px)}
-.education-page .education-content{display:grid;grid-template-columns:minmax(0,.96fr) minmax(0,1.04fr);align-items:stretch;gap:clamp(10px,1.25vw,18px);width:100%;height:100%;min-height:0;overflow:hidden}
+.education-page .education-content{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:stretch;gap:clamp(10px,1.25vw,18px);width:100%;height:100%;min-height:0;overflow:hidden}
 .education-page .route-panel,.education-page .pokedex-panel,.education-page .proof-ribbon-panel{height:100%;min-width:0;min-height:0;padding:clamp(9px,1.2vw,16px);border-color:var(--glass-panel-border);background:var(--glass-panel-gradient);box-shadow:var(--glass-panel-shadow);backdrop-filter:blur(14px) saturate(118%);-webkit-backdrop-filter:blur(14px) saturate(118%)}
 .education-page .route-panel{display:grid;grid-template-rows:auto minmax(0,1fr) auto;align-content:stretch;gap:clamp(6px,.9vh,11px);overflow:hidden}
 .education-proof-column{display:grid;grid-template-columns:minmax(0,1fr) clamp(158px,15vw,205px);align-items:stretch;gap:clamp(6px,.75vw,10px);width:100%;height:100%;min-width:0;min-height:0;overflow:hidden}
@@ -2168,4 +2169,212 @@ body.personal-scroll-active .personal-page .page-heading .sprite-toggle{
   .education-page .proof-ribbon-cycle{grid-template-columns:repeat(7,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));grid-auto-flow:row;grid-auto-rows:minmax(0,1fr);height:100%;gap:2px}
   .education-page .proof-ribbon-item{display:grid;grid-template-columns:1fr;grid-template-rows:minmax(0,1fr);padding:1px}
   .education-page .proof-ribbon-copy,.education-page .proof-ribbon-number{display:none}
+}
+
+
+/* FAMILY & FRIENDS — compact three-section inner-circle layout. */
+.family-page{
+  grid-template-rows:auto minmax(0,1fr);
+  gap:clamp(6px,1.1vh,11px);
+  overflow:hidden;
+  padding:clamp(9px,1.7vh,18px) var(--page-pad-x) 8px;
+}
+.family-heading{align-items:end;gap:12px;margin:0}
+.family-heading .section-kicker{margin:0 0 5px;font-size:var(--fs-label)}
+.family-heading .page-title{font-size:clamp(26px,3.6vw,52px);line-height:.96}
+.family-heading .heading-note{max-width:220px;font-size:var(--fs-label);letter-spacing:var(--tracking-label)}
+.family-layout{display:grid;grid-template-rows:minmax(0,1.08fr) minmax(0,1fr) minmax(0,.66fr);gap:clamp(6px,1vh,10px);min-height:0;overflow:hidden}
+.family-panel{position:relative;display:grid;grid-template-rows:auto minmax(0,1fr);gap:clamp(5px,.8vh,8px);min-width:0;min-height:0;padding:clamp(7px,.85vw,11px);overflow:hidden;border:1px solid var(--glass-panel-border);border-left:2px solid var(--accent-light);background:var(--glass-panel-gradient);box-shadow:var(--glass-panel-shadow);backdrop-filter:blur(12px) saturate(115%);-webkit-backdrop-filter:blur(12px) saturate(115%)}
+.family-panel::after{content:"";position:absolute;right:8px;top:8px;width:18px;height:18px;border-top:1px solid var(--accent-light);border-right:1px solid var(--accent-light);opacity:.65;pointer-events:none}
+.family-section-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0}
+.family-section-heading>div{display:flex;align-items:baseline;gap:8px;min-width:0}
+.family-section-heading h2{margin:0;color:var(--ink);font:800 clamp(14px,1.4vw,19px)/1 var(--display);letter-spacing:.045em}
+.family-section-heading h2 span{color:var(--accent-text)}
+.family-index{color:var(--accent-text);font:700 var(--fs-label)/1 var(--display);letter-spacing:.11em;white-space:nowrap}
+.family-section-meta{color:var(--muted);font:500 var(--fs-label)/1 var(--display);letter-spacing:.08em;text-align:right;white-space:nowrap}
+.family-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(6px,.8vw,10px);min-width:0;min-height:0}
+.foundation-card{display:grid;grid-template-columns:clamp(78px,9vw,118px) minmax(0,1fr);align-items:stretch;gap:clamp(6px,.8vw,10px);min-width:0;min-height:0;padding:6px;border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 76%,transparent);box-shadow:inset 0 1px 0 var(--ink-wash-12);transition:transform .22s var(--ease),border-color .22s var(--ease),background .22s var(--ease)}
+.foundation-card:hover,.foundation-card:focus-within{transform:translateY(-2px);border-color:var(--accent-light);background:color-mix(in srgb,var(--surface) 91%,var(--accent))}
+.foundation-photo{position:relative;display:grid;place-items:center;min-width:0;min-height:0;overflow:hidden;border:1px solid var(--line-strong);background:var(--bg)}
+.foundation-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,transparent 42%,var(--accent-wash-16));pointer-events:none}
+.foundation-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 38%;transition:transform .45s var(--ease),filter .3s ease}
+.foundation-card:hover .foundation-photo img{transform:scale(1.045);filter:saturate(1.08)}
+.foundation-monogram{color:var(--accent-text);font:800 20px/1 var(--display);letter-spacing:.08em}
+.foundation-copy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:4px;min-width:0;overflow:hidden}
+.foundation-relation{color:var(--muted);font:600 var(--fs-label)/1.1 var(--display);letter-spacing:.08em}
+.foundation-name{margin:0;color:var(--ink);font:800 clamp(14px,1.4vw,19px)/1.05 var(--display);letter-spacing:.02em}
+.foundation-note{margin:0;color:var(--ink-soft);font:400 12px/1.28 var(--body);overflow-wrap:anywhere}
+.squad-content{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);align-items:center;gap:clamp(8px,1.2vw,16px);min-width:0;min-height:0}
+.squad-photo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(5px,.65vw,8px);min-width:0;min-height:0}
+.squad-photo-card{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:3px;min-width:0;min-height:0;margin:0}
+.squad-photo-frame{position:relative;min-width:0;min-height:0;overflow:hidden;aspect-ratio:1.72;border:1px solid var(--line-strong);background:var(--bg)}
+.squad-photo-frame::after{content:"";position:absolute;inset:0;border:1px solid var(--accent-light);opacity:0;transition:opacity .2s ease;pointer-events:none}
+.squad-photo-card:hover .squad-photo-frame::after{opacity:.85}
+.squad-photo-frame img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .4s var(--ease)}
+.squad-photo-card:hover img{transform:scale(1.05)}
+.squad-photo-number{position:absolute;z-index:1;left:4px;top:4px;padding:2px 4px;color:var(--ink);background:var(--accent);font:700 var(--fs-label)/1 var(--display);letter-spacing:.08em}
+.squad-photo-card figcaption{overflow:hidden;color:var(--muted);font:600 var(--fs-label)/1.1 var(--display);letter-spacing:.04em;text-overflow:ellipsis;white-space:nowrap}
+.squad-message{display:grid;align-content:center;gap:5px;min-width:0;min-height:0}
+.squad-message p{margin:0;color:var(--ink-soft);font:400 12px/1.32 var(--body)}
+.squad-message .squad-closing{color:var(--accent-text);font:700 12px/1.2 var(--display);letter-spacing:.055em}
+.others-panel{grid-template-rows:auto minmax(0,1fr)}
+.others-heading h2{font-size:clamp(14px,1.5vw,20px)}
+.family-film-window{position:relative;min-width:0;min-height:0;overflow:hidden;border:1px solid var(--line-strong);background:color-mix(in srgb,var(--bg) 84%,var(--surface));isolation:isolate}
+.family-film-window::before,.family-film-window::after{content:"";position:absolute;z-index:3;left:0;right:0;height:7px;background:repeating-linear-gradient(90deg,var(--ink-soft) 0 9px,transparent 9px 20px);opacity:.52;pointer-events:none}
+.family-film-window::before{top:2px}.family-film-window::after{bottom:2px}
+.family-film-track{display:flex;align-items:stretch;width:max-content;height:100%;min-width:100%;padding:10px 8px;gap:9px}
+.family-film-window.has-frames .family-film-track{animation:family-film-roll 34s linear infinite}
+.family-film-window:hover .family-film-track,.family-film-window:focus-within .family-film-track{animation-play-state:paused}
+.family-film-cycle{display:flex;align-items:stretch;gap:9px;flex:0 0 auto}
+.family-film-frame{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:2px;width:clamp(92px,10vw,132px);min-width:0;height:100%;margin:0;padding:3px 4px;border-inline:1px solid var(--line);background:var(--surface)}
+.family-film-frame img{width:100%;height:100%;min-height:0;object-fit:cover}
+.family-film-frame figcaption{overflow:hidden;color:var(--muted);font:600 var(--fs-label)/1 var(--display);text-overflow:ellipsis;white-space:nowrap}
+.film-empty-state{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:stretch;gap:6px;width:100%;height:100%;padding:0 8px}
+.film-empty-frame{display:grid;align-content:center;justify-items:center;gap:4px;min-width:0;padding:4px;border-inline:1px solid var(--line);background:linear-gradient(135deg,var(--surface-wash-18),transparent)}
+.film-frame-number{color:var(--accent-text);font:700 var(--fs-label)/1 var(--display);letter-spacing:.08em}
+.film-frame-placeholder{color:var(--muted);font:500 11px/1 var(--display);letter-spacing:.05em;font-style:normal;text-align:center}
+.image-unavailable{background:linear-gradient(135deg,var(--surface),var(--bg))}
+@keyframes family-film-roll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* The fixed footer owns its own strip; pages use only the space above it. */
+.page-stage{bottom:var(--corner-h);overflow:hidden}
+.page{min-height:0}
+body.personal-scroll-active .page-stage{overflow:hidden}
+body.personal-scroll-active .personal-page{position:absolute;inset:0;width:auto;height:auto;min-height:0;overflow:hidden;grid-template-rows:auto minmax(0,1fr);align-content:stretch;gap:clamp(6px,1vh,11px);padding:clamp(8px,1.6vh,16px) var(--page-pad-x) 8px}
+.personal-page{position:absolute;inset:0;width:auto;height:auto;min-height:0;overflow:hidden}
+.education-page{overflow:hidden;grid-template-rows:auto minmax(0,1fr);padding-bottom:8px}
+@media (max-width:1023px),(orientation:portrait){
+  .page-stage{bottom:var(--corner-h)}
+  .education-page{overflow:hidden;grid-template-rows:auto minmax(0,1fr);padding-bottom:6px}
+}
+@media (max-width:800px){
+  .family-page{padding:8px 14px 6px;gap:6px}
+  .family-heading .page-title{font-size:clamp(24px,4.2vw,36px)}
+  .family-layout{grid-template-rows:minmax(0,1.1fr) minmax(0,1fr) minmax(0,.62fr);gap:6px}
+  .family-panel{padding:7px;gap:5px}
+  .foundation-card{grid-template-columns:clamp(65px,12vw,88px) minmax(0,1fr);padding:5px;gap:6px}
+  .foundation-note,.squad-message p{font-size:11px;line-height:1.22}
+  .squad-content{gap:8px}
+}
+@media (max-width:600px){
+  .family-page{padding:7px 10px 6px;gap:6px}
+  .family-heading{align-items:end;gap:5px}
+  .family-heading .section-kicker{margin-bottom:4px}
+  .family-heading .page-title{font-size:clamp(21px,5.7vw,29px)}
+  .family-heading .heading-note{display:none}
+  .family-layout{grid-template-rows:minmax(0,1.22fr) minmax(0,1fr) minmax(0,.62fr);gap:5px}
+  .family-panel{padding:5px;gap:4px}
+  .family-panel::after{right:5px;top:5px;width:12px;height:12px}
+  .family-section-heading>div{gap:5px}
+  .family-section-heading h2{font-size:13px}
+  .family-index,.family-section-meta{font-size:11px}
+  .family-section-meta{max-width:118px;white-space:normal;line-height:1.1}
+  .family-card-grid{gap:4px}
+  .foundation-card{grid-template-columns:minmax(0,1fr);grid-template-rows:clamp(38px,6.5vh,52px) minmax(0,1fr);gap:3px;padding:4px}
+  .foundation-photo img{object-position:center 34%}
+  .foundation-copy{gap:2px;justify-content:start}
+  .foundation-relation{font-size:11px;line-height:1}
+  .foundation-name{font-size:12px;line-height:1.05}
+  .foundation-note{font-size:11px;line-height:1.18}
+  .squad-content{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:4px;align-content:stretch}
+  .squad-photo-grid{gap:4px}
+  .squad-photo-card{gap:2px}
+  .squad-photo-frame{aspect-ratio:2.4}
+  .squad-photo-number{left:3px;top:3px}
+  .squad-photo-card figcaption{font-size:11px}
+  .squad-message{gap:3px;align-content:start}
+  .squad-message p{font-size:11px;line-height:1.16}
+  .squad-message .squad-closing{font-size:11px}
+  .family-film-track{padding:8px 5px;gap:5px}
+  .film-empty-state{gap:4px;padding:0 5px}
+  .film-empty-frame{padding:3px 2px}
+  .film-frame-number{font-size:11px}
+  .film-frame-placeholder{font-size:11px;line-height:1.1}
+}
+@media (max-width:380px) and (max-height:700px){
+  .family-page{padding:5px 8px 5px;gap:4px}
+  .family-layout{grid-template-rows:minmax(0,1.42fr) minmax(0,1.2fr) minmax(0,.68fr);gap:4px}
+  .family-panel{padding:4px;gap:3px}
+  .family-section-heading h2{font-size:12px}
+  .foundation-card{padding:3px;grid-template-rows:36px minmax(0,1fr)}
+  .foundation-note{font-size:11px;line-height:1.05}
+  .squad-message p{font-size:11px;line-height:1.12}
+  .squad-photo-frame{aspect-ratio:2.8}
+}
+@media (prefers-reduced-motion:reduce){
+  .foundation-card,.foundation-photo img,.squad-photo-frame::after,.squad-photo-frame img{transition:none}
+  .family-film-window.has-frames .family-film-track{animation:none}
+}
+
+.pokedex-proof-placeholder,.pokedex-certificate-placeholder{display:grid;place-items:center;width:100%;height:100%;min-height:70px;padding:10px;border:1px dashed var(--line-strong);color:var(--accent-text);background:linear-gradient(135deg,var(--surface),var(--bg));font:700 var(--fs-label)/1.3 var(--display);letter-spacing:.08em;text-align:center}
+
+
+/* Compact layouts: keep the site on one viewport and expose dense panels through sub-tabs. */
+.compact-page-tabs{display:none}
+@media (max-width:800px),(orientation:portrait){
+  .personal-page,.education-page{grid-template-rows:auto auto minmax(0,1fr);gap:7px;overflow:hidden}
+  .compact-page-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;min-width:0}
+  .compact-page-tabs button{min-width:0;min-height:32px;padding:5px 7px;border:1px solid var(--line-strong);background:var(--surface-wash-18);color:var(--muted);font:700 var(--fs-label)/1.1 var(--display);letter-spacing:.055em;text-align:center;cursor:pointer}
+  .compact-page-tabs button[aria-pressed="true"]{border-color:var(--accent-light);background:var(--accent);color:var(--ink);box-shadow:inset 0 -2px 0 var(--accent-light)}
+  .personal-page .agent-profile-layout{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr);height:100%;min-height:0;overflow:hidden}
+  .personal-page .agent-profile-card,.personal-page .about-content{height:100%;min-height:0;overflow:hidden}
+  .personal-page[data-step="identity"] .about-content{display:none}
+  .personal-page[data-step="notes"] .agent-profile-card{display:none}
+  .personal-page[data-step="notes"] .about-content{display:grid;grid-template-rows:auto auto minmax(0,1fr);align-content:stretch}
+  .education-page .education-content{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr);height:100%;min-height:0;overflow:hidden}
+  .education-page[data-step="journey"] .education-proof-column,.education-page[data-step="achievements"] .education-proof-column{display:none}
+  .education-page[data-step="proof"] .route-panel{display:none}
+  .education-page[data-step="journey"] .achievement-index-wrap,.education-page[data-step="achievements"] .school-record-list{display:none}
+  .education-page[data-step="achievements"] .subsection-heading{display:none}
+  .education-page[data-step="journey"] .route-panel,.education-page[data-step="achievements"] .route-panel{grid-template-rows:auto minmax(0,1fr)}
+  .education-page .route-panel{height:100%;min-height:0;overflow:hidden}
+  .education-page[data-step="journey"] .school-record-list{grid-template-rows:minmax(0,2.1fr) minmax(0,1fr)}
+  .education-page[data-step="achievements"] .achievement-index-wrap{display:grid;grid-template-rows:auto minmax(0,1fr);align-content:stretch}
+  .education-page[data-step="achievements"] .achievement-index{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));align-content:stretch}
+  .education-page[data-step="achievements"] .achievement-index-item{align-content:center}
+  .education-page .education-proof-column{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) 82px;gap:6px;height:100%;min-height:0;overflow:hidden}
+  .education-page .pokedex-panel{height:100%;min-height:0}
+  .education-page .proof-ribbon-panel{height:82px;min-height:0}
+}
+@media (max-width:600px){
+  .personal-page{padding:8px 10px 6px;gap:6px}
+  .personal-page .page-heading{align-items:start;gap:6px}
+  .personal-page .page-title{font-size:clamp(22px,6vw,30px);line-height:1.02}
+  .personal-page .heading-note{max-width:90px;font-size:var(--fs-label)}
+  .personal-mobile-tabs button{min-height:30px;font-size:11px}
+  .personal-page .agent-profile-card{padding:7px;gap:5px}
+  .personal-page .about-content{gap:5px}
+  .education-page{padding:8px 10px 6px;gap:6px}
+  .education-mobile-tabs{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+  .education-mobile-tabs button{min-height:30px;padding:4px 3px;font-size:11px;letter-spacing:.02em}
+  .education-page .route-panel{padding:7px;gap:5px}
+  .education-page .school-record-list{gap:4px}
+  .education-page .school-record{padding:5px;gap:5px;grid-template-columns:40px minmax(0,1fr)}
+  .education-page .school-record-logo{width:36px}
+  .education-page .achievement-index{grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}
+  .education-page .achievement-index-item{grid-template-columns:16px minmax(0,1fr);padding:3px;gap:3px}
+  .education-page .education-proof-column{grid-template-rows:minmax(0,1fr) 82px}
+}
+@media (max-width:380px) and (max-height:700px){
+  .personal-page .quick-stats{gap:2px 5px}
+  .personal-page .agent-card-head{grid-template-columns:64px minmax(0,1fr);gap:6px}
+  .personal-page .about-photo-toggle{width:64px}
+  .personal-page .interest-chips{gap:3px}
+  .personal-page .interest-chips .chip{min-height:22px;padding:2px 4px}
+  .personal-page .about-bio-panel p{font-size:11px;line-height:1.25}
+  .personal-page .about-detail-card{padding:4px 5px}
+  .personal-page .about-detail-card p{font-size:11px;line-height:1.18}
+  .personal-page .agent-dossier{padding:4px 5px}
+  .education-page .route-panel{padding:5px;gap:4px}
+  .education-page .subsection-heading h2{font-size:12px}
+  .education-page .school-record{padding:4px;gap:4px}
+  .education-page .school-record-name{font-size:11px}
+  .education-page .school-record-context,.education-page .school-stage-level,.education-page .school-stage-years{font-size:11px}
+  .education-page .school-stage{padding:2px 0}
+  .education-page .achievement-index-heading h3{font-size:11px}
+  .education-page .achievement-index-item{padding:2px 3px}
+  .education-page .achievement-index-title,.education-page .achievement-index-category{font-size:11px}
+}
+@media (min-width:1024px) and (orientation:landscape){
+  .portrait-stage{margin-left:0}
 }

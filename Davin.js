@@ -16,9 +16,9 @@
     detailIntentDelay: 120,
     detailHideDelay: 300,
     education: [
-      { level: "Grade School", years: "SY 2021–2022", school: "Don Mariano Marcos Memorial State University", campus: "South La Union Campus", status: "COMPLETED", schoolKey: "dmmmsu", proofImage: "assets/proofs/grade-school-dmmmsu.jpg", proofAlt: "Grade-school graduation portrait and frame labeled DMMMSU-SLUC Elementary Laboratory School, SY 2021–2022" },
-      { level: "Junior High School", years: "2023–2024", school: "Don Mariano Marcos Memorial State University", campus: "South La Union Campus", status: "COMPLETED", schoolKey: "dmmmsu", proofImage: "assets/proofs/junior-high-dmmmsu.jpg", proofAlt: "Junior-high graduation photo labeled Grade 10, Batch 2023–2024" },
-      { level: "Senior High School", years: "BATCH 2026", school: "Don Mariano Marcos Memorial State University", campus: "South La Union Campus", status: "COMPLETED", schoolKey: "dmmmsu", proofImage: "assets/proofs/senior-high-dmmmsu.jpg", proofAlt: "Senior-high graduation portrait labeled Grade 12 STEM, Batch 2026" },
+      { level: "Grade School", years: "2015–2020", school: "Don Mariano Marcos Memorial State University", campus: "South La Union Campus", status: "COMPLETED", schoolKey: "dmmmsu", proofImage: "assets/proofs/grade-school-dmmmsu.jpg", proofAlt: "Grade-school education at DMMMSU South La Union Campus" },
+      { level: "Junior High School", years: "2020–2024", school: "Don Mariano Marcos Memorial State University", campus: "South La Union Campus", status: "COMPLETED", schoolKey: "dmmmsu", proofImage: "assets/proofs/junior-high-dmmmsu.jpg", proofAlt: "Junior-high graduation photo labeled Grade 10, Batch 2023–2024" },
+      { level: "Senior High School", years: "2024–2026", school: "Don Mariano Marcos Memorial State University", campus: "South La Union Campus", status: "COMPLETED", schoolKey: "dmmmsu", proofImage: "assets/proofs/senior-high-dmmmsu.jpg", proofAlt: "Senior-high graduation portrait labeled Grade 12 STEM, Batch 2026" },
       { level: "College", years: "AUG 2026–PRESENT", school: "University of the Cordilleras", program: "Computer Science", status: "IN SESSION", schoolKey: "uc" }
     ],
     proofTapeMoments: [
@@ -30,18 +30,40 @@
         { title: "Medal Presentation", src: "assets/proofs/academic-excellence-medal-presentation.jpg", alt: "Daveen receives a medal from an educator during a graduation recognition ceremony" },
         { title: "Graduation Day", src: "assets/proofs/academic-excellence-graduation.jpg", alt: "Daveen stands with classmates and educators at a graduation ceremony" }
       ] },
-      { id: "journalist", title: "Campus Journalist", category: "MEDIA", stage: "THE FORUMN / FEATURE STORY", years: [], note: "Feature story: The Climb — Journey Beyond the Goal.", icon: "quill", proofImage: "assets/proofs/the-climb-journalism.jpg", proofAlt: "The Climb: Journey Beyond the Goal, a feature story about graduates" },
-      { id: "broadcaster", title: "Lead Broadcaster/Anchor", category: "MEDIA", stage: "SPORTS NEWS", years: [], note: "Lead broadcaster and anchor covering sports news.", icon: "mic" },
-      { id: "divisions", title: "Divisions Meet · Volleyball (Men's)", category: "ATHLETICS", stage: "JUNIOR HIGH / SENIOR HIGH", years: ["2023", "2025"], note: "Volleyball team achievement.", icon: "medal", proofImage: "assets/proofs/athletics-volleyball-team.jpg", proofAlt: "The volleyball team huddles together after a match" },
-      { id: "workshops", title: "Workshops / Seminars", category: "LEARNING", stage: "BUSINESS PROBLEM LAB", years: ["2026"], note: "Participated in Business Problem Lab: It Wasn't Luck (October 25, 2026).", icon: "star", proofImage: "assets/proofs/workshop-business-problem-lab.jpg", proofAlt: "Certificate of participation in Business Problem Lab: It Wasn't Luck, dated October 25, 2026" }
+      { id: "journalist", title: "Campus Journalist", category: "MEDIA", stage: "THE FORUMN / SCHOOL PUBLICATION", years: [], note: "Campus journalist for The Forumn school publication.", icon: "quill", proofImage: "assets/proofs/the-climb-journalism.jpg", proofAlt: "The Climb: Journey Beyond the Goal, a feature story about graduates" },
+      { id: "broadcaster", title: "Broadcaster", category: "MEDIA", stage: "BROADCASTING", years: [], note: "Experience as a campus broadcaster.", icon: "mic" },
+      { id: "milo", title: "MILO Little Olympics 2019", category: "ATHLETICS", stage: "GRADE SCHOOL", years: ["2019"], note: "Qualified and competed in the MILO Little Olympics in 2019.", icon: "medal" },
+      { id: "divisions", title: "Division Meet · Volleyball (Men's)", category: "ATHLETICS", stage: "JUNIOR HIGH / SENIOR HIGH", years: ["2023", "2025"], note: "Qualified and competed in the men's volleyball Division Meet in 2023 and 2025.", icon: "medal", proofImage: "assets/proofs/athletics-volleyball-team.jpg", proofAlt: "The volleyball team huddles together after a match" }
     ],
     certificates: [
-      { id: "ai-data-scientist", title: "AI and Data Scientist Certificate", issuer: "", date: "", fileUrl: "assets/certs/ai-and-data-scientist-certificate.pdf", previewImage: "assets/certs/previews/ai-and-data-scientist-certificate-preview.jpg", previewAlt: "First page of Daveen's OneRoadmap AI and Data Scientist certificate" },
-      { id: "python", title: "Python Certificate", issuer: "", date: "", fileUrl: "assets/certs/python-certificate.pdf", previewImage: "assets/certs/previews/python-certificate-preview.jpg", previewAlt: "First page of Daveen's OneRoadmap Python certificate" }
+      { id: "certificate-placeholder-01", title: "CERTIFICATE — TO BE ADDED", issuer: "", date: "", fileUrl: "", previewImage: "", previewAlt: "Certificate placeholder" },
+      { id: "certificate-placeholder-02", title: "CERTIFICATE — TO BE ADDED", issuer: "", date: "", fileUrl: "", previewImage: "", previewAlt: "Certificate placeholder" }
     ],
-    family: [],
-    friends: [],
-    partyNote: "",
+    family: [
+      { name: "MY MAMA", relation: "FAMILY / 01", photo: "assets/family/my-mama.webp", alt: "Daveen with his mother", note: "Thank you for your unconditional love, sacrifices, and unwavering support. I am grateful for everything you have done and continue to do for me." },
+      { name: "MY PAPA", relation: "FAMILY / 02", photo: "assets/family/my-papa.webp", alt: "Daveen with his father", note: "Thank you for your protection, guidance, and support. Your presence and the ways you look after me mean more than words can express." },
+      { name: "MY ADING", relation: "FAMILY / 03", photo: "assets/family/my-ading.webp", alt: "Daveen with his sibling", note: "You inspire me to keep becoming a better kuya. I want to continue growing, improving, and becoming someone you can always look up to." }
+    ],
+    friends: [
+      { title: "THE SQUAD / 01", photo: "assets/friends/squad-01.webp", alt: "Daveen with friends at school" },
+      { title: "THE SQUAD / 02", photo: "assets/friends/squad-02.webp", alt: "A group photograph with friends" },
+      { title: "THE SQUAD / 03", photo: "assets/friends/squad-03.webp", alt: "Friends together during a karaoke outing" }
+    ],
+    supplementaryPhotos: [
+  {
+    photo: "assets/family/memory-01.jpg"
+  },
+  {
+    photo: "assets/family/memory-02.jpg"
+  },
+  {
+    photo: "assets/family/memory-03.jpg"
+  },
+  {
+    photo: "assets/family/memory-04.jpg"
+  }
+    ],
+    partyNote: "These people have been a blessing in my life. Their presence, encouragement, and determination continually push and inspire me to pursue excellence. I am grateful to have people who challenge me to grow, celebrate progress, and strive for something greater together.",
     contact: { email: "dap1801@students.uc-bcf.edu.ph" }
   };
 
@@ -75,6 +97,16 @@
   const portraitCanvas = document.getElementById("portrait-canvas");
   const portraitBall = document.getElementById("portrait-ball");
   const personalPage = document.getElementById("personal");
+  const educationPage = document.getElementById("education");
+  const personalStepTabs = Array.from(document.querySelectorAll("[data-personal-step]"));
+  const educationStepTabs = Array.from(document.querySelectorAll("[data-education-step]"));
+  function updateCompactTabs(page, tabs, attribute, value) {
+    if (!page) return;
+    page.dataset.step = value;
+    tabs.forEach((tab) => tab.setAttribute("aria-pressed", String(tab.getAttribute(attribute) === value)));
+  }
+  personalStepTabs.forEach((tab) => tab.addEventListener("click", () => updateCompactTabs(personalPage, personalStepTabs, "data-personal-step", tab.getAttribute("data-personal-step"))));
+  educationStepTabs.forEach((tab) => tab.addEventListener("click", () => updateCompactTabs(educationPage, educationStepTabs, "data-education-step", tab.getAttribute("data-education-step"))));
   const aboutProfileCard = document.getElementById("agent-profile");
   const aboutPhotoToggle = document.getElementById("about-photo-toggle");
   const siteIntro = document.getElementById("site-intro");
@@ -441,15 +473,19 @@
 
     pageCurrent.textContent = String(activeIndex + 1).padStart(2, "0");
     updateCornerButtons();
-    if (activeIndex === 1) runAboutEntry();
-    else {
+    if (activeIndex === 1) {
+      updateCompactTabs(personalPage, personalStepTabs, "data-personal-step", "identity");
+      runAboutEntry();
+    } else if (activeIndex === 2) {
+      updateCompactTabs(educationPage, educationStepTabs, "data-education-step", "journey");
+    } else {
       window.clearTimeout(aboutEntryTimer);
       if (personalPage) personalPage.classList.remove("is-entering");
     }
     closeStageDetails();
     setMobileMenu(false);
     document.body.classList.toggle("home-active", activeIndex === 0);
-    document.body.classList.toggle("personal-scroll-active", activeIndex === 1);
+    document.body.classList.remove("personal-scroll-active");
     setSpritePage(activeIndex);
     updateSpritePlayback();
     updatePokedexAutoplay();
@@ -898,7 +934,6 @@
   const routeList = document.getElementById("education-route");
   const achievementIndex = document.getElementById("achievement-index");
   const achievementTotal = document.getElementById("achievement-total");
-  const educationPage = document.getElementById("education");
   const pokedexPanel = document.querySelector(".pokedex-panel");
   const pokedexCarousel = document.getElementById("pokedex-carousel");
   const pokedexCount = document.getElementById("pokedex-count");
@@ -909,8 +944,6 @@
   let activeProofIndex = 0;
   let proofAutoplayTimer = 0;
   let proofExitTimer = 0;
-  let familyFilter = "all";
-  let familyPage = 0;
   const badgeIcons = {
     star: '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="m24 4 5.8 12 13.2 1.9-9.5 9.3 2.2 13.1L24 34.1l-11.7 6.2 2.2-13.1L5 17.9 18.2 16 24 4Z"/></svg>',
     quill: '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M39 5C23 6 12 11 9 23c-2 8 5 12 11 8-1 6-5 9-9 11m5-12 12-11M12 36l-4 4m20-24 7 6"/></svg>',
@@ -949,6 +982,8 @@
       logoFrame.dataset.school = key;
       const logo = schoolLogos[key];
       if (logo) {
+        const initials = key === "dmmmsu" ? "DMMMSU" : "UC";
+        const fallback = addText(logoFrame, "span", "school-record-initial", initials);
         const image = document.createElement("img");
         image.src = logo.src;
         image.alt = logo.alt;
@@ -956,7 +991,8 @@
         image.height = 192;
         image.loading = "lazy";
         image.decoding = "async";
-        image.addEventListener("error", () => { image.hidden = true; }, { once: true });
+        image.addEventListener("load", () => { fallback.hidden = true; }, { once: true });
+        image.addEventListener("error", () => { image.remove(); }, { once: true });
         logoFrame.append(image);
       } else {
         logoFrame.setAttribute("aria-hidden", "true");
@@ -1029,7 +1065,11 @@
       image.decoding = "async";
       image.loading = "eager";
       image.draggable = false;
-      image.addEventListener("error", () => { photo.hidden = true; }, { once: true });
+      image.addEventListener("error", () => {
+        photo.replaceChildren();
+        photo.classList.add("is-unavailable");
+        addText(photo, "span", "pokedex-proof-placeholder", "PROOF PHOTO / TO RESTORE");
+      }, { once: true });
 
       photo.append(backdrop, image);
       art.append(photo);
@@ -1083,7 +1123,7 @@
       }
     } else if (record.entry.previewImage) {
       appendProofImage(art, record.entry.previewImage, record.entry.previewAlt || record.entry.title + " preview", { fit: "contain" });
-    } else {
+    } else if (record.entry.fileUrl) {
       const documentFrame = document.createElement("iframe");
       documentFrame.className = "pokedex-document-frame";
       documentFrame.title = record.entry.title;
@@ -1092,6 +1132,11 @@
       documentFrame.tabIndex = -1;
       documentFrame.setAttribute("scrolling", "no");
       art.append(documentFrame);
+    } else {
+      const placeholder = document.createElement("span");
+      placeholder.className = "pokedex-certificate-placeholder";
+      placeholder.textContent = "CERTIFICATE / TO BE ADDED";
+      art.append(placeholder);
     }
 
     const copy = document.createElement("div");
@@ -1196,7 +1241,7 @@
       title: entry.title,
       image: entry.previewImage,
       alt: entry.previewAlt || entry.title + " preview",
-      mark: entry.id === "python" ? "PY" : "AI + DATA"
+      mark: "ADD"
     }));
     const records = educationRecords.concat(campusRecords, achievementRecords, certificateRecords);
     proofRibbonCount.textContent = String(records.length).padStart(2, "0");
@@ -1226,6 +1271,10 @@
           media.loading = "eager";
           media.decoding = "async";
           media.draggable = false;
+          media.addEventListener("error", () => {
+            media.remove();
+            item.classList.add("media-unavailable");
+          }, { once: true });
         } else {
           media = document.createElement("span");
           media.className = "proof-ribbon-document-preview";
@@ -1248,77 +1297,107 @@
     proofRibbonTrack.replaceChildren(buildCycle(false), buildCycle(true));
   }
   const familyGrid = document.getElementById("family-grid");
-  const familyEmpty = document.getElementById("family-empty");
-  const familyFilterBar = document.getElementById("family-filters");
-  function allPartyMembers() {
-    return CONFIG.family.map((member) => Object.assign({}, member, { group: "family" }))
-      .concat(CONFIG.friends.map((member) => Object.assign({}, member, { group: member.group === "teammate" ? "teammate" : "friend" })));
+  const friendPhotoGrid = document.getElementById("friend-photo-grid");
+  const familyFilmWindow = document.getElementById("family-film-window");
+  const familyFilmTrack = document.getElementById("family-film-track");
+
+  function makeGalleryImage(src, alt, className) {
+    const image = document.createElement("img");
+    image.className = className || "";
+    image.src = src;
+    image.alt = alt || "";
+    image.loading = "lazy";
+    image.decoding = "async";
+    image.draggable = false;
+    image.addEventListener("error", () => {
+      image.hidden = true;
+      image.parentElement?.classList.add("image-unavailable");
+    }, { once: true });
+    return image;
   }
-  function drawFamilyCard(member) {
+
+  function drawFoundationCard(member, index) {
     const card = document.createElement("article");
-    card.className = "member-card panel";
-    card.tabIndex = 0;
+    card.className = "foundation-card";
     card.dataset.auditBox = "";
-    const photoBox = document.createElement("div");
-    photoBox.className = "member-photo";
-    const initial = (member.name || "?").trim().charAt(0).toUpperCase();
-    addText(photoBox, "span", "member-monogram", initial);
-    if (member.photo) {
-      const image = document.createElement("img");
-      image.src = member.photo;
-      image.alt = "Portrait of " + member.name;
-      image.width = 240;
-      image.height = 300;
-      image.loading = "lazy";
-      image.onerror = () => { image.remove(); photoBox.classList.add("photo-missing"); };
-      photoBox.append(image);
-    }
-    card.append(photoBox);
-    addText(card, "h2", "member-name", member.name);
-    addText(card, "span", "stamp member-relation", member.relation);
-    if (member.note) {
-      const note = member.note.trim().split(/\s+/).slice(0, 15).join(" ");
-      addText(card, "p", "member-note", note);
-    }
+    const photo = document.createElement("div");
+    photo.className = "foundation-photo";
+    photo.setAttribute("aria-hidden", "true");
+    addText(photo, "span", "foundation-monogram", String(index + 1).padStart(2, "0"));
+    if (member.photo) photo.append(makeGalleryImage(member.photo, member.alt, ""));
+    const copy = document.createElement("div");
+    copy.className = "foundation-copy";
+    addText(copy, "span", "foundation-relation", member.relation || "FOUNDATION");
+    addText(copy, "h3", "foundation-name", member.name);
+    addText(copy, "p", "foundation-note", member.note || "");
+    card.append(photo, copy);
     return card;
   }
-  function renderFamily() {
-    const members = allPartyMembers();
-      familyFilterBar.querySelectorAll("[data-filter]").forEach((button) => {
-      const group = button.dataset.filter;
-      button.hidden = group !== "all" && !members.some((member) => member.group === group);
-    });
-    const filtered = familyFilter === "all" ? members : members.filter((member) => member.group === familyFilter);
-    const maxPages = Math.max(1, Math.ceil(filtered.length / 8));
-    familyPage = Math.min(familyPage, maxPages - 1);
-    const pageMembers = filtered.slice(familyPage * 8, familyPage * 8 + 8);
-    familyGrid.replaceChildren(...pageMembers.map(drawFamilyCard));
-    familyEmpty.hidden = members.length !== 0;
-    familyGrid.hidden = members.length === 0 || pageMembers.length === 0;
-    const pagination = document.getElementById("family-pagination");
-    pagination.hidden = maxPages <= 1 || members.length === 0;
-    document.getElementById("family-page-label").textContent = (familyPage + 1) + " / " + maxPages;
-    document.getElementById("family-page-count").textContent = members.length ? filtered.length + " MEMBERS" : "";
-    document.getElementById("family-prev").disabled = familyPage === 0;
-    document.getElementById("family-next").disabled = familyPage >= maxPages - 1;
-    const note = document.getElementById("party-note");
-    if (CONFIG.partyNote) { note.textContent = CONFIG.partyNote; note.hidden = false; }
-    else note.hidden = true;
+
+  function drawSquadPhoto(photo, index) {
+    const figure = document.createElement("figure");
+    figure.className = "squad-photo-card";
+    const frame = document.createElement("div");
+    frame.className = "squad-photo-frame";
+    addText(frame, "span", "squad-photo-number", String(index + 1).padStart(2, "0"));
+    frame.append(makeGalleryImage(photo.photo, photo.alt || photo.title, ""));
+    const caption = document.createElement("figcaption");
+    caption.textContent = photo.title || ("MEMORY / " + String(index + 1).padStart(2, "0"));
+    figure.append(frame, caption);
+    return figure;
   }
-  familyFilterBar.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-filter]");
-    if (!button || button.hidden) return;
-    familyFilter = button.dataset.filter;
-    familyPage = 0;
-    familyFilterBar.querySelectorAll("[data-filter]").forEach((item) => {
-      const selected = item === button;
-      item.classList.toggle("selected", selected);
-      item.setAttribute("aria-pressed", String(selected));
+
+  function renderMemoryFilm() {
+  familyFilmTrack.replaceChildren();
+
+  const photos = Array.isArray(CONFIG.supplementaryPhotos)
+    ? CONFIG.supplementaryPhotos.filter(item => item && item.photo)
+    : [];
+
+  familyFilmWindow.classList.remove("is-empty", "has-frames");
+  familyFilmWindow.classList.add("has-motion");
+
+  if (!photos.length) return;
+
+  for (let cycleIndex = 0; cycleIndex < 2; cycleIndex++) {
+    const cycle = document.createElement("div");
+    cycle.className = "family-film-cycle";
+    cycle.setAttribute(
+      "aria-hidden",
+      cycleIndex === 1 ? "true" : "false"
+    );
+
+    if (cycleIndex === 1) cycle.inert = true;
+
+    photos.forEach(item => {
+      const frame = document.createElement("figure");
+      frame.className = "family-film-frame";
+
+      const image = makeGalleryImage(
+        item.photo,
+        cycleIndex === 1 ? "" : (item.alt || "Additional memory"),
+        ""
+      );
+
+      image.loading = "eager";
+      frame.append(image);
+      cycle.append(frame);
     });
-    renderFamily();
-  });
-  document.getElementById("family-prev").addEventListener("click", () => { familyPage -= 1; renderFamily(); });
-  document.getElementById("family-next").addEventListener("click", () => { familyPage += 1; renderFamily(); });
+
+    familyFilmTrack.append(cycle);
+  }
+
+  familyFilmWindow.classList.add("has-frames");
+}
+
+  function renderFamily() {
+    familyGrid.replaceChildren(...CONFIG.family.map(drawFoundationCard));
+    friendPhotoGrid.replaceChildren(...CONFIG.friends.map(drawSquadPhoto));
+    document.getElementById("squad-caption").textContent = CONFIG.partyNote;
+    document.getElementById("squad-closing").textContent = "Always hoping we all excel!";
+    renderMemoryFilm();
+  }
+
   if (CONFIG.contact && CONFIG.contact.email) {
     const email = document.getElementById("personal-email");
     email.href = "mailto:" + CONFIG.contact.email;
@@ -1352,6 +1431,15 @@
     }
     return window.innerHeight >= 900 ? 3 : 2;
   }
+  let spriteImageTotal = 0;
+  let spriteImageSettled = 0;
+  let spriteImageLoaded = 0;
+  function updateSpriteAvailability() {
+    if (spriteImageSettled < spriteImageTotal) return;
+    const available = spriteImageLoaded > 0;
+    spriteBand.hidden = !available;
+    spriteToggle.hidden = !available;
+  }
   function makeSpriteItem(entry, background) {
     const item = document.createElement("span");
     item.className = "sprite-item";
@@ -1359,7 +1447,17 @@
     const image = document.createElement("img");
     image.src = spriteSourceFor(entry[0]);
     image.width = 96; image.height = 96; image.alt = ""; image.decoding = "async";
-    image.onerror = () => item.remove();
+    image.addEventListener("load", () => {
+      spriteImageLoaded += 1;
+      spriteImageSettled += 1;
+      spriteBand.hidden = false;
+      spriteToggle.hidden = false;
+    }, { once: true });
+    image.addEventListener("error", () => {
+      item.remove();
+      spriteImageSettled += 1;
+      updateSpriteAvailability();
+    }, { once: true });
     item.append(image);
     if (!background) {
       const label = document.createElement("span");
@@ -1370,6 +1468,11 @@
     return item;
   }
   function buildSpriteRows(entries, count, background, span) {
+    spriteImageTotal = entries.length;
+    spriteImageSettled = 0;
+    spriteImageLoaded = 0;
+    spriteBand.hidden = entries.length === 0;
+    spriteToggle.hidden = entries.length === 0;
     spriteRows.replaceChildren();
     const rows = Array.from({length:count}, () => []);
     entries.forEach((entry, index) => rows[index % count].push(entry));
@@ -1411,8 +1514,8 @@
       parent.insertBefore(spriteBand, parent.firstElementChild);
       controlsParent.append(spriteToggle);
     }
-    spriteBand.hidden = false;
-    spriteToggle.hidden = false;
+    spriteBand.hidden = spriteImageLoaded === 0 && spriteImageSettled >= spriteImageTotal && spriteImageTotal > 0;
+    spriteToggle.hidden = spriteBand.hidden || spriteImageTotal === 0;
     requestAnimationFrame(() => spriteBand.classList.add("is-visible"));
     updateSpritePlayback();
   }

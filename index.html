@@ -6,7 +6,7 @@
 <meta content="#F2EFEA" id="theme-color-meta" name="theme-color"/>
 <meta content="Davin the Project — Where ideas warp into reality. An evolving portfolio by a Computer Science student." name="description"/>
 <meta content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
-<title>Davin the Project — Build 01</title>
+<title>Davin the Project — The Inner Circle</title>
 <link href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Ccircle cx=%2232%22 cy=%2232%22 r=%2229%22 fill=%22%230A0809%22 stroke=%22%23F2EFEA%22 stroke-width=%223%22/%3E%3Cpath d=%22M3 32a29 29 0 0 1 58 0H3Z%22 fill=%22%237A1427%22/%3E%3Cpath d=%22M3 32h58%22 stroke=%22%230A0809%22 stroke-width=%226%22/%3E%3Ccircle cx=%2232%22 cy=%2232%22 r=%228%22 fill=%22%23F2EFEA%22 stroke=%22%230A0809%22 stroke-width=%224%22/%3E%3C/svg%3E" rel="icon" type="image/svg+xml"/><link rel="preload" href="fonts/Oxanium-VariableFont_wght.woff2" as="font" type="font/woff2" crossorigin/><link rel="preload" href="fonts/SpaceGrotesk-VariableFont_wght.woff2" as="font" type="font/woff2" crossorigin/>
 <!-- Emergency fallback (enable only if self-hosted files are unavailable): <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet"/>. If enabled, add https://fonts.googleapis.com to style-src and https://fonts.gstatic.com to font-src in CSP. -->
 <link href="style.css" rel="stylesheet"/>
@@ -22,7 +22,7 @@
 <header class="app-header">
 <a aria-label="Davin the Project home" class="brand" href="#home">DAVIN<span>.</span></a>
 <div class="header-right">
-<nav aria-label="Portfolio pages" class="desktop-nav"><a aria-current="page" class="nav-tile top-nav-link active" data-nav="0" href="#home">HOME</a><a class="nav-tile top-nav-link" data-nav="1" href="#personal">PERSONAL INFO</a><a class="nav-tile top-nav-link" data-nav="2" href="#education">EDUCATION</a><a class="nav-tile top-nav-link" data-nav="3" href="#family">FAMILY & FRIENDS</a></nav>
+<nav aria-label="Portfolio pages" class="desktop-nav"><a aria-current="page" class="nav-tile top-nav-link active" data-nav="0" href="#home">HOME</a><a class="nav-tile top-nav-link" data-nav="1" href="#personal">PERSONAL INFORMATION</a><a class="nav-tile top-nav-link" data-nav="2" href="#education">ACHIEVEMENTS</a><a class="nav-tile top-nav-link" data-nav="3" href="#family">FAMILY & FRIENDS</a></nav>
 <button aria-controls="mobile-menu" aria-expanded="false" class="menu-toggle" id="menu-toggle" type="button">MENU</button>
 <span aria-live="polite" class="page-indicator"><span id="page-current">01</span><span class="indicator-slash">/</span>04</span>
 <button aria-label="Theme: PARCHMENT. Switch to NIGHT." class="theme-toggle" id="theme-toggle" type="button"><span aria-hidden="true" class="theme-pixel-icon"></span></button>
@@ -75,24 +75,33 @@
 </div>
 </div>
 </div>
-</section><section aria-labelledby="personal-title" class="page personal-page" data-page="1" id="personal">
+</section><section aria-labelledby="personal-title" class="page personal-page" data-page="1" data-step="identity" id="personal">
 <div class="page-heading"><div><p class="section-kicker label">02 / PERSONAL INFORMATION</p><h1 class="page-title" id="personal-title">PERSONAL INFORMATION</h1></div><p class="heading-note">LEARNING BY MAKING</p></div>
+<nav class="compact-page-tabs personal-mobile-tabs" aria-label="Personal information panels">
+  <button type="button" data-personal-step="identity" aria-pressed="true">IDENTITY / 01</button>
+  <button type="button" data-personal-step="notes" aria-pressed="false">FIELD NOTES / 02</button>
+</nav>
 <div class="agent-profile-layout">
 <section aria-label="Personal profile card" class="agent-profile-card panel" data-audit-box id="agent-profile">
 <div class="agent-card-head"><button aria-label="Switch profile portrait to text-only ID mode" aria-pressed="false" class="about-photo-toggle" id="about-photo-toggle" type="button">
 <picture class="about-profile-picture"><source sizes="(min-width: 1024px) 150px, 24vw" srcset="assets/about-portrait-800.webp 800w" type="image/webp"/><img alt="Portrait of Daveen Peñaranda" decoding="async" height="1152" id="about-profile-photo" loading="eager" src="assets/about-portrait.jpg" width="928"/></picture><span aria-hidden="true" class="about-photo-fallback">D</span><span aria-hidden="true" class="photo-sheen"></span><span aria-hidden="true" class="photo-mode-badge" id="about-photo-mode">PHOTO MODE</span>
 <span aria-hidden="true" class="about-id-mode-panel"><small>IDENTITY RECORD / 001</small><strong>Daveen Raphael A. Peñaranda</strong><span>COMPUTER SCIENCE</span><span>UNIVERSITY OF THE CORDILLERAS</span></span></button>
 <div class="agent-heading"><span class="agent-status"><i aria-hidden="true"></i> STATUS: EVOLVING</span><h2>Daveen Raphael A. Peñaranda</h2><p>COMPUTER SCIENCE <span>/</span> UNIVERSITY OF THE CORDILLERAS</p><span class="agent-code">PLAYER RECORD / 001</span></div></div>
-<dl aria-label="Quick profile details" class="quick-stats"><div><dt>NAME</dt><dd>Daveen Raphael A. Peñaranda</dd></div><div><dt>PROGRAM</dt><dd>Computer Science</dd></div><div><dt>UNIVERSITY</dt><dd>University of the Cordilleras</dd></div><div><dt>CIVIL STATUS</dt><dd>Single</dd></div><div><dt>CITIZENSHIP</dt><dd>Filipino</dd></div><div><dt>BIRTHDAY</dt><dd>January</dd></div></dl>
+<dl aria-label="Quick profile details" class="quick-stats"><div><dt>CIVIL STATUS</dt><dd>SINGLE</dd></div><div><dt>CITIZENSHIP</dt><dd>FILIPINO</dd></div><div><dt>BIRTHDAY</dt><dd>JANUARY</dd></div><div><dt>EYE COLOR</dt><dd>BROWN</dd></div><div><dt>FAVOURITE COLOR</dt><dd>PINK & BLUE</dd></div><div><dt>FAVOURITE FOOD</dt><dd>EVERYTHING BUT TOMATOES</dd></div></dl>
 <div class="skill-area"><div class="skill-heading"><span class="field-label label">AREAS OF INTEREST</span><small>EXPLORING / LEARNING</small></div><div class="interest-chips"><span class="chip">GAME DEVELOPMENT</span><span class="chip">AI / MACHINE LEARNING</span><span class="chip">CREATIVE SYSTEMS</span></div></div>
 <p class="profile-disclaimer">INTERESTS ARE DIRECTIONS FOR LEARNING, NOT CLAIMS OF MASTERY.</p></section>
 <div class="about-content" data-audit-box>
 <section aria-labelledby="about-overview-title" class="about-bio-panel panel"><div class="about-panel-heading"><span class="field-label label" id="about-overview-title">PROFILE / OVERVIEW</span><span class="about-panel-index">AGENT FILE / 001</span></div><p>I am a Computer Science student who learns by making. I am exploring technology, problem-solving, and creative systems while working toward game development and artificial intelligence / machine learning. I hope to build games that entertain, teach, and spark curiosity in future generations.</p></section>
 <div aria-label="Personal direction and working approach" class="about-detail-grid"><article class="about-detail-card panel"><span class="field-label label">01 / DIRECTION</span><p>Game development and AI / machine learning are the paths I want to explore.</p></article><article class="about-detail-card panel"><span class="field-label label">02 / APPROACH</span><p>Learn by making. Test an idea. Understand what happens. Build again.</p></article><article class="about-detail-card panel"><span class="field-label label">03 / TEAMWORK</span><p>I value learning with others, adaptability, and shared problem-solving.</p></article><article class="about-detail-card panel"><span class="field-label label">04 / CURRENT BUILD</span><p>Davin the Project is an evolving record of ideas becoming tangible experiences.</p></article></div>
-<section aria-labelledby="dossier-title" class="agent-dossier panel"><div class="dossier-heading"><h2 class="field-label label" id="dossier-title">DOSSIER / FIELD NOTES</h2><span class="dossier-code">AGENT FILE / 001</span></div><div class="dossier-grid"><article class="dossier-item"><span>FAVORITE GAME</span><p>Pokémon</p></article><article class="dossier-item"><span>ASPIRATIONS</span><p>Games · AI / ML</p></article><article class="dossier-item"><span>VALUES</span><p>Teamwork · Adaptability · Curiosity</p></article></div></section>
+<section aria-labelledby="dossier-title" class="agent-dossier panel"><div class="dossier-heading"><h2 class="field-label label" id="dossier-title">DOSSIER / FIELD NOTES</h2><span class="dossier-code">AGENT FILE / 001</span></div><div class="dossier-grid"><article class="dossier-item"><span>FAVORITE GAME</span><p>Pokémon</p></article><article class="dossier-item"><span>ASPIRATIONS</span><p>Game Developer · AI / ML Engineer</p></article><article class="dossier-item"><span>VALUES</span><p>Teamwork · Adaptability · Curiosity</p></article></div></section>
 <section aria-labelledby="contact-info-title" class="personal-contact panel" id="personal-contact" hidden><span class="field-label label" id="contact-info-title">CONTACT</span><a class="text-link" id="personal-email" href="mailto:dap1801@students.uc-bcf.edu.ph">dap1801@students.uc-bcf.edu.ph</a></section>
-</div></div></section><section aria-labelledby="education-title" class="page education-page" data-page="2" id="education">
+</div></div></section><section aria-labelledby="education-title" class="page education-page" data-page="2" data-step="journey" id="education">
 <div class="page-heading education-heading"><div><p class="section-kicker label">03 / EDUCATION</p><h1 class="page-title" id="education-title">EDUCATION &amp; ACHIEVEMENTS</h1></div><p class="heading-note">GRADE SCHOOL <span class="meta-separator">/</span> COLLEGE</p></div>
+<nav class="compact-page-tabs education-mobile-tabs" aria-label="Education panels">
+  <button type="button" data-education-step="journey" aria-pressed="true">JOURNEY / 01</button>
+  <button type="button" data-education-step="achievements" aria-pressed="false">ACHIEVEMENTS / 02</button>
+  <button type="button" data-education-step="proof" aria-pressed="false">PROOF / 03</button>
+</nav>
 <div class="education-content">
 <section aria-labelledby="route-title" class="route-panel panel" data-audit-box>
 <div class="subsection-heading"><h2 class="label" id="route-title">ACADEMIC JOURNEY</h2><span class="meta-label">GRADE SCHOOL TO COLLEGE</span></div>
@@ -115,7 +124,49 @@
 </aside>
 </div>
 </div>
-</section><section aria-labelledby="family-title" class="page family-page" data-page="3" id="family"><div class="page-heading family-heading"><div><p class="section-kicker label">04 / FAMILY &amp; FRIENDS</p><h1 class="page-title" id="family-title">MY PARTY</h1></div><p class="heading-note family-note" id="party-note" hidden></p></div><div class="family-toolbar" data-audit-box><div class="family-filters" id="family-filters" role="group" aria-label="Filter members"><button class="chip filter-chip selected" data-filter="all" type="button" aria-pressed="true">ALL</button><button class="chip filter-chip" data-filter="family" type="button" aria-pressed="false" hidden>FAMILY</button><button class="chip filter-chip" data-filter="friend" type="button" aria-pressed="false" hidden>FRIENDS</button><button class="chip filter-chip" data-filter="teammate" type="button" aria-pressed="false" hidden>TEAMMATES</button></div><span class="family-page-count" id="family-page-count" aria-live="polite"></span></div><div class="family-grid" data-audit-box id="family-grid" aria-label="Family and friends"></div><div class="family-empty panel" data-audit-box id="family-empty">MY PARTY - MEMBERS TO BE ADDED</div><div class="family-pagination" id="family-pagination" hidden><button class="button" id="family-prev" type="button" aria-label="Previous members">PREV</button><span id="family-page-label">1 / 1</span><button class="button" id="family-next" type="button" aria-label="Next members">NEXT</button></div></section></main>
+</section><section aria-labelledby="family-title" class="page family-page" data-page="3" id="family">
+  <div class="page-heading family-heading">
+    <div>
+      <p class="section-kicker label">04 / FAMILY &amp; FRIENDS</p>
+      <h1 class="page-title" id="family-title">THE INNER CIRCLE</h1>
+    </div>
+    <p class="heading-note family-note">MY PEOPLE / MY HOME TEAM</p>
+  </div>
+
+  <div class="family-layout">
+    <section aria-labelledby="foundations-title" class="family-panel foundations-panel" data-audit-box>
+      <div class="family-section-heading">
+        <div><span class="family-index">01 / FOUNDATIONS</span><h2 id="foundations-title">FAMILY</h2></div>
+        <span class="family-section-meta">MY HOME TEAM</span>
+      </div>
+      <div class="family-card-grid" id="family-grid" aria-label="My family"></div>
+    </section>
+
+    <section aria-labelledby="squad-title" class="family-panel squad-panel" data-audit-box>
+      <div class="family-section-heading">
+        <div><span class="family-index">02 / THE SQUAD</span><h2 id="squad-title">BESTFRIENDS</h2></div>
+        <span class="family-section-meta">GOOD PEOPLE / GOOD MEMORIES</span>
+      </div>
+      <div class="squad-content">
+        <div class="squad-photo-grid" id="friend-photo-grid" aria-label="Three photographs with my friends"></div>
+        <div class="squad-message">
+          <p id="squad-caption"></p>
+          <p class="squad-closing" id="squad-closing">Always hoping we all excel!</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="others-title" class="family-panel others-panel" data-audit-box>
+      <div class="family-section-heading others-heading">
+        <div><span class="family-index">03 / MEMORY REEL</span><h2 id="others-title">MEMORIES <span aria-hidden="true">♥</span></h2></div>
+        <span class="family-section-meta">35MM</span>
+      </div>
+      <div class="family-film-window" id="family-film-window" tabindex="0" role="region" aria-label="Continuous film strip of additional memories">
+        <div class="family-film-track" id="family-film-track"></div>
+      </div>
+    </section>
+  </div>
+</section></main>
 <nav aria-label="Previous and next pages" class="corner-controls">
 <button aria-label="Previous page: Home" class="corner-button corner-prev" hidden="" id="page-prev" type="button"><span id="page-prev-label">&lt; HOME</span></button>
 <p class="site-credit"><span class="credit-desktop">Pokémon and its sprites are (c) Nintendo / Creatures / GAME FREAK. Fan tribute for a class project; not affiliated.</span><span class="credit-mobile">Pokémon © Nintendo /<br/>Creatures / GAME FREAK.<span class="sr-only"> Unofficial class tribute; not affiliated.</span></span></p>

@@ -1,0 +1,9 @@
+DAVIN THE PROJECT — FINAL FURNISHING PASS
+
+- Replaced the Personal Information page with the approved animated Player Dossier.
+- Added the supplied personal facts, favorites, learning profile, experience, habits, dream career, and future goal.
+- Excluded blood type from the public-facing page as personal health information.
+- Renamed the visible third navigation item and page heading to ACHIEVEMENTS; retained the existing #education route for stable internal navigation.
+- Removed compact-page click-to-reveal tabs. All main page sections are intended to be visible at rest within a fixed viewport.
+- Made MY OTHERS 35mm film reel animate continuously with supplied supplementary photos or with a decorative placeholder film loop until additional photos are supplied.
+- Retained the four-page navigation, existing home page, theme/sound controls, Pokedex proof scan, local asset paths, and reduced-motion support.
