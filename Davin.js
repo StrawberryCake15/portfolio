@@ -1348,47 +1348,41 @@
   }
 
   function renderMemoryFilm() {
-  familyFilmTrack.replaceChildren();
-
-  const photos = Array.isArray(CONFIG.supplementaryPhotos)
-    ? CONFIG.supplementaryPhotos.filter(item => item && item.photo)
-    : [];
-
-  familyFilmWindow.classList.remove("is-empty", "has-frames");
-  familyFilmWindow.classList.add("has-motion");
-
-  if (!photos.length) return;
-
-  for (let cycleIndex = 0; cycleIndex < 2; cycleIndex++) {
-    const cycle = document.createElement("div");
-    cycle.className = "family-film-cycle";
-    cycle.setAttribute(
-      "aria-hidden",
-      cycleIndex === 1 ? "true" : "false"
-    );
-
-    if (cycleIndex === 1) cycle.inert = true;
-
-    photos.forEach(item => {
-      const frame = document.createElement("figure");
-      frame.className = "family-film-frame";
-
-      const image = makeGalleryImage(
-        item.photo,
-        cycleIndex === 1 ? "" : (item.alt || "Additional memory"),
-        ""
-      );
-
-      image.loading = "eager";
-      frame.append(image);
-      cycle.append(frame);
-    });
-
-    familyFilmTrack.append(cycle);
+    familyFilmTrack.replaceChildren();
+    const photos = Array.isArray(CONFIG.supplementaryPhotos) ? CONFIG.supplementaryPhotos.filter((item) => item && item.photo) : [];
+    if (!photos.length) {
+      familyFilmWindow.classList.add("is-empty");
+      const empty = document.createElement("div");
+      empty.className = "film-empty-state";
+      [1, 2, 3, 4].forEach((number) => {
+        const frame = document.createElement("span");
+        frame.className = "film-empty-frame";
+        addText(frame, "b", "film-frame-number", "FRAME " + String(number).padStart(2, "0"));
+        addText(frame, "i", "film-frame-placeholder", "PHOTO TO COME");
+        empty.append(frame);
+      });
+      familyFilmTrack.append(empty);
+      return;
+    }
+    familyFilmWindow.classList.remove("is-empty");
+    for (let cycleIndex = 0; cycleIndex < 2; cycleIndex += 1) {
+      const cycle = document.createElement("div");
+      cycle.className = "family-film-cycle";
+      cycle.setAttribute("aria-hidden", cycleIndex === 1 ? "true" : "false");
+      if (cycleIndex === 1) cycle.inert = true;
+      photos.forEach((item, index) => {
+        const frame = document.createElement("figure");
+        frame.className = "family-film-frame";
+        frame.append(makeGalleryImage(item.photo, cycleIndex ? "" : (item.alt || item.title || "Additional memory"), ""));
+        const caption = document.createElement("figcaption");
+        caption.textContent = item.title || ("MEMORY / " + String(index + 1).padStart(2, "0"));
+        frame.append(caption);
+        cycle.append(frame);
+      });
+      familyFilmTrack.append(cycle);
+    }
+    familyFilmWindow.classList.add("has-frames");
   }
-
-  familyFilmWindow.classList.add("has-frames");
-}
 
   function renderFamily() {
     familyGrid.replaceChildren(...CONFIG.family.map(drawFoundationCard));
