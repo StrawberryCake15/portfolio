@@ -7,7 +7,7 @@ required = ["index.html", "style.css", "Davin.js", "README.txt", "overlap-check.
 routes = ["home", "personal", "education", "family"]
 family_photos = [
     "assets/family/my-mama.webp", "assets/family/my-papa.webp", "assets/family/my-ading.webp",
-    "assets/friends/squad-01.webp", "assets/friends/squad-02.webp", "assets/friends/squad-03.webp",
+    "assets/friends/squad-01.webp",
 ]
 optional_original = [
     "assets/daveen-cutout.png", "assets/daveen-cutout.webp", "assets/about-portrait.jpg",
@@ -30,8 +30,9 @@ if re.search(r'\bid="(?:builds|lab|contact|davin)"', html, re.I):
     problems.append("Obsolete page route remains")
 if "THE INNER CIRCLE" not in html or "FOUNDATIONS" not in html or "THE SQUAD" not in html or "MY OTHERS" not in html:
     problems.append("Family & Friends sections are incomplete")
-if "supplementaryPhotos: []" not in js:
-    problems.append("Supplementary photo list should remain empty until photos are supplied")
+for memory in re.findall(r'photo:\s*"(assets/[^"]+)"', js.split("supplementaryPhotos", 1)[-1].split("]", 1)[0]):
+    if not (ROOT / memory).is_file():
+        warnings.append("MY OTHERS photo listed in CONFIG but not in this bundle: " + memory)
 if "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self';" not in html:
     problems.append("CSP is missing the self-only font/script/style policy")
 if "!important" in css:

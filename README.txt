@@ -42,3 +42,28 @@ CHECKS
 - Run: python check_site.py
 - overlap-check.js can be pasted into the browser console on the deployed site to check the four views at the current viewport.
 - The current archive check verifies the four routes, family photo files, local policy, and configured view behavior. Missing original repository assets are reported as warnings rather than fabricated.
+
+VISUAL DEPTH AND PERFORMANCE
+- A fixed depth stack (soft glow, running perspective grid, rising pixel embers, vignette) sits behind every page; each page's hero panel has a rotating border ring; family/squad photos share one colour grade with corner brackets and a periodic light sweep.
+- Adaptive quality: about 5.5 seconds after load the page samples its frame rate. Below roughly 34 fps it adds the fx-lite class, which turns the embers, grid motion, ring rotation, and light sweeps into static versions.
+- Add ?fx=full or ?fx=lite to the URL to force a mode when testing (for example index.html?fx=full#family).
+- Reduced-motion settings remove the embers and stop all of these animations.
+
+CHOREOGRAPHY (PASS 2)
+- Built on the browser's native Web Animations API; no animation or 3D library is bundled, so the strict self-only policy and the single-file build stay intact.
+- FAMILY & FRIENDS battle intro (about 3.5 seconds, first visit per browser session only): alternating stripes sweep in, "DAVIN sent out THE INNER CIRCLE!" types in a Pokemon-style box, a pixel Poke Ball is thrown, bounces and wobbles, then bursts open and the six photos fly out into their frames while the panels fade in. Click or press any key to skip. Reduced-motion settings skip it entirely.
+- PERSONAL: an NPC dialogue box in the page heading types three sentences taken from this page (click to advance), and the portrait and name sit on parallax depth layers.
+- HOME: the name animates in letter by letter each time you arrive, and the portrait ball wiggles every few seconds.
+
+LATEST CHANGES
+- MY OTHERS film is one constant belt: frames move at a steady speed and are recycled off-screen, so there is no keyframe loop or restart. It pauses on hover/focus and is static with reduced motion.
+- Default theme is NIGHT (black and maroon). The toggle now cycles NIGHT, PARCHMENT, SLATE; saved choices from before this update are ignored once (storage key davin-theme-v2).
+- Achievements are six: MILO Little Olympics was replaced by Online Certifications, and Workshop Engagement was added.
+- THE SQUAD uses one photo (assets/friends/squad-01.webp). squad-02 and squad-03 are no longer used and can be deleted.
+- The HOME button is gone from the navigation (desktop and mobile menu). The DAVIN logo, the PREV/NEXT buttons and key 1 still lead home; all four pages remain.
+- Personal information: panels fade up together as the page wipe passes, then the dialogue box types, replacing the earlier per-element pop-in.
+
+FAMILY CAPTIONS AND PHOTO HIGHLIGHTS
+- Captions are rewritten around the main message: Mama (love and support), Papa (protection and guidance), Ading (inspiration and reminder), the squad (blessings and support). Edit them in CONFIG.family (note, short, tag), CONFIG.partyNote / partyShort and CONFIG.squadTag.
+- "short" and "partyShort" are the condensed versions shown on screens up to 900px wide so every photo and caption fits without scrolling; the full version shows on larger screens.
+- Each photo carries its message tag, a soft glow frame and a very slow drift; hovering a family card spotlights it and dims the others. fx-lite and reduced motion turn the drift off.

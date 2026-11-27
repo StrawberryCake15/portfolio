@@ -1,0 +1,202 @@
+/* Davin the Project: cinematic layer styles. Loaded after style.css, driven by davin-fx.js.
+ * Every rule is scoped to html.fx or to elements the script creates, so removing this file or the script
+ * returns the site to exactly its previous look. Colours come from the existing theme tokens. */
+
+/* ---------- Title screen ---------- */
+.fx-ch { display: inline-block; will-change: transform; }
+html.fx-title-pending .fx-ch { opacity: 0; }
+html.fx-title-run .fx-ch { animation: fx-chroma 1.3s ease-out both; }
+@keyframes fx-chroma {
+  0%   { text-shadow: 3px 0 rgba(255, 70, 100, .75), -3px 0 rgba(90, 220, 255, .55); }
+  100% { text-shadow: 0 0 rgba(255, 70, 100, 0), 0 0 rgba(90, 220, 255, 0); }
+}
+
+.fx-scan { position: absolute; left: 0; right: 0; top: 0; height: 2px; z-index: 6; pointer-events: none; opacity: 0;
+  background: linear-gradient(90deg, transparent, var(--accent-light), #fff, var(--accent-light), transparent);
+  box-shadow: 0 0 18px 4px rgba(214, 91, 112, .45); }
+.fx-scan-run .fx-scan { animation: fx-scan 1.25s cubic-bezier(.45, 0, .2, 1) both; }
+@keyframes fx-scan {
+  0%   { top: 0; opacity: 0; }
+  12%  { opacity: 1; }
+  88%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.fx-drift { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; opacity: .5;
+  -webkit-mask-image: linear-gradient(to top, transparent 0, #000 16%, #000 80%, transparent 100%);
+  mask-image: linear-gradient(to top, transparent 0, #000 16%, #000 80%, transparent 100%); }
+.fx-drift i { position: absolute; bottom: 0; width: var(--size, 22px); height: var(--size, 22px); border-radius: 50%;
+  background: linear-gradient(180deg, var(--accent-light) 0 45%, #120F10 45% 55%, #F2EFEA 55%);
+  box-shadow: 0 0 0 2px #120F10, inset 0 0 0 1px rgba(255, 255, 255, .25); }
+.fx-drift i::after { content: ""; position: absolute; left: 50%; top: 50%; width: 30%; height: 30%; margin: -15% 0 0 -15%;
+  border-radius: 50%; background: #F2EFEA; box-shadow: 0 0 0 2px #120F10; }
+html.fx-lite .fx-drift { display: none; }
+
+/* ZZZ-style caution tape behind the title copy */
+.fx-tape { position: absolute; left: -3%; bottom: 9%; width: 44%; height: 28px; z-index: 3; overflow: hidden; pointer-events: none;
+  transform: rotate(-3.2deg); background: var(--accent); border-block: 1px solid var(--accent-light); opacity: .9;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%); }
+.fx-tape::after { content: ""; position: absolute; inset: 0; opacity: .16;
+  background: repeating-linear-gradient(135deg, #fff 0 6px, transparent 6px 14px); }
+.fx-tape-track { display: flex; width: max-content; animation: fx-tape 30s linear infinite; }
+.fx-tape-track span { padding: 0 1.1em; font: 700 11px/26px var(--display); letter-spacing: .22em; color: var(--ink); white-space: nowrap; }
+@keyframes fx-tape { to { transform: translateX(-50%); } }
+html.fx-lite .fx-tape-track { animation: none; }
+@media (max-height: 760px), (max-width: 1023px), (orientation: portrait) { .fx-tape { display: none; } }
+
+/* ---------- Personal Information: dialogue strip ---------- */
+#personal .page-heading > :not(.fx-dlg) { flex-shrink: 0; }   /* the title and note keep their natural size; the strip only takes leftover room */
+.fx-dlg { position: relative; flex: 1 1 0; max-width: 640px; min-width: 0; height: 66px; align-self: end; margin: 0 auto 2px;
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 8px 12px 8px 10px;
+  background: var(--surface); border: 1px solid var(--line); cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)); }
+.fx-dlg::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--accent-light); }
+.fx-dlg-face { position: relative; width: 46px; height: 46px; overflow: hidden; display: grid; place-items: center;
+  background: var(--accent); border: 1px solid var(--accent-light); font: 800 20px/1 var(--display); color: var(--ink); }
+.fx-dlg-face img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 14%; }
+.fx-dlg-main { min-width: 0; display: grid; gap: 3px; align-content: center; }
+.fx-dlg-name { font: 800 11px/1 var(--display); letter-spacing: .12em; color: var(--accent-text); }
+.fx-dlg-name i { font-style: normal; font-weight: 600; color: var(--muted); }
+.fx-dlg-body { display: flex; flex-wrap: wrap; align-content: flex-start; align-items: center; gap: 2px 10px; min-height: 2.6em; }
+.fx-dlg-text { margin: 0; font: 500 13.5px/1.3 var(--body); color: var(--ink); }
+.fx-dlg.is-typing .fx-dlg-text::after { content: "\258C"; margin-left: 2px; color: var(--accent-text); animation: fi-blink .6s steps(2) infinite; }
+.fx-dlg-choices { display: none; gap: 8px; flex-wrap: wrap; }
+.fx-dlg.is-last:not(.is-typing) .fx-dlg-choices { display: inline-flex; }
+.fx-dlg-choices button { min-height: 26px; padding: 4px 9px; border: 1px solid var(--accent-light); background: transparent; color: var(--ink);
+  font: 700 11px/1 var(--display); letter-spacing: .08em; cursor: pointer; transform: skewX(-7deg); }
+.fx-dlg-choices button::before { content: "\25B6\00a0"; color: var(--accent-text); }
+.fx-dlg-choices button:hover, .fx-dlg-choices button:focus-visible { background: var(--accent); outline: none; }
+.fx-dlg-next { width: 26px; height: 26px; padding: 0; border: 1px solid var(--line); background: transparent; color: var(--accent-text); font-size: 11px; cursor: pointer; }
+.fx-dlg-next:focus-visible { outline: 2px solid var(--accent-light); outline-offset: 2px; }
+.fx-dlg:not(.is-typing):not(.is-last) .fx-dlg-next { animation: fi-nudge 1s ease-in-out infinite; }
+.fx-dlg.is-last .fx-dlg-next { visibility: hidden; }
+@keyframes fi-nudge { 50% { transform: translateY(3px); } }
+@media (max-width: 1180px), (max-width: 800px), (orientation: portrait) { .fx-dlg { display: none; } }
+
+/* depth layer inside the Dossier panel (panels use clip-path, so z-index -1 stays inside the panel, behind its text) */
+.fx-emblem { position: absolute; right: 6px; bottom: 6px; width: min(230px, 36%); aspect-ratio: 1; overflow: hidden; z-index: -1; pointer-events: none; opacity: .14; }
+.fx-emblem svg { width: 100%; height: 100%; fill: none; stroke: var(--accent-light); stroke-width: 1.4; animation: fx-emblem 120s linear infinite; }
+@keyframes fx-emblem { to { transform: rotate(360deg); } }
+html.fx-lite .fx-emblem { animation: none; }
+@media (max-width: 800px), (orientation: portrait) { .fx-emblem { display: none; } }
+
+/* ---------- Family & Friends: replay control ---------- */
+.fx-head-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.fx-replay { min-height: 28px; padding: 5px 10px; border: 1px solid var(--line); background: var(--surface-wash-18, transparent); color: var(--muted);
+  font: 700 11px/1 var(--display); letter-spacing: .1em; cursor: pointer; transform: skewX(-7deg); transition: color .2s, border-color .2s; }
+.fx-replay:hover, .fx-replay:focus-visible { color: var(--ink); border-color: var(--accent-light); outline: none; }
+.fx-pop { position: absolute; inset: 0; z-index: 3; background: #fff; opacity: 0; pointer-events: none; }
+
+/* ---------- Family intro: the cutscene overlay ---------- */
+.fi { position: fixed; inset: 0; z-index: 140; overflow: hidden; background: #0A0809; color: #F2EFEA; font-family: var(--display); cursor: pointer; touch-action: none; }
+.fi.is-leaving { opacity: 0; transition: opacity .22s ease-out; pointer-events: none; }
+.fi-scene, .fi-scene > * { position: absolute; }
+.fi-scene { inset: 0; }
+.fi-quick .fi-scene { display: none; }
+
+.fi-sky { inset: 0; background: radial-gradient(ellipse at 70% 52%, rgba(181, 48, 74, .35), transparent 55%), linear-gradient(180deg, #10050a 0%, #2a0a14 52%, #12070b 100%); }
+.fi-speed { inset: -28%; animation: fi-spin 46s linear infinite;
+  background: repeating-conic-gradient(from 0deg at 70% 48%, rgba(242, 239, 234, .07) 0 1.3deg, transparent 1.3deg 7deg);
+  -webkit-mask-image: radial-gradient(circle at 70% 48%, transparent 6%, #000 55%); mask-image: radial-gradient(circle at 70% 48%, transparent 6%, #000 55%); }
+.fi-floor { left: -25%; right: -25%; bottom: 0; height: 100%; transform-origin: 50% 100%; transform: perspective(520px) rotateX(74deg);
+  background: linear-gradient(rgba(181, 48, 74, .5) 2px, transparent 2px) 0 0 / 100% 54px, linear-gradient(90deg, rgba(181, 48, 74, .5) 2px, transparent 2px) 0 0 / 74px 100%;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 20%, #000 100%); mask-image: linear-gradient(to bottom, transparent 20%, #000 100%);
+}
+.fi-plat { --pw: min(56vmin, 600px); width: var(--pw); height: calc(var(--pw) * .26); border-radius: 50%;
+  left: calc(var(--x) - var(--pw) / 2); top: calc(var(--y) - var(--pw) * .13);
+  background: radial-gradient(ellipse at 50% 32%, #8a2339 0%, #4d1020 56%, #240710 100%);
+  box-shadow: 0 1.2vmin 0 #150508, 0 0 0 .55vmin rgba(214, 91, 112, .6), inset 0 .6vmin 1.6vmin rgba(255, 170, 185, .28); }
+.fi-plat-enemy { --x: 70%; --y: 50%; }
+.fi-plat-player { --x: 18%; --y: 90%; --pw: min(78vmin, 760px); }
+
+.fi-crew { left: 70%; top: 50%; width: 0; height: 0; }
+.fi-crew i { position: absolute; bottom: 1.2vmin; display: block; width: var(--w); height: var(--h); margin-left: var(--ox); transform-origin: 50% 60%;
+  background: linear-gradient(#0b0407, #1c0810); border-radius: 38% 38% 10% 10% / 26% 26% 6% 6%;
+  box-shadow: inset 0 .5vmin 0 rgba(255, 150, 170, .25), 0 0 3.4vmin rgba(181, 48, 74, .4); }
+.fi-crew i::before { content: ""; position: absolute; left: 50%; bottom: 100%; width: 62%; aspect-ratio: 1; margin: 0 0 -.4vmin -31%; border-radius: 50%; background: inherit;
+  box-shadow: inset 0 .5vmin 0 rgba(255, 150, 170, .25); }
+.fi-crew i:nth-child(1) { --w: 10vmin; --h: 15vmin; --ox: -19vmin; }
+.fi-crew i:nth-child(2) { --w: 11vmin; --h: 17.5vmin; --ox: -7vmin; }
+.fi-crew i:nth-child(3) { --w: 8vmin; --h: 11vmin; --ox: 5vmin; }
+.fi-crew i:nth-child(4) { --w: 9.5vmin; --h: 14vmin; --ox: 13vmin; }
+.fi-crew i.is-captured { background: linear-gradient(#ff9aaa, #d02a48); box-shadow: 0 0 5vmin #ff4d6d; }
+
+.fi-plate { left: 5%; top: 15%; min-width: min(300px, 62vw); display: grid; grid-template-columns: 1fr auto; gap: 8px 14px; align-items: baseline;
+  padding: 1.6vmin 2.4vmin 2vmin; background: rgba(10, 8, 9, .92);
+  box-shadow: inset 0 0 0 2px rgba(242, 239, 234, .9), inset 0 0 0 4px #0A0809, inset 0 0 0 6px var(--accent-light);
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px)); }
+.fi-plate b { font: 800 clamp(16px, 2.6vmin, 26px)/1 var(--display); letter-spacing: .06em; }
+.fi-plate em { font: 700 clamp(12px, 1.9vmin, 18px)/1 var(--display); font-style: normal; color: var(--accent-text); }
+.fi-hp { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; }
+.fi-hp u { text-decoration: none; padding: 2px 5px; background: var(--accent-light); color: #0A0809; font: 800 11px/1 var(--display); }
+.fi-hp i { flex: 1; height: 9px; background: linear-gradient(90deg, #ff7a92, #d65b70); box-shadow: 0 0 0 2px #1a0b0f; }
+
+.fi-canvas { inset: 0; width: 100%; height: 100%; display: none; pointer-events: none; }
+.fi-gl .fi-canvas { display: block; }
+.fi-cssball { left: 0; top: 0; border-radius: 50%; opacity: 0; pointer-events: none;
+  background: radial-gradient(circle at 34% 26%, rgba(255, 255, 255, .6) 0 5%, transparent 20%), linear-gradient(180deg, #a8122a 0 46%, #141012 46% 55%, #f2efea 55%);
+  box-shadow: inset -.9vmin -.9vmin 2.2vmin rgba(0, 0, 0, .38); }
+.fi-cssball i { position: absolute; left: 50%; top: 50%; width: 26%; aspect-ratio: 1; margin: -13% 0 0 -13%; border-radius: 50%; background: #f2efea;
+  box-shadow: 0 0 0 .7vmin #141012, 0 0 calc(2.4vmin * var(--glow, 0)) calc(1.2vmin * var(--glow, 0)) rgba(255, 190, 200, .9); }
+.fi-gl .fi-cssball { display: none; }
+.fi-glow { width: 40vmin; height: 40vmin; margin: -20vmin 0 0 -20vmin; border-radius: 50%; opacity: 0; pointer-events: none;
+  background: radial-gradient(circle, #fff 0, rgba(255, 205, 214, .95) 24%, rgba(255, 80, 110, .42) 55%, transparent 70%); }
+.fi-sparks { inset: 0; pointer-events: none; }
+.fi-sparks i { position: absolute; width: 14px; height: 14px; margin: -7px 0 0 -7px; background: #fff;
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); }
+
+.fi-dialog { left: 0; right: 0; bottom: max(4vh, 22px); margin-inline: auto; width: min(900px, 92vw); min-height: clamp(84px, 14vmin, 128px);
+  padding: clamp(16px, 2.6vmin, 28px) clamp(20px, 3.4vmin, 40px); background: rgba(10, 8, 9, .95); opacity: 0;
+  box-shadow: inset 0 0 0 3px #F2EFEA, inset 0 0 0 6px #0A0809, inset 0 0 0 8px var(--accent-light);
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px)); }
+.fi-text { margin: 0; min-height: 1.35em; font: 600 clamp(17px, 3.2vmin, 28px)/1.35 var(--display); letter-spacing: .03em; }
+.fi-more { position: absolute; right: 24px; bottom: 14px; font-style: normal; color: var(--accent-text); opacity: 0; }
+.fi-dialog.is-done .fi-more { opacity: 1; animation: fi-blink .8s steps(2) infinite; }
+
+.fi-bars { inset: 0; display: grid; grid-template-rows: repeat(9, 1fr); pointer-events: none; }
+.fi-bars i { display: block; background: #0A0809; box-shadow: 0 1px 0 var(--accent-light), 0 -1px 0 var(--accent-light); }
+
+/* camera shutter + viewfinder */
+.fi-iris { position: absolute; inset: 0; display: none; pointer-events: none; }
+.fi-iris.is-on { display: block; }
+.fi-iris-fill { fill: #0A0809; }
+.fi-iris-edge { fill: none; stroke: var(--accent-light); stroke-width: 3; stroke-linejoin: round; }
+.fi-iris-glow { fill: none; stroke: var(--accent-light); stroke-width: 14; stroke-linejoin: round; opacity: .3; }   /* cheap glow: a wide soft stroke instead of a per-frame blur filter */
+.fi-vf { position: absolute; inset: 0; display: none; pointer-events: none; font: 700 clamp(11px, 1.7vmin, 14px)/1 var(--display); letter-spacing: .14em; color: #F2EFEA; }
+.fi-vf.is-on { display: block; }
+.fi-c { position: absolute; width: 6vmin; height: 6vmin; border: 0 solid rgba(242, 239, 234, .92); }
+.fi-c-tl { left: 6vmin; top: 6vmin; border-width: 3px 0 0 3px; }
+.fi-c-tr { right: 6vmin; top: 6vmin; border-width: 3px 3px 0 0; }
+.fi-c-bl { left: 6vmin; bottom: 6vmin; border-width: 0 0 3px 3px; }
+.fi-c-br { right: 6vmin; bottom: 6vmin; border-width: 0 3px 3px 0; }
+.fi-rec { position: absolute; left: calc(6vmin + 16px); top: calc(6vmin + 16px); display: flex; align-items: center; gap: 8px; }
+.fi-rec b { width: 10px; height: 10px; border-radius: 50%; background: #ff3b5c; animation: fi-blink .9s steps(2) infinite; }
+.fi-roll { position: absolute; right: calc(6vmin + 16px); top: calc(6vmin + 16px); }
+.fi-tc { position: absolute; left: calc(6vmin + 16px); bottom: calc(6vmin + 16px); font-variant-numeric: tabular-nums; }
+.fi-af { position: absolute; right: calc(6vmin + 16px); bottom: calc(6vmin + 16px); padding: 3px 6px; border: 1px solid currentColor; }
+.fi-perf { position: absolute; top: 0; bottom: 0; width: 26px; opacity: .85;
+  background: repeating-linear-gradient(180deg, transparent 0 9px, rgba(242, 239, 234, .85) 9px 21px, transparent 21px 32px) center / 10px 100% no-repeat, #0A0809; }
+.fi-perf-l { left: 0; }
+.fi-perf-r { right: 0; }
+.fi-flash { position: absolute; inset: 0; background: #fff4ee; opacity: 0; pointer-events: none; }
+.fi-skip { position: absolute; right: max(14px, 2vmin); top: max(14px, 2vmin); z-index: 5; min-height: 40px; padding: 8px 14px; border: 1px solid rgba(242, 239, 234, .4);
+  background: rgba(10, 8, 9, .72); color: #F2EFEA; font: 700 12px/1 var(--display); letter-spacing: .14em; cursor: pointer; }
+.fi-skip kbd { margin-left: 6px; font: inherit; opacity: .6; }
+.fi-skip:focus-visible { outline: 2px solid var(--accent-light); outline-offset: 3px; }
+.fi-vf.is-on ~ .fi-skip { opacity: 0; pointer-events: none; }
+body.fi-on { overflow: hidden; }
+
+@keyframes fi-spin { to { transform: rotate(360deg); } }
+@keyframes fi-blink { 50% { opacity: 0; } }
+
+/* Reduced motion: nothing here autoplays; the script also skips every cutscene. */
+@media (prefers-reduced-motion: reduce) {
+  .fx-tape-track, .fx-drift i, .fx-dlg-next, .fx-scan, .fx-emblem { animation: none; }
+  .fx-drift { display: none; }
+}
+
+/* ---------- Corner controls: room for the longer "ACHIEVEMENTS" labels on tablets ---------- */
+@media (min-width: 601px) and (max-width: 900px) {
+  .corner-controls { grid-template-columns: minmax(172px, 1fr) minmax(0, 300px) minmax(172px, 1fr); }
+}
+@media (pointer: coarse) { .fi-skip kbd { display: none; } }

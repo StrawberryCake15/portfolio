@@ -7,7 +7,7 @@
     displayName: ["DAVEEN", "PEÑARANDA"],
     showProjectHeadline: false,
     trainerSpriteSrc: "",
-    themeNames: ["parchment", "night", "slate"],
+    themeNames: ["night", "parchment", "slate"],
     spriteRows: { desktop: 4, short: 3, phone: 2 },
     spriteSpeeds: { far: 110, near: 55 },
     soundDefault: false,
@@ -32,22 +32,39 @@
       ] },
       { id: "journalist", title: "Campus Journalist", category: "MEDIA", stage: "THE FORUMN / SCHOOL PUBLICATION", years: [], note: "Campus journalist for The Forumn school publication.", icon: "quill", proofImage: "assets/proofs/the-climb-journalism.jpg", proofAlt: "The Climb: Journey Beyond the Goal, a feature story about graduates" },
       { id: "broadcaster", title: "Broadcaster", category: "MEDIA", stage: "BROADCASTING", years: [], note: "Experience as a campus broadcaster.", icon: "mic" },
-      { id: "milo", title: "MILO Little Olympics 2019", category: "ATHLETICS", stage: "GRADE SCHOOL", years: ["2019"], note: "Qualified and competed in the MILO Little Olympics in 2019.", icon: "medal" },
-      { id: "divisions", title: "Division Meet · Volleyball (Men's)", category: "ATHLETICS", stage: "JUNIOR HIGH / SENIOR HIGH", years: ["2023", "2025"], note: "Qualified and competed in the men's volleyball Division Meet in 2023 and 2025.", icon: "medal", proofImage: "assets/proofs/athletics-volleyball-team.jpg", proofAlt: "The volleyball team huddles together after a match" }
+      { id: "certifications", title: "Online Certifications", category: "LEARNING", stage: "ONLINE LEARNING", years: [], note: "Online certifications earned alongside my studies.", icon: "certificate" },
+      { id: "divisions", title: "Division Meet · Volleyball (Men's)", category: "ATHLETICS", stage: "JUNIOR HIGH / SENIOR HIGH", years: ["2023", "2025"], note: "Qualified and competed in the men's volleyball Division Meet in 2023 and 2025.", icon: "medal", proofImage: "assets/proofs/athletics-volleyball-team.jpg", proofAlt: "The volleyball team huddles together after a match" },
+      { id: "workshops", title: "Workshop Engagement", category: "LEARNING", stage: "WORKSHOPS", years: [], note: "Active engagement in workshops.", icon: "gear" }
     ],
-    certificates: [
-      { id: "certificate-placeholder-01", title: "CERTIFICATE — TO BE ADDED", issuer: "", date: "", fileUrl: "", previewImage: "", previewAlt: "Certificate placeholder" },
-      { id: "certificate-placeholder-02", title: "CERTIFICATE — TO BE ADDED", issuer: "", date: "", fileUrl: "", previewImage: "", previewAlt: "Certificate placeholder" }
-    ],
+    
+certificates: [
+  {
+    id: "ai-data-scientist",
+    title: "AI and Data Scientist",
+    issuer: "OneRoadmap",
+    date: "November 12, 2026",
+    fileUrl: "assets/certs/ai-and-data-scientist-certificate.pdf",
+    previewImage: "assets/certs/previews/ai-and-data-scientist-certificate-preview.jpg",
+    previewAlt: "OneRoadmap Certificate of Achievement in AI and Data Scientist",
+  },
+  {
+    id: "python",
+    title: "Python",
+    issuer: "OneRoadmap",
+    date: "November 11, 2026",
+    fileUrl: "assets/certs/python-certificate.pdf",
+    previewImage: "assets/certs/previews/python-certificate-preview.jpg",
+    previewAlt: "OneRoadmap Certificate of Achievement in Python",
+  },
+],
+
     family: [
-      { name: "MY MAMA", relation: "FAMILY / 01", photo: "assets/family/my-mama.webp", alt: "Daveen with his mother", note: "Thank you for your unconditional love, sacrifices, and unwavering support. I am grateful for everything you have done and continue to do for me." },
-      { name: "MY PAPA", relation: "FAMILY / 02", photo: "assets/family/my-papa.webp", alt: "Daveen with his father", note: "Thank you for your protection, guidance, and support. Your presence and the ways you look after me mean more than words can express." },
-      { name: "MY ADING", relation: "FAMILY / 03", photo: "assets/family/my-ading.webp", alt: "Daveen with his sibling", note: "You inspire me to keep becoming a better kuya. I want to continue growing, improving, and becoming someone you can always look up to." }
+      { name: "MY MAMA", short: "Thank you for loving me without conditions and for standing behind every step I take.", relation: "FAMILY / 01", tag: "LOVE & SUPPORT", photo: "assets/family/my-mama.webp", alt: "Daveen with his mother", note: "Mama, thank you for loving me without conditions and for standing behind every step I take. Your love is where I begin, and your support is why I keep going." },
+      { name: "MY PAPA", short: "Thank you for protecting me and guiding me when the road is unclear.", relation: "FAMILY / 02", tag: "PROTECTION & GUIDANCE", photo: "assets/family/my-papa.webp", alt: "Daveen with his father", note: "Papa, thank you for protecting me and for guiding me when the road is unclear. Your care shows in everything you do, and I carry your lessons with me wherever I go." },
+      { name: "MY ADING", short: "You remind me who I want to be. I will keep growing as your kuya.", relation: "FAMILY / 03", tag: "INSPIRATION & REMINDER", photo: "assets/family/my-ading.webp", alt: "Daveen with his sibling", note: "Ading, you are my reminder of who I want to be. You inspire me to be a better kuya, and I will keep growing so you always have someone to look up to." }
     ],
     friends: [
-      { title: "THE SQUAD / 01", photo: "assets/friends/squad-01.webp", alt: "Daveen with friends at school" },
-      { title: "THE SQUAD / 02", photo: "assets/friends/squad-02.webp", alt: "A group photograph with friends" },
-      { title: "THE SQUAD / 03", photo: "assets/friends/squad-03.webp", alt: "Friends together during a karaoke outing" }
+      { title: "THE SQUAD", photo: "assets/friends/squad-02.webp", alt: "Daveen with friends at school" }
     ],
     supplementaryPhotos: [
   {
@@ -63,7 +80,9 @@
     photo: "assets/family/memory-04.jpg"
   }
     ],
-    partyNote: "These people have been a blessing in my life. Their presence, encouragement, and determination continually push and inspire me to pursue excellence. I am grateful to have people who challenge me to grow, celebrate progress, and strive for something greater together.",
+    squadTag: "COMMUNITY",
+    partyShort: "You are blessings in my life. Your support lifts me up and pushes me to do my best.",
+    partyNote: "You are blessings in my life. Your support lifts me up, your encouragement keeps me moving, and your drive pushes me to give my best. I am grateful to grow alongside you.",
     contact: { email: "dap1801@students.uc-bcf.edu.ph" }
   };
 
@@ -112,14 +131,33 @@
   const siteIntro = document.getElementById("site-intro");
   let introStartTimer = 0;
   let introFinishTimer = 0;
-  function finishSiteIntro() {
-    window.clearTimeout(introStartTimer);
-    window.clearTimeout(introFinishTimer);
-    if (siteIntro) siteIntro.hidden = true;
-    document.body.classList.remove("intro-playing");
+  let introDoneDispatched = false;
+
+function announceIntroDone() {
+  if (introDoneDispatched) return;
+
+  introDoneDispatched = true;
+
+  document.dispatchEvent(
+    new CustomEvent("davin:intro-done")
+  );
+}
+  
+ function finishSiteIntro() {
+  window.clearTimeout(introStartTimer);
+  window.clearTimeout(introFinishTimer);
+
+  if (siteIntro) siteIntro.hidden = true;
+
+  document.body.classList.remove("intro-playing");
+
+  announceIntroDone();
+}
+ function startSiteIntro() {
+  if (!siteIntro || reducedMotion.matches) {
+    announceIntroDone();
+    return;
   }
-  function startSiteIntro() {
-    if (!siteIntro || reducedMotion.matches) return;
     siteIntro.hidden = false;
     document.body.classList.add("intro-playing");
     introStartTimer = window.setTimeout(() => {
@@ -176,13 +214,13 @@
   let lastPointerType = "";
 
 
-  // THEMES: start in PARCHMENT unless a previous theme choice was saved by this site.
+  // THEMES: start in NIGHT unless a previous theme choice was saved by this site.
   function readSavedTheme() {
     try {
-      const saved = localStorage.getItem("davin-theme");
-      return CONFIG.themeNames.includes(saved) ? saved : "parchment";
+      const saved = localStorage.getItem("davin-theme-v2");
+      return CONFIG.themeNames.includes(saved) ? saved : "night";
     } catch (_error) {
-      return "parchment";
+      return "night";
     }
   }
 
@@ -199,7 +237,7 @@
       if (themeBackground) themeMeta.setAttribute("content", themeBackground);
     }
     try {
-      localStorage.setItem("davin-theme", theme);
+      localStorage.setItem("davin-theme-v2", theme);
     } catch (_error) {
       // The selected theme still works for this page when storage is blocked.
     }
@@ -452,7 +490,9 @@
   }
 
   function syncPage({ focusHeading = false } = {}) {
-    activeIndex = indexFromHash();
+  const previousIndex = activeIndex;
+
+  activeIndex = indexFromHash();
     const pageStage = document.querySelector(".page-stage");
     if (pageStage) pageStage.scrollTop = 0;
     pageElements.forEach((page, index) => {
@@ -462,6 +502,15 @@
       if ("inert" in page) page.inert = !isActive;
       else if (!isActive) page.setAttribute("inert", "");
       else page.removeAttribute("inert");
+      document.dispatchEvent(
+  new CustomEvent("davin:pagechange", {
+    detail: {
+      index: activeIndex,
+      previous: previousIndex
+    }
+  })
+);
+      
     });
 
     navLinks.forEach((link) => {
@@ -513,6 +562,9 @@
       transitionTimer = window.setTimeout(() => document.body.classList.remove("transitioning"), 640);
     }
     playSoundEffect("page");
+    document.addEventListener("davin:sfx", (event) => {
+  playSoundEffect(event.detail);
+});
     window.location.hash = pages[safeIndex];
     syncPage({ focusHeading });
   }
@@ -949,6 +1001,8 @@
     quill: '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M39 5C23 6 12 11 9 23c-2 8 5 12 11 8-1 6-5 9-9 11m5-12 12-11M12 36l-4 4m20-24 7 6"/></svg>',
     mic: '<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="17" y="5" width="14" height="24" rx="7"/><path d="M11 22v2a13 13 0 0 0 26 0v-2M24 37v7m-9 0h18"/></svg>',
     ball: '<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><path d="M6 24h36M24 6a18 18 0 0 1 0 36"/><circle cx="24" cy="24" r="5"/></svg>',
+    certificate: '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 8h34v24H7z"/><path d="M13 16h22M13 22h14"/><path d="m30 32 2 9 4-3 4 3-2-9"/></svg>',
+    gear: '<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="7"/><path d="M24 5v7m0 24v7M5 24h7m24 0h7M10.6 10.6l5 5m16.8 16.8 5 5m0-26.8-5 5M15.6 32.4l-5 5"/></svg>',
     medal: '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="m14 5 10 9 10-9 5 2-4 17H13L9 7l5-2Z"/><circle cx="24" cy="33" r="10"/><path d="m24 27 2 4 4 .6-3 3 .7 4.4-3.7-2-3.7 2 .7-4.4-3-3 4-.6 2-4Z"/></svg>'
   };
   const schoolLogos = {
@@ -1325,11 +1379,14 @@
     photo.setAttribute("aria-hidden", "true");
     addText(photo, "span", "foundation-monogram", String(index + 1).padStart(2, "0"));
     if (member.photo) photo.append(makeGalleryImage(member.photo, member.alt, ""));
+    if (member.tag) addText(photo, "span", "photo-tag", member.tag);
     const copy = document.createElement("div");
     copy.className = "foundation-copy";
     addText(copy, "span", "foundation-relation", member.relation || "FOUNDATION");
     addText(copy, "h3", "foundation-name", member.name);
-    addText(copy, "p", "foundation-note", member.note || "");
+    const note = addText(copy, "p", "foundation-note", "");
+    addText(note, "span", "note-full", member.note || "");
+    if (member.short) addText(note, "span", "note-short", member.short);
     card.append(photo, copy);
     return card;
   }
@@ -1341,6 +1398,7 @@
     frame.className = "squad-photo-frame";
     addText(frame, "span", "squad-photo-number", String(index + 1).padStart(2, "0"));
     frame.append(makeGalleryImage(photo.photo, photo.alt || photo.title, ""));
+    if (CONFIG.squadTag) addText(frame, "span", "photo-tag", CONFIG.squadTag);
     const caption = document.createElement("figcaption");
     caption.textContent = photo.title || ("MEMORY / " + String(index + 1).padStart(2, "0"));
     figure.append(frame, caption);
@@ -1374,9 +1432,7 @@
         const frame = document.createElement("figure");
         frame.className = "family-film-frame";
         frame.append(makeGalleryImage(item.photo, cycleIndex ? "" : (item.alt || item.title || "Additional memory"), ""));
-        const caption = document.createElement("figcaption");
-        caption.textContent = item.title || ("MEMORY / " + String(index + 1).padStart(2, "0"));
-        frame.append(caption);
+  
         cycle.append(frame);
       });
       familyFilmTrack.append(cycle);
@@ -1387,7 +1443,10 @@
   function renderFamily() {
     familyGrid.replaceChildren(...CONFIG.family.map(drawFoundationCard));
     friendPhotoGrid.replaceChildren(...CONFIG.friends.map(drawSquadPhoto));
-    document.getElementById("squad-caption").textContent = CONFIG.partyNote;
+    const squadCaption = document.getElementById("squad-caption");
+    squadCaption.textContent = "";
+    addText(squadCaption, "span", "note-full", CONFIG.partyNote);
+    if (CONFIG.partyShort) addText(squadCaption, "span", "note-short", CONFIG.partyShort);
     document.getElementById("squad-closing").textContent = "Always hoping we all excel!";
     renderMemoryFilm();
   }
@@ -1608,4 +1667,311 @@
   syncPage();
   document.documentElement.classList.add("js-ready");
   window.requestAnimationFrame(startSiteIntro);
+})();
+
+
+/* ===== NEXT LEVEL: explore HUD, zone-clear reward, title glitch, card tilt ===== */
+(() => {
+  const current = document.getElementById("page-current");
+  const indicator = current && current.closest(".page-indicator");
+  if (!current || !indicator) return;
+  const KEY = "davin-explored", DONE = "davin-zone-clear";
+  const read = (key) => { try { return JSON.parse(localStorage.getItem(key) || "null"); } catch (e) { return null; } };
+  const write = (key, value) => { try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* storage unavailable */ } };
+  let seen = Array.isArray(read(KEY)) ? read(KEY) : [];
+  const pips = document.createElement("span");
+  pips.className = "xp-pips";
+  pips.setAttribute("aria-hidden", "true");
+  for (let i = 0; i < 4; i += 1) pips.append(document.createElement("i"));
+  indicator.append(pips);
+  function paint(here) {
+    [...pips.children].forEach((pip, i) => {
+      pip.classList.toggle("is-seen", seen.includes(i));
+      pip.classList.toggle("is-here", i === here);
+    });
+  }
+  function clearToast() {
+    const toast = document.createElement("div");
+    toast.className = "zone-clear";
+    toast.setAttribute("role", "status");
+    toast.innerHTML = "<b>ZONE CLEAR</b><span>ALL 4 AREAS DISCOVERED</span>";
+    document.body.append(toast);
+    setTimeout(() => toast.remove(), 4600);
+  }
+  function onPage() {
+    const here = Math.max(0, (parseInt(current.textContent, 10) || 1) - 1);
+    if (!seen.includes(here)) { seen.push(here); write(KEY, seen); }
+    paint(here);
+    const page = document.querySelectorAll("main .page")[here];
+    const title = page && page.querySelector(".page-title");
+    if (title && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      title.classList.remove("title-glitch");
+      void title.offsetWidth;
+      title.classList.add("title-glitch");
+      setTimeout(() => title.classList.remove("title-glitch"), 700);
+    }
+    if (seen.length >= 4 && !read(DONE)) { write(DONE, true); setTimeout(clearToast, 900); }
+  }
+  new MutationObserver(onPage).observe(current, { childList: true, characterData: true, subtree: true });
+  onPage();
+  if (window.matchMedia("(hover:hover) and (pointer:fine)").matches) {
+    const tiltAt = ".foundation-card, .squad-photo-card, .about-detail-card, .dossier-item, .agent-profile-card";
+    document.addEventListener("pointermove", (event) => {
+      const card = event.target instanceof Element ? event.target.closest(tiltAt) : null;
+      document.querySelectorAll(".is-tilt").forEach((el) => { if (el !== card) el.classList.remove("is-tilt"); });
+      if (!card) return;
+      const box = card.getBoundingClientRect();
+      const x = (event.clientX - box.left) / box.width, y = (event.clientY - box.top) / box.height;
+      const k = card.matches(".agent-profile-card") ? 3 : 9;
+      card.style.setProperty("--ry", ((x - 0.5) * k).toFixed(2) + "deg");
+      card.style.setProperty("--rx", ((0.5 - y) * k).toFixed(2) + "deg");
+      card.style.setProperty("--mx", (x * 100).toFixed(1) + "%");
+      card.style.setProperty("--my", (y * 100).toFixed(1) + "%");
+      card.classList.add("is-tilt");
+    });
+  }
+})();
+
+
+/* ===== NEXT LEVEL 2: staggered scan-in, inspectable skill nodes, pointer parallax ===== */
+(() => {
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const INSPECT = ["Games that entertain, teach, and inspire curiosity.", "Learned by making and testing ideas.", "Where technology, problem-solving, and design meet."];
+  const disclaimer = document.querySelector("#personal .profile-disclaimer");
+  const base = disclaimer ? disclaimer.textContent : "";
+  const nodes = [...document.querySelectorAll("#personal .interest-chips .chip")];
+  let typing = 0, restore = 0;
+  const reset = () => { nodes.forEach((n) => { n.setAttribute("aria-pressed", "false"); n.classList.remove("is-on"); }); if (disclaimer) disclaimer.textContent = base; };
+  nodes.forEach((node, i) => {
+    node.setAttribute("role", "button"); node.tabIndex = 0; node.setAttribute("aria-pressed", "false");
+    const run = () => {
+      const on = node.getAttribute("aria-pressed") !== "true";
+      clearInterval(typing); clearTimeout(restore); reset();
+      if (!on || !disclaimer) return;
+      node.setAttribute("aria-pressed", "true"); node.classList.add("is-on");
+      const text = "> " + INSPECT[i]; let n = 0;
+      if (reduced.matches) disclaimer.textContent = text;
+      else typing = setInterval(() => { n += 2; disclaimer.textContent = text.slice(0, n); if (n >= text.length) clearInterval(typing); }, 22);
+      restore = setTimeout(reset, 9000);
+    };
+    node.addEventListener("click", run);
+    node.addEventListener("keydown", (event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); run(); } });
+  });
+  if (window.matchMedia("(hover:hover) and (pointer:fine)").matches && !reduced.matches) {
+    let frame = 0;
+    window.addEventListener("pointermove", (event) => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        document.documentElement.style.setProperty("--px", (event.clientX / window.innerWidth - 0.5).toFixed(3));
+        document.documentElement.style.setProperty("--py", (event.clientY / window.innerHeight - 0.5).toFixed(3));
+      });
+    });
+  }
+})();
+
+/* ===== NEXT LEVEL 2b: dossier loadout slots (restyles the existing three facts only) ===== */
+(() => {
+  const BALL = '<svg class="pixel-ball" viewBox="0 0 9 9" width="30" height="30" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 0h3v1H3zM1 1h7v1H1zM0 2h9v2H0z" fill="currentColor"/><path d="M0 4h9v1H0z" fill="#120F10"/><path d="M0 5h9v2H0zM1 7h7v1H1zM3 8h3v1H3z" fill="#F2EFEA"/><path d="M3 3h3v3H3z" fill="#120F10"/><path d="M4 4h1v1H4z" fill="#F2EFEA"/></svg>';
+  document.querySelectorAll("#personal .dossier-item").forEach((item) => {
+    const p = item.querySelector("p");
+    if (!p || p.dataset.loadout) return;
+    p.dataset.loadout = "1";
+    const text = p.textContent.trim();
+    const parts = text.split("\u00B7").map((s) => s.trim()).filter(Boolean);
+    if (parts.length > 1) {
+      p.textContent = "";
+      parts.forEach((part) => { const tag = document.createElement("b"); tag.className = "loadout-tag"; tag.textContent = part; p.append(tag); });
+    } else if (/pok.mon/i.test(text)) {
+      p.innerHTML = BALL;
+      const name = document.createElement("span");
+      name.textContent = text;
+      p.append(name);
+    }
+  });
+})();
+
+
+/* ===== PASS 1: layered depth background (glow, running grid, pixel embers, vignette) + hero border rings ===== */
+(() => {
+  const stack = document.createElement("div");
+  stack.className = "bg-stack";
+  stack.setAttribute("aria-hidden", "true");
+  stack.innerHTML = '<div class="bg-glow"></div><div class="bg-grid"></div><div class="bg-embers"></div><div class="bg-vignette"></div>';
+  document.body.prepend(stack);
+  [".portrait-stage", ".agent-profile-card", ".pokedex-panel", ".squad-panel"].forEach((selector) => {
+    const host = document.querySelector(selector);
+    if (!host) return;
+    if (getComputedStyle(host).position === "static") host.style.position = "relative";
+    const ring = document.createElement("span");
+    ring.className = "hero-ring";
+    ring.setAttribute("aria-hidden", "true");
+    host.append(ring);
+  });
+  // Embers: small CSS-animated squares (compositor-only), skipped for reduced motion and small phones.
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || window.innerWidth <= 600) { stack.querySelector(".bg-embers").remove(); return; }
+  const embers = stack.querySelector(".bg-embers");
+  for (let i = 0; i < 18; i += 1) {
+    const ember = document.createElement("i");
+    ember.style.setProperty("--x", (Math.random() * 100).toFixed(1) + "%");
+    ember.style.setProperty("--s", (Math.random() < 0.3 ? 3 : 2) + "px");
+    ember.style.setProperty("--t", (16 + Math.random() * 16).toFixed(1) + "s");
+    ember.style.setProperty("--w", (-Math.random() * 30).toFixed(1) + "s");
+    ember.style.setProperty("--dx", ((Math.random() - 0.5) * 120).toFixed(0) + "px");
+    embers.append(ember);
+  }
+})();
+
+/* ===== PASS 1b: adaptive quality. Slow machines get static versions of the heaviest effects (?fx=full or ?fx=lite overrides). ===== */
+(() => {
+  const root = document.documentElement;
+  const forced = new URLSearchParams(location.search).get("fx");
+  if (forced === "lite") { root.classList.add("fx-lite"); return; }
+  if (forced === "full") return;
+  setTimeout(() => {
+    let frames = 0;
+    const start = performance.now();
+    (function tick(now) {
+      frames += 1;
+      if (now - start < 1500) requestAnimationFrame(tick);
+      else if (frames / ((now - start) / 1000) < 34) root.classList.add("fx-lite");
+    })(start);
+  }, 5500);
+})();
+
+/* ===== PASS 2: choreography on the native Web Animations API: battle intro (Family), NPC dialogue (Personal), kinetic name (Home) ===== */
+(() => {
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const run = (el, frames, options) => el.animate(frames, Object.assign({ fill: "both", easing: "cubic-bezier(.2,.8,.2,1)" }, options)).finished.catch(() => {});
+  const booting = () => document.body.classList.contains("intro-playing");
+  const afterBoot = (fn) => {
+    if (!booting()) { fn(); return; }
+    const timer = setInterval(() => { if (!booting()) { clearInterval(timer); fn(); } }, 120);
+  };
+  const current = document.getElementById("page-current");
+  const pageNumber = () => parseInt(current && current.textContent, 10) || 1;
+  const BALL = '<svg viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true"><path d="M3 0h3v1H3zM1 1h7v1H1zM0 2h9v2H0z" fill="currentColor"/><path d="M0 4h9v1H0z" fill="#120F10"/><path d="M0 5h9v2H0zM1 7h7v1H1zM3 8h3v1H3z" fill="#F2EFEA"/><path d="M3 3h3v3H3z" fill="#120F10"/><path d="M4 4h1v1H4z" fill="#F2EFEA"/></svg>';
+  function typeInto(el, text, ms, isCancelled) {
+    return new Promise((resolve) => {
+      let n = 0;
+      el.textContent = "";
+      const timer = setInterval(() => {
+        n += 1;
+        el.textContent = text.slice(0, n);
+        if (n >= text.length || (isCancelled && isCancelled())) { clearInterval(timer); el.textContent = text; resolve(); }
+      }, ms);
+    });
+  }
+
+ function onPage() {
+  if (pageNumber() === 1) afterBoot(replayLetters);
+  if (pageNumber() === 2) afterBoot(arrivePersonal);
+  else token += 1;
+}
+
+  /* --- HOME: kinetic letters + idle ball wiggle (CSS) --- */
+  const name = document.querySelector("#home .display-name");
+  let split = false;
+  if (name && !reduced.matches) {
+    let k = 0;
+    name.querySelectorAll(".name-line").forEach((line) => {
+      const text = line.textContent;
+      line.textContent = "";
+      [...text].forEach((c) => {
+        const s = document.createElement("span");
+        s.className = "ch"; s.setAttribute("aria-hidden", "true"); s.style.setProperty("--i", String(k++)); s.textContent = c;
+        line.append(s);
+      });
+    });
+    split = true;
+  }
+  function replayLetters() {
+    if (!split) return;
+    name.classList.remove("letters-go");
+    void name.offsetWidth;
+    name.classList.add("letters-go");
+  }
+
+  /* --- PERSONAL: the page keeps its own arrival animation; the NPC box eases in after it, then types --- */
+  const personal = document.getElementById("personal");
+  const heading = personal && personal.querySelector(".page-heading");
+  let npc = null, lineEl = null, index = 0, token = 0;
+  const LINES = ["I am a Computer Science student who learns by making.", "Test an idea. Understand what happens. Build again.", "I hope to build games that entertain, teach, and spark curiosity in future generations."];
+  async function sayLine() {
+    const mine = ++token;
+    const text = LINES[index % LINES.length];
+    if (reduced.matches) { lineEl.textContent = text; return; }
+    await typeInto(lineEl, text, 24, () => mine !== token);
+    if (mine !== token) return;
+    await wait(3200);
+    if (mine !== token) return;
+    index += 1;
+    sayLine();
+  }
+  if (heading) {
+    npc = document.createElement("div");
+    npc.className = "npc";
+    npc.setAttribute("aria-hidden", "true");
+    npc.innerHTML = '<span class="npc-tag">DAVIN</span><p class="npc-line"></p><i class="npc-arrow">\u25BC</i>';
+    heading.append(npc);
+    lineEl = npc.querySelector(".npc-line");
+    npc.addEventListener("click", () => { index += 1; sayLine(); });
+  }
+  function arrivePersonal() {
+    if (!npc) return;
+    if (reduced.matches) { index = 0; sayLine(); return; }
+    const ease = "cubic-bezier(.22,.8,.24,1)";
+    npc.animate([{ opacity: 0, transform: "translateY(-10px)" }, { opacity: 1, transform: "none" }], { duration: 520, delay: 420, easing: ease, fill: "backwards" });
+    token += 1;
+    lineEl.textContent = "";
+    setTimeout(() => { if (pageNumber() === 2) { index = 0; sayLine(); } }, 900);
+  }
+  if (current) new MutationObserver(onPage).observe(current, { childList: true, characterData: true, subtree: true });
+  // The boot intro starts on the next frame, so look one frame later to see whether it is playing.
+  window.requestAnimationFrame(() => window.requestAnimationFrame(onPage));
+})();
+
+
+/* ===== PASS 3: MY OTHERS film as one constant, continuous belt (no keyframe loop; frames are recycled off-screen) ===== */
+(() => {
+  const win = document.getElementById("family-film-window");
+  const track = document.getElementById("family-film-track");
+  if (!win || !track || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const first = track.querySelector(".family-film-cycle");
+  const frames = first ? [...first.querySelectorAll(".family-film-frame")] : [];
+  if (!frames.length) return;
+  win.classList.add("is-belt");
+  track.replaceChildren(...frames);
+  const gap = () => parseFloat(getComputedStyle(track).columnGap) || 0;
+  const unit = () => frames[0].offsetWidth + gap();
+  function fill() {
+    track.style.setProperty("--pitch", unit() + "px");
+    while (track.children.length * unit() < win.clientWidth + unit() * 2) {
+      const copy = frames[track.children.length % frames.length].cloneNode(true);
+      copy.setAttribute("aria-hidden", "true");
+      copy.inert = true;
+      track.append(copy);
+    }
+  }
+  fill();
+  window.addEventListener("resize", fill);
+  const SPEED = 36;
+  let x = 0, last = 0, paused = false;
+  const hold = (value) => () => { paused = value; };
+  win.addEventListener("pointerenter", hold(true));
+  win.addEventListener("pointerleave", hold(false));
+  win.addEventListener("focusin", hold(true));
+  win.addEventListener("focusout", hold(false));
+  function tick(time) {
+    window.requestAnimationFrame(tick);
+    const dt = Math.min((time - last) / 1000, 0.1);
+    last = time;
+    if (paused || document.hidden) return;
+    x += SPEED * dt;
+    const width = unit();
+    while (x >= width) { track.append(track.firstElementChild); x -= width; }
+    track.style.transform = "translate3d(" + (-x).toFixed(2) + "px,0,0)";
+  }
+  window.requestAnimationFrame(tick);
 })();
